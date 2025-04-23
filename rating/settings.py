@@ -46,6 +46,7 @@ if not firebase_admin._apps:
 
 INSTALLED_APPS = [
     # Стандартные приложения Django
+    'modeltranslation',
     'channels',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -230,11 +231,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # Локализация и время
 # ==================================================
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Asia/Dushanbe'
 USE_I18N = True
 USE_TZ = True
 
+LANGUAGES = (
+    ('ru', 'Russian'),
+    ('tg', 'Tajik'),
+)
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 # ==================================================
 # Статические файлы и медиа
 # ==================================================

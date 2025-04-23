@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
-from django.db.models import Avg
 from .specialty import Specialty
 from .medical_category import MedicalCategory
 from .service import Service
@@ -13,18 +11,7 @@ User = get_user_model()
 
 class Doctor(models.Model):
     """
-    Модель врача, содержащая основную информацию о специалисте:
-    - Связь с пользователем
-    - Специализация, категория и ученая степень
-    - Образование
-    - Места работы
-    - Описание деятельности
-    - Описание работы c пациентами
-    - Услуги, которые предоставляет врач
-    - Верификация
-    - Звания и заслуги
-    - Знание языков
-    - Контакты
+    Модель врача, содержащая основную информацию о специалисте
     """
 
     # Связь с пользователем

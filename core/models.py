@@ -1,80 +1,42 @@
-from django.contrib.auth.models import AbstractUser
-from django.db import models
 from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator
-from django.utils.translation import gettext_lazy as _
-from .managers import CustomUserManager
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+
+from django.db import models
+from django.contrib.auth.models import AbstractUser
 from map.models import City
 from subscriptions.models import Subscription
+
+from .managers import CustomUserManager
 from storages.backends.s3boto3 import S3Boto3Storage
 
 media_storage = S3Boto3Storage()
 
 class CustomUser(AbstractUser):
-    """
-    Кастомная модель пользователя
-    """
+    """Кастомная модель пользователя"""
 
-    # Убираем стандартное поле username, так как используем phone_number для входа
-    username = None
-
-    # Валидатор для номера телефона (таджикский формат: +992XXYYYYYY)
+    class Gender(models.TextChoices):
+        MALE = 'M', _('Мужской')
+        FEMALE = 'F', _('Женский')
+    
+    # Валидатор для номера телефона
     phone_regex = RegexValidator(
         regex=r'^\+992\d{9}$',
         message=_("Номер телефона должен быть в формате: '+992XXYYYYYY'."),
     )
 
-    # Поле для номера телефона
-    phone_number = models.CharField(
-        _('phone number'),
-        validators=[phone_regex],
-        max_length=13,
-        unique=True,
-        help_text=_("Номер телефона в формате +992XXYYYYYY."),
-        error_messages={'unique': _("Пользователь с таким номером телефона уже существует.")},
-    )
+    username = None
 
-    # Поле email используется для входа в систему
-    email = models.EmailField(
-        _('email address'),
-        null = True,
-        blank=True
-    )
-
-    # Верифицирован ли email
-    email_verified = models.BooleanField(
-        _('email verified'),
-        default=False,
-        help_text=_("Указывает, подтвержден ли email пользователя."),
-    )
-
-    # Поля для ФИО (имя, фамилия, отчество)
-    first_name = models.CharField(_('first name'), max_length=150)
-    last_name = models.CharField(_('last name'), max_length=150, blank=True)
-    middle_name = models.CharField(_('middle name'), max_length=150, blank=True, null=True, default='')
-
-    # Дата рождения пользователя
+    # Персональные данные
+    first_name = models.CharField(_('Имя'), max_length=150)
+    last_name = models.CharField(_('Фамилия'), max_length=150)
+    middle_name = models.CharField(_('Отчество'), max_length=150, blank=True, null=True)
+    
     date_of_birth = models.DateField(
         _('Дата рождения'),
         help_text=_("Дата рождения пользователя."),
     )
 
-    # Поле для фото профиля
-    profile_picture = models.ImageField(
-        _('profile picture'),
-        upload_to='profile_pictures',
-        storage=S3Boto3Storage(),
-        blank=True,
-        null=True,
-        help_text=_("Фотография профиля"),
-    )
-
-    # Определяем варианты выбора для поля "пол"
-    class Gender(models.TextChoices):
-        MALE = 'M', _('Мужской')
-        FEMALE = 'F', _('Женский')
-
-    # Поле для выбора пола пользователя
     gender = models.CharField(
         _('gender'),
         max_length=1,
@@ -84,7 +46,39 @@ class CustomUser(AbstractUser):
         help_text=_("Пол пользователя (необязательное)."),
     )
 
-    # Поле для ИНН (индивидуальный номер налогоплательщика)
+    city = models.ForeignKey(City, verbose_name="Город проживания", on_delete=models.SET_NULL, null=True)
+
+    phone_number = models.CharField(
+        _('Номер телефона'),
+        validators=[phone_regex],
+        max_length=13,
+        unique=True,
+        help_text=_("Номер телефона в формате +992XXYYYYYY."),
+        error_messages={'unique': _("Пользователь с таким номером телефона уже существует.")},
+    )
+
+    email = models.EmailField(
+        _('Электронная почта'),
+        null = True,
+        blank=True
+    )
+
+    profile_picture = models.ImageField(
+        _('Фотография профиля'),
+        upload_to='profile_pictures',
+        storage=S3Boto3Storage(),
+        blank=True,
+        null=True,
+        help_text=_("Фотография профиля"),
+    )
+
+    email_verified = models.BooleanField(
+        _('Электронная почта подтверждена'),
+        default=False,
+        help_text=_("Указывает, подтвержден ли email пользователя."),
+    )
+
+    # Индивидуальный номер налогоплательщика
     inn = models.CharField(
         _('ИНН'),
         max_length=9,
@@ -99,9 +93,6 @@ class CustomUser(AbstractUser):
         help_text=_("Индивидуальный номер налогоплательщика (9 цифр)."),
         error_messages={'unique': _("Пользователь с таким ИНН уже существует.")},
     )
-
-    # Город проживания
-    city = models.ForeignKey(City, verbose_name="Город проживания", on_delete=models.SET_NULL, null=True)
 
     # Подписка
     subscription = models.ForeignKey(
@@ -128,25 +119,17 @@ class CustomUser(AbstractUser):
         verbose_name_plural = _('Пользователи') 
 
     def __str__(self):
-        """
-        Возвращает строковое представление пользователя.
-        Формат: "Фамилия Имя Отчество (phone_number)".
-        """
         return f"{self.get_full_name} ({self.phone_number})"
     
     def generate_confirmation_code(self):
-        """
-        Генерация 6-значного кода подтверждения.
-        """
+        """Генерирует код подтверждения"""
         import random
         self.confirmation_code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
         self.confirmation_code_created_at = timezone.now()
         self.save()
 
     def is_confirmation_code_valid(self, code):
-        """
-        Проверка, что код подтверждения действителен и не истек.
-        """
+        """Проверяет код подтверждения"""
         if self.confirmation_code == code and (timezone.now() - self.confirmation_code_created_at).total_seconds() < 3600:
             return True
         return False
@@ -167,9 +150,5 @@ class CustomUser(AbstractUser):
 
     @property
     def get_full_name(self):
-        """
-        Возвращает полное имя пользователя.
-        Формат: "Фамилия Имя Отчество".
-        Если отчество отсутствует, оно не включается в результат.
-        """
+        """Возвращает полное имя пользователя"""
         return " ".join(filter(None, [self.last_name, self.first_name, self.middle_name]))

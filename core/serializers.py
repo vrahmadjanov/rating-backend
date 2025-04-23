@@ -3,8 +3,8 @@ from rest_framework import serializers
 from .models import CustomUser
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from map.serializers import CitySerializer
-from map.models import City
+from a_base.serializers import CitySerializer
+from a_base.models import City
 
 User = get_user_model()
 

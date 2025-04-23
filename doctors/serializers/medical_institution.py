@@ -1,7 +1,7 @@
 # doctors/serializers/medical_institution.py
 from rest_framework import serializers
 from doctors.models.medical_institution import MedicalInstitution
-from map.serializers import CitySerializer, RegionSerializer
+from a_base.serializers import CitySerializer, RegionSerializer
 from .base import BaseMedicalInstitutionSerializer
 
 class MedicalInstitutionSerializer(BaseMedicalInstitutionSerializer):

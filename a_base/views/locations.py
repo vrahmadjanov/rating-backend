@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 
-from .models import City, Region
-from .serializers import CitySerializer, RegionSerializer
+from a_base.models import City, Region
+from a_base.serializers import CitySerializer, RegionSerializer
 
 class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()

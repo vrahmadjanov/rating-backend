@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from map.models import City
+from a_base.models import City
 from subscriptions.models import Subscription
 
 from .managers import CustomUserManager

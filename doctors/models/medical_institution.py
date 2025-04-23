@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
-from map.models import Region, City
+from a_base.models import Region, City
 
 
 class MedicalInstitution(models.Model):

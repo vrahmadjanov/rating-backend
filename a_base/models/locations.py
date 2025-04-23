@@ -27,7 +27,7 @@ class City(models.Model):
     name = models.CharField(
         max_length=100,
         verbose_name="Название города/района",
-        help_text="Название города или района (например, Душанбе или Гиссарский район)"
+        help_text="Название города или района (например, Душанбе)"
     )
     region = models.ForeignKey(
         Region,

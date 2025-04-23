@@ -14,7 +14,7 @@ urlpatterns = [
     path('api/', include("ehr.urls")),
     path('api/', include("chat.urls")),
     path('api/', include("appointments.urls")),
-    path('api/', include("map.urls")),
+    path('api/', include("a_base.urls")),
 
     path('notifications/', include("notifications.urls")),
 ]

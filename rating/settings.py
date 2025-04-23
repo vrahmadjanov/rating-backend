@@ -64,16 +64,15 @@ INSTALLED_APPS = [
     'fcm_django',
 
     # Пользовательские приложения
+    'a_base',
+    'subscriptions',
     'core',
     'doctors',
     'appointments',
     'patients',
     'notifications',
-    'subscriptions',
     'ehr',
-    'import',
     'chat',
-    'map',
 ]
 
 ASGI_APPLICATION = 'rating.asgi.application'

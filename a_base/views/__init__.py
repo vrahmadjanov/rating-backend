@@ -1,0 +1,1 @@
+from .locations import RegionViewSet, CityViewSet

@@ -1,0 +1,2 @@
+from .custom_user_model import CustomUserModelTest
+from .customuser_manager import CustomUserManagerTest

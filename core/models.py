@@ -4,25 +4,15 @@ from django.core.validators import RegexValidator, MinLengthValidator, MaxLength
 from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
 from django.utils import timezone
-from notifications.services import send_email
 from map.models import City
 from subscriptions.models import Subscription
-
-from django.utils.html import mark_safe
 from storages.backends.s3boto3 import S3Boto3Storage
 
 media_storage = S3Boto3Storage()
 
 class CustomUser(AbstractUser):
     """
-    Кастомная модель пользователя, расширяющая стандартную модель AbstractUser.
-    Использует phone_number в качестве логина и добавляет дополнительные поля:
-    - ФИО (имя, фамилия, отчество)
-    - Номер телефона (в таджикском формате)
-    - Email (уникальный адрес э.п.)
-    - Фото профиля
-    - Пол (мужской/женский)
-    - ИНН (индивидуальный номер налогоплательщика)
+    Кастомная модель пользователя
     """
 
     # Убираем стандартное поле username, так как используем phone_number для входа
@@ -129,7 +119,6 @@ class CustomUser(AbstractUser):
 
     objects = CustomUserManager()
 
-    # Поле, используемое для входа в систему (phone_number вместо username)
     USERNAME_FIELD = 'phone_number'
 
     REQUIRED_FIELDS = ['first_name', 'date_of_birth']
@@ -143,7 +132,7 @@ class CustomUser(AbstractUser):
         Возвращает строковое представление пользователя.
         Формат: "Фамилия Имя Отчество (phone_number)".
         """
-        return f"{self.get_full_name()} ({self.phone_number})"
+        return f"{self.get_full_name} ({self.phone_number})"
     
     def generate_confirmation_code(self):
         """
@@ -162,33 +151,12 @@ class CustomUser(AbstractUser):
             return True
         return False
     
-    def send_confirmation_email(self):
-        """
-        Отправка кода подтверждения на email.
-        """
-        if self.email:
-            self.generate_confirmation_code()
-            subject = "Подтверждение email"
-            message = f"Ваш код подтверждения: {self.confirmation_code}"
-            
-            # Отправляем email
-            if send_email(self.email, subject, message):
-                print(f"Код подтверждения отправлен на {self.email}.")
-            else:
-                print(f"Не удалось отправить код подтверждения на {self.email}.")
-        else:
-            print("Email не указан. Невозможно отправить код подтверждения.")
+    def activate_subscription(self):
+        """Активирует подписку для пользователя"""
+        duration_days = self.subscription.duration_days
+        self.subscription_end_date = self.subscription_start_date + timezone.timedelta(days=duration_days)
+        self.save()
 
-    def confirm_email(self, code):
-        """
-        Подтверждение email с использованием кода подтверждения.
-        """
-        if self.is_confirmation_code_valid(code):
-            self.email_verified = True
-            self.save()
-            return True
-        return False
-    
     @property
     def has_active_subscription(self):
         """Проверяет, активна ли подписка пользователя"""
@@ -196,24 +164,8 @@ class CustomUser(AbstractUser):
             return False
         now = timezone.now()
         return self.subscription_end_date and self.subscription_end_date > now
-    
-    def activate_subscription(self):
-        """Активирует подписку для пользователя"""
-        duration_days = self.subscription.duration_days
-        self.subscription_end_date = self.subscription_start_date + timezone.timedelta(days=duration_days)
-        self.save()
-    
-    def photo_tag(self):
-        """
-        Возвращает html-объект с фотографией пользователя
-        """
-        if self.profile_picture:
-            return mark_safe(
-                '<img src="%s" width="600" />'
-                % (self.profile_picture.url)
-            )
-        return ""
 
+    @property
     def get_full_name(self):
         """
         Возвращает полное имя пользователя.

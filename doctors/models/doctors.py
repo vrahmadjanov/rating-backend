@@ -176,7 +176,7 @@ class Doctor(models.Model):
         """
         Возвращает строковое представление врача: ФИО + специализация.
         """
-        user_name = self.user.get_full_name() or self.user.email
+        user_name = self.user.get_full_name or self.user.email
         specialty_name = self.specialty.name if self.specialty else "Без специализации"
         academic_degree = self.academic_degree or "Без степени"
         return f"{user_name} ({specialty_name}, {academic_degree})"

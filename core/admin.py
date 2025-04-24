@@ -11,7 +11,7 @@ class CustomUserAdmin(UserAdmin):
         'first_name', 
         'last_name', 
         'email',
-        'city', 
+        'district', 
         'subscription', 
         'is_active', 
     ]
@@ -31,7 +31,7 @@ class CustomUserAdmin(UserAdmin):
         'last_name', 
         'phone_number', 
         'inn',
-        'city'
+        'district'
     ]
 
     # Сортировка по умолчанию
@@ -48,7 +48,7 @@ class CustomUserAdmin(UserAdmin):
                 'phone_number', 
                 'gender',
                 'subscription', 
-                'city', 
+                'district', 
                 'inn',
                 'date_of_birth', 
                 'profile_picture', 
@@ -88,7 +88,7 @@ class CustomUserAdmin(UserAdmin):
                 'phone_number', 
                 'gender',
                 'subscription',
-                'city', 
+                'district', 
                 'inn',
                 'profile_picture'
             )

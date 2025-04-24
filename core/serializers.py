@@ -3,8 +3,8 @@ from rest_framework import serializers
 from .models import CustomUser
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from a_base.serializers import CitySerializer
-from a_base.models import City
+from a_base.serializers import DistrictSerializer
+from a_base.models import District
 
 User = get_user_model()
 
@@ -15,7 +15,7 @@ class SubscriptionSerializer(serializers.Serializer):
     name = serializers.CharField()
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    city = CitySerializer(read_only=True)
+    district = DistrictSerializer(read_only=True)
     groups = GroupSerializer(many=True, read_only=True)
     subscription = SubscriptionSerializer(read_only=True)
     
@@ -34,24 +34,24 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 class CustomUserShortSerializer(serializers.ModelSerializer):
-    city = CitySerializer(read_only=True)
+    district = DistrictSerializer(read_only=True)
     
     class Meta:
         model = CustomUser
-        fields = ['id', 'first_name', 'last_name', 'middle_name', 'profile_picture', 'gender', 'city']
+        fields = ['id', 'first_name', 'last_name', 'middle_name', 'profile_picture', 'gender', 'district']
 
 
 # Сериализатор для регистрации нового пользователя
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
-    city = serializers.PrimaryKeyRelatedField(
-        queryset=City.objects.all(),
+    district = serializers.PrimaryKeyRelatedField(
+        queryset=District.objects.all(),
         write_only=True,
         required=True
     )
     class Meta:
         model = User
-        fields = ['first_name', 'phone_number', 'date_of_birth', 'city', 'password']
+        fields = ['first_name', 'phone_number', 'date_of_birth', 'district', 'password']
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)

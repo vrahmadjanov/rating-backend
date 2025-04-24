@@ -3,14 +3,14 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import timedelta
 from core.models import CustomUser
-from a_base.models import City, Region
+from a_base.models import District, Region
 from subscriptions.models import Subscription
 
 class CustomUserModelTest(TestCase):
     def setUp(self):
         """Создаем тестовые данные для всех тестов"""
         self.region = Region.objects.create(name="Душанбе")
-        self.city = City.objects.create(name="Душанбе", region=self.region)
+        self.district = District.objects.create(name="Душанбе", region=self.region)
         self.subscription = Subscription.objects.create(
             name="Премиум",
             duration_days=30,
@@ -24,7 +24,7 @@ class CustomUserModelTest(TestCase):
             'middle_name': 'Иванович',
             'date_of_birth': '1990-01-01',
             'phone_number': '+992123456789',
-            'city': self.city,
+            'district': self.district,
         }
         
         self.user = CustomUser.objects.create_user(**self.user_data)
@@ -183,7 +183,7 @@ class CustomUserModelTest(TestCase):
             last_name='Email',
             date_of_birth='1990-01-01',
             phone_number='+992111111111',
-            city=self.city
+            district=self.district
         )
         self.assertIsNone(user.email)
         

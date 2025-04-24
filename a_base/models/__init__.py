@@ -1,1 +1,1 @@
-from .locations import Region, City
+from .locations import Region, District

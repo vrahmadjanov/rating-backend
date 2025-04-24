@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from a_base.models import City
+from a_base.models import District
 from subscriptions.models import Subscription
 
 from .managers import CustomUserManager
@@ -46,7 +46,7 @@ class CustomUser(AbstractUser):
         help_text=_("Пол пользователя (необязательное)."),
     )
 
-    city = models.ForeignKey(City, verbose_name="Город проживания", on_delete=models.SET_NULL, null=True)
+    district = models.ForeignKey(District, verbose_name="Район проживания пользователя", on_delete=models.SET_NULL, null=True)
 
     phone_number = models.CharField(
         _('Номер телефона'),

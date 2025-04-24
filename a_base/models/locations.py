@@ -2,44 +2,26 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 class Region(models.Model):
-    """
-    Модель для хранения информации об областях.
-    """
-    name = models.CharField(
-        max_length=100,
-        verbose_name="Название области",
-        help_text="Название области (например, Согдийская область)"
-    )
+    code = models.CharField(max_length=2, unique=True)
+    name = models.CharField(max_length=100, verbose_name=_("Название региона"))
 
     class Meta:
-        verbose_name = "Область"
-        verbose_name_plural = "Области"
-        ordering = ["name"]
-
+        verbose_name = _("Регион")
+        verbose_name_plural = _("Регионы")
+        ordering = ['name']
+    
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.id})"
 
-
-class City(models.Model):
-    """
-    Модель для хранения информации о городах/районах.
-    """
-    name = models.CharField(
-        max_length=100,
-        verbose_name="Название города/района",
-        help_text="Название города или района (например, Душанбе)"
-    )
-    region = models.ForeignKey(
-        Region,
-        on_delete=models.CASCADE,
-        verbose_name="Область",
-        help_text="Область, к которой принадлежит город/район"
-    )
+class District(models.Model):
+    code = models.CharField(max_length=2, unique=True, null=True, blank=True)
+    name = models.CharField(max_length=100, verbose_name=_("Название района"))
+    region = models.ForeignKey(Region, verbose_name=_("Регион"), on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = "Город/Район"
-        verbose_name_plural = "Города/Районы"
-        ordering = ["name"]
+        verbose_name = _("Район")
+        verbose_name_plural = _("Районы")
+        ordering = ['name']
 
     def __str__(self):
-        return f"{self.name}, {self.region}"
+        return f"{self.name} ({self.code}) | {self.region.name}"

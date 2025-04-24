@@ -1,1 +1,1 @@
-from .locations import RegionSerializer, CitySerializer
+from .locations import RegionSerializer, DistrictSerializer

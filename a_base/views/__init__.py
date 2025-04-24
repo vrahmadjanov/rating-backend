@@ -1,1 +1,1 @@
-from .locations import RegionViewSet, CityViewSet
+from .locations import RegionViewSet, DistrictViewSet

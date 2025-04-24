@@ -6,6 +6,6 @@ from .service import Service
 from .specialty import Specialty
 from .education import Education
 from .workplace import Workplace
-from .medical_institution import MedicalInstitution, Region, City
+from .medical_institution import MedicalInstitution
 from .schedule import Schedule
 

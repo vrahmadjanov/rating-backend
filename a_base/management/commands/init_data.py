@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.core.management import call_command
 from django.apps import apps
 from django.utils import timezone
 from datetime import timedelta
@@ -72,7 +73,6 @@ class Command(BaseCommand):
 
     def create_all_test_data(self):
         """Создание всех тестовых данных (полная версия)"""
-        from a_base.models import Region, City
         from subscriptions.models import Advantage, Subscription
         from patients.models import SocialStatus, Patient
         from doctors.models import (
@@ -82,31 +82,11 @@ class Command(BaseCommand):
 
         # 1. Регионы и города (полный список)
         self.stdout.write("Создание регионов и городов...")
-        regions_data = {
-            "Согдийская область": [
-                "Панҷакент", "Истаравшан", "Худжанд", "Айнӣ", "Деваштич", 
-                "Кӯҳистони Мастчоҳ", "Шаҳристон", "Спитамен", "Зафоробод", 
-                "Ашт", "Мастчоҳ", "Бустон", "Гулистон", "Истиқлол",
-                "Конибодом", "Ҷабор Расулов", "Исфара", "Бобоҷон Ғаффуров"
-            ],
-            "Хатлонская область": [
-                "Бохтар", "Куляб", "Норак", "Сатҳи вилоятӣ", "Ёвон", 
-                "А. Ҷомӣ", "Хуросон", "Левакант", "Кўшониён", "Вахш", 
-                "Дустӣ", "Ҷ. Балхӣ", "Ҷайҳун", "Панҷ", "Қубодиён", 
-                "Шаҳритуз", "Н. Хусрав", "Восеъ", "Данғара", 
-                "М. Ҳамадонӣ", "Фархор", "Ховалинг", "Муъминобод", 
-                "Ш.Шоҳин", "Балҷувон", "Темурмалик"
-            ],
-            "Горно-Бадахшанская автономная область": ["Хорог", "Ишкашим", "Мургаб"],
-            "Душанбе": ["Душанбе", "Фирдавсӣ", "Сино", "Шоҳмансур", "И. Сомонӣ"],
-        }
-
-        for region_name, cities in regions_data.items():
-            region = Region.objects.create(name=region_name)
-            City.objects.bulk_create([
-                City(name=city_name, region=region) for city_name in cities
-            ])
-        self.stdout.write(self.style.SUCCESS('Регионы и города созданы!'))
+        try:
+            call_command('loaddata', 'a_base/fixtures/initial_districts.json')
+            self.stdout.write(self.style.SUCCESS('Регионы успешно загружены.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке районов: {str(e)}'))
 
         # 2. Подписки и преимущества (полный список)
         self.stdout.write("Создание подписок...")
@@ -283,9 +263,9 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Социальные статусы созданы!'))
 
         # 5. Тестовые пользователи с подписками
+        from a_base.models import District
         self.stdout.write("Создание тестовых пользователей...")
         subscriptions = Subscription.objects.all()
-        cities = City.objects.filter(name__in=["Худжанд", "Душанбе", "Куляб"])
         
         users_data = [
             {
@@ -301,7 +281,7 @@ class Command(BaseCommand):
                 'gender': User.Gender.MALE,
                 'inn': '123456789',
                 'date_of_birth': "2002-08-08",
-                'city': cities[0]
+                'district': District.objects.get(id=101)
             },
             {
                 'phone_number': '+992000000001',
@@ -316,7 +296,7 @@ class Command(BaseCommand):
                 'gender': User.Gender.MALE,
                 'inn': '123456788',
                 'date_of_birth': "2002-08-08",
-                'city': cities[1]
+                'district': District.objects.get(id=201)
             },
             {
                 'phone_number': '+992000000002',
@@ -331,7 +311,7 @@ class Command(BaseCommand):
                 'gender': User.Gender.MALE,
                 'inn': '123456787',
                 'date_of_birth': "2002-08-08",
-                'city': cities[2]
+                'district': District.objects.get(id=301)
             }
         ]
 

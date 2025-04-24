@@ -156,6 +156,7 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
@@ -231,17 +232,24 @@ AUTH_PASSWORD_VALIDATORS = [
 # Локализация и время
 # ==================================================
 
-LANGUAGE_CODE = 'ru'
-TIME_ZONE = 'Asia/Dushanbe'
-USE_I18N = True
-USE_TZ = True
-
 LANGUAGES = (
     ('ru', 'Russian'),
     ('tg', 'Tajik'),
 )
 
+LANGUAGE_CODE = 'ru'
+TIME_ZONE = 'Asia/Dushanbe'
+USE_I18N = True
+USE_TZ = True
+
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
+
+MODELTRANSLATION_AUTO_POPULATE = True  # Автозаполнение перевода
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'ru'  # Язык для автозаполнения
+
+FALLBACK_LANGUAGES = {
+    'tg': 'ru',
+}
 # ==================================================
 # Статические файлы и медиа
 # ==================================================

@@ -1,0 +1,738 @@
+[
+    {
+        "model": "a_base.region",
+        "pk": 1,
+        "fields": {
+            "code": "01",
+            "name_ru": "Душанбе",
+            "name_tg": "Душанбе"
+        }
+    },
+    {
+        "model": "a_base.region",
+        "pk": 2,
+        "fields": {
+            "name_ru": "ГРРП",
+            "name_tg": "ШНТҶ"
+        }
+    },
+    {
+        "model": "a_base.region",
+        "pk": 3,
+        "fields": {
+            "code": "02",
+            "name_ru": "Согдийская область",
+            "name_tg": "Вилояти Суғд"
+        }
+    },
+    {
+        "model": "a_base.region",
+        "pk": 4,
+        "fields": {
+            "code": "03",
+            "name_ru": "Хатлонская область",
+            "name_tg": "Вилояти Хатлон"
+        }
+    },
+    {
+        "model": "a_base.region",
+        "pk": 5,
+        "fields": {
+            "code": "04",
+            "name_ru": "Горно-Бадахшанская автономная область",
+            "name_tg": "Вилояти Мухтори Кӯҳистони Бадахшон"
+        }
+    },
+
+    {
+        "model": "a_base.district",
+        "pk": 101,
+        "fields": {
+            "name_ru": "Сино",
+            "name_tg": "Сино",
+            "region": 1
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 102,
+        "fields": {
+            "name_ru": "Исмоили Сомони",
+            "name_tg": "Исмоили Сомонӣ",
+            "region": 1
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 103,
+        "fields": {
+            "name_ru": "Фирдавси",
+            "name_tg": "Фирдавсӣ",
+            "region": 1
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 104,
+        "fields": {
+            "name_ru": "Шохмансур",
+            "name_tg": "Шоҳмансур",
+            "region": 1
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 201,
+        "fields": {
+            "code": "61",
+            "name_ru": "Рудаки",
+            "name_tg": "Рӯдакӣ",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 202,
+        "fields": {
+            "code": "64",
+            "name_ru": "Вахдат",
+            "name_tg": "Ваҳдат",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 203,
+        "fields": {
+            "code": "63",
+            "name_ru": "Варзоб",
+            "name_tg": "Варзоб",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 204,
+        "fields": {
+            "code": "65",
+            "name_ru": "Гиссар",
+            "name_tg": "Ҳисор",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 205,
+        "fields": {
+            "code": "66",
+            "name_ru": "Лахш",
+            "name_tg": "Лахш",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 206,
+        "fields": {
+            "code": "67",
+            "name_ru": "Нурабад",
+            "name_tg": "Нуробод",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 207,
+        "fields": {
+            "code": "68",
+            "name_ru": "Рашт",
+            "name_tg": "Рашт",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 208,
+        "fields": {
+            "code": "69",
+            "name_ru": "Рогун",
+            "name_tg": "Роғун",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 209,
+        "fields": {
+            "code": "71",
+            "name_ru": "Сангвор",
+            "name_tg": "Сангвор",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 210,
+        "fields": {
+            "code": "72",
+            "name_ru": "Таджикабад",
+            "name_tg": "Тоҷикобод",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 211,
+        "fields": {
+            "code": "73",
+            "name_ru": "Турсунзаде",
+            "name_tg": "Турсунзода",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 212,
+        "fields": {
+            "code": "74",
+            "name_ru": "Файзабад",
+            "name_tg": "Файзобод",
+            "region": 2
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 213,
+        "fields": {
+            "code": "75",
+            "name_ru": "Шахринав",
+            "name_tg": "Шаҳринав",
+            "region": 2
+        }
+    },
+
+    {
+        "model": "a_base.district",
+        "pk": 301,
+        "fields": {
+            "code": "10",
+            "name_ru": "Худжанд",
+            "name_tg": "Хуҷанд",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 302,
+        "fields": {
+            "code": "13",
+            "name_ru": "Гулистон",
+            "name_tg": "Гулистон",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 303,
+        "fields": {
+            "code": "16",
+            "name_ru": "Истиклол",
+            "name_tg": "Истиқлол",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 304,
+        "fields": {
+            "code": "17",
+            "name_ru": "Бустон",
+            "name_tg": "Бустон",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 305,
+        "fields": {
+            "code": "18",
+            "name_ru": "Айни",
+            "name_tg": "Айнӣ",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 306,
+        "fields": {
+            "code": "19",
+            "name_ru": "Ашт",
+            "name_tg": "Ашт",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 307,
+        "fields": {
+            "code": "20",
+            "name_ru": "Б. Гафуров",
+            "name_tg": "Б. Ғафуров",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 308,
+        "fields": {
+            "code": "21",
+            "name_ru": "Деваштич",
+            "name_tg": "Деваштич",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 309,
+        "fields": {
+            "code": "22",
+            "name_ru": "Горная Матча",
+            "name_tg": "Кӯҳистони Мастчоҳ",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 310,
+        "fields": {
+            "code": "23",
+            "name_ru": "Дж. Расулов",
+            "name_tg": "Ҷ. Расулов",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 311,
+        "fields": {
+            "code": "24",
+            "name_ru": "Зафарабад",
+            "name_tg": "Зафаробод",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 312,
+        "fields": {
+            "code": "25",
+            "name_ru": "Истаравшан",
+            "name_tg": "Истаравшан",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 313,
+        "fields": {
+            "code": "26",
+            "name_ru": "Исфара",
+            "name_tg": "Исфара",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 314,
+        "fields": {
+            "code": "27",
+            "name_ru": "Канибадам",
+            "name_tg": "Конибодом",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 315,
+        "fields": {
+            "code": "28",
+            "name_ru": "Матча",
+            "name_tg": "Мастчоҳ",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 316,
+        "fields": {
+            "code": "29",
+            "name_ru": "Пенджикент",
+            "name_tg": "Панҷакент",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 317,
+        "fields": {
+            "code": "30",
+            "name_ru": "Спитамен",
+            "name_tg": "Спитамен",
+            "region": 3
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 318,
+        "fields": {
+            "code": "31",
+            "name_ru": "Шахристан",
+            "name_tg": "Шаҳристон",
+            "region": 3
+        }
+    },
+
+
+    {
+        "model": "a_base.district",
+        "pk": 401,
+        "fields": {
+            "code": "32",
+            "name_ru": "Бохтар",
+            "name_tg": "Бохтар",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 402,
+        "fields": {
+            "code": "35",
+            "name_ru": "Леваканд",
+            "name_tg": "Леваканд",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 403,
+        "fields": {
+            "code": "36",
+            "name_ru": "А. Джами",
+            "name_tg": "А. Ҷомӣ",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 404,
+        "fields": {
+            "code": "39",
+            "name_ru": "Вахш",
+            "name_tg": "Вахш",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 405,
+        "fields": {
+            "code": "42",
+            "name_ru": "Дж. Балхи",
+            "name_tg": "Ҷ. Балхӣ",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 406,
+        "fields": {
+            "code": "43",
+            "name_ru": "Дусти",
+            "name_tg": "Дустӣ",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 407,
+        "fields": {
+            "code": "44",
+            "name_ru": "Кубодиён",
+            "name_tg": "Қубодиён",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 408,
+        "fields": {
+            "code": "46",
+            "name_ru": "Джайхун",
+            "name_tg": "Ҷайҳун",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 409,
+        "fields": {
+            "code": "49",
+            "name_ru": "Н. Хусрав",
+            "name_tg": "Н. Хусрав",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 410,
+        "fields": {
+            "code": "50",
+            "name_ru": "Нурек",
+            "name_tg": "Норак",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 411,
+        "fields": {
+            "code": "51",
+            "name_ru": "Пяндж",
+            "name_tg": "Панҷ",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 412,
+        "fields": {
+            "code": "56",
+            "name_ru": "Хуросон",
+            "name_tg": "Хуросон",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 413,
+        "fields": {
+            "code": "57",
+            "name_ru": "Шахритус",
+            "name_tg": "Шаҳритус",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 414,
+        "fields": {
+            "code": "38",
+            "name_ru": "Кушониён",
+            "name_tg": "Кушониён",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 415,
+        "fields": {
+            "code": "59",
+            "name_ru": "Яван",
+            "name_tg": "Ёвон",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 416,
+        "fields": {
+            "code": "33",
+            "name_ru": "г. Куляб",
+            "name_tg": "ш. Кӯлоб",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 417,
+        "fields": {
+            "code": "45",
+            "name_ru": "р. Куляб",
+            "name_tg": "н. Кӯлоб",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 418,
+        "fields": {
+            "code": "37",
+            "name_ru": "Бальджуван",
+            "name_tg": "Балҷувон",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 419,
+        "fields": {
+            "code": "40",
+            "name_ru": "Восеъ",
+            "name_tg": "Восеъ",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 420,
+        "fields": {
+            "code": "41",
+            "name_ru": "Дангара",
+            "name_tg": "Данғара",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 421,
+        "fields": {
+            "code": "47",
+            "name_ru": "М. Хамадони",
+            "name_tg": "М. Ҳамадонӣ",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 422,
+        "fields": {
+            "code": "48",
+            "name_ru": "Муминабад",
+            "name_tg": "Мӯъминобод",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 423,
+        "fields": {
+            "code": "53",
+            "name_ru": "Темурмалик",
+            "name_tg": "Темурмалик",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 424,
+        "fields": {
+            "code": "54",
+            "name_ru": "Фархор",
+            "name_tg": "Фархор",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 425,
+        "fields": {
+            "code": "55",
+            "name_ru": "Ховалинг",
+            "name_tg": "Ховалинг",
+            "region": 4
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 426,
+        "fields": {
+            "code": "58",
+            "name_ru": "Ш. Шохин",
+            "name_tg": "Ш. Шохин",
+            "region": 4
+        }
+    },
+
+
+    {
+        "model": "a_base.district",
+        "pk": 501,
+        "fields": {
+            "code": "02",
+            "name_ru": "Хорог",
+            "name_tg": "Хоруғ",
+            "region": 5
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 502,
+        "fields": {
+            "code": "03",
+            "name_ru": "Вандж",
+            "name_tg": "Ванҷ",
+            "region": 5
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 503,
+        "fields": {
+            "code": "04",
+            "name_ru": "Дарваз",
+            "name_tg": "Дарвоз",
+            "region": 5
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 504,
+        "fields": {
+            "code": "05",
+            "name_ru": "Ишкашим",
+            "name_tg": "Ишкошим",
+            "region": 5
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 505,
+        "fields": {
+            "code": "06",
+            "name_ru": "Мургаб",
+            "name_tg": "Мурғоб",
+            "region": 5
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 506,
+        "fields": {
+            "code": "07",
+            "name_ru": "Рошткала",
+            "name_tg": "Роштқалъа",
+            "region": 5
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 507,
+        "fields": {
+            "code": "08",
+            "name_ru": "Рушан",
+            "name_tg": "Рӯшон",
+            "region": 5
+        }
+    },
+    {
+        "model": "a_base.district",
+        "pk": 508,
+        "fields": {
+            "code": "09",
+            "name_ru": "Шугнан",
+            "name_tg": "Шуғнон",
+            "region": 5
+        }
+    }
+]

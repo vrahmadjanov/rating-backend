@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
-from a_base.models import Region, City
+from a_base.models import Region, District
 
 
 class MedicalInstitution(models.Model):
@@ -53,12 +53,12 @@ class MedicalInstitution(models.Model):
         help_text="Область, в которой находится медицинское учреждение"
     )
 
-    # Город/Район
-    city = models.ForeignKey(
-        City,
+    # Район
+    district = models.ForeignKey(
+        District,
         on_delete=models.CASCADE,
-        verbose_name="Город/Район",
-        help_text="Город или район, где находится медицинское учреждение"
+        verbose_name="Район",
+        help_text="Район, где находится медицинское учреждение"
     )
 
     phone_regex = RegexValidator(

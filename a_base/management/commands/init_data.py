@@ -76,14 +76,15 @@ class Command(BaseCommand):
         from subscriptions.models import Advantage, Subscription
         from patients.models import SocialStatus, Patient
         from doctors.models import (
-            Specialty, MedicalCategory, AcademicDegree, 
+            Specialty, MedicalCategory, 
             Service, Language, LanguageLevel
         )
+        from a_base.models import AcademicDegree
 
         # 1. Регионы и города (полный список)
         self.stdout.write("Создание регионов и городов...")
         try:
-            call_command('loaddata', 'a_base/fixtures/initial_districts.json')
+            call_command('loaddata', 'a_base/fixtures/districts.json')
             self.stdout.write(self.style.SUCCESS('Регионы успешно загружены.'))
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Ошибка при загрузке районов: {str(e)}'))
@@ -177,13 +178,12 @@ class Command(BaseCommand):
         ])
 
         # Ученые степени
-        AcademicDegree.objects.bulk_create([
-            AcademicDegree(name=name) for name in [
-                "Кандидат медицинских наук", 
-                "Доктор медицинских наук", 
-                "Профессор"
-            ]
-        ])
+        self.stdout.write("Создание ученых степеней...")
+        try:
+            call_command('loaddata', 'a_base/fixtures/academic_degrees.json')
+            self.stdout.write(self.style.SUCCESS('Ученые степени успешно загружены.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке ученых степеней: {str(e)}'))
 
         # Услуги
         Service.objects.bulk_create([

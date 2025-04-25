@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from .specialty import Specialty
 from .medical_category import MedicalCategory
 from .service import Service
-from .academic_degree import AcademicDegree
+from a_base.models import AcademicDegree
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 

@@ -1,0 +1,29 @@
+[
+    {
+        "model": "a_base.academicdegree",
+        "pk": 1,
+        "fields": {
+            "name": "Кандидат медицинских наук",
+            "name_ru": "к.м.н",
+            "name_tg": "д.и.т"
+        }
+    },
+    {
+        "model": "a_base.academicdegree",
+        "pk": 2,
+        "fields": {
+            "name": "Доктор медицинских наук",
+            "name_ru": "д.м.н",
+            "name_tg": "н.и.т"
+        }
+    },
+    {
+        "model": "a_base.academicdegree",
+        "pk": 3,
+        "fields": {
+            "name": "Доцент",
+            "name_ru": "Доцент",
+            "name_tg": "Дотсент"
+        }
+    }
+]

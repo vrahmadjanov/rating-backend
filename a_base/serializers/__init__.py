@@ -1,1 +1,2 @@
 from .locations import RegionSerializer, DistrictSerializer
+from .academic_degrees import AcademicDegreeSerializer

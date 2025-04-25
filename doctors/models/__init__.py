@@ -1,5 +1,4 @@
 from .language import Language, UserLanguage, LanguageLevel
-from .academic_degree import AcademicDegree
 from .doctors import Doctor
 from .medical_category import MedicalCategory
 from .service import Service

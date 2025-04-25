@@ -1,6 +1,6 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
-from .models import Region, District
+from a_base.models import Region, District
 
 @admin.register(Region)
 class RegionAdmin(TranslationAdmin):

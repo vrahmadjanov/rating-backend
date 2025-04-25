@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from a_base.models import District
-from subscriptions.models import Subscription
+from a_base.models import Subscription
 
 from .managers import CustomUserManager
 from storages.backends.s3boto3 import S3Boto3Storage

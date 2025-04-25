@@ -73,13 +73,12 @@ class Command(BaseCommand):
 
     def create_all_test_data(self):
         """Создание всех тестовых данных (полная версия)"""
-        from subscriptions.models import Advantage, Subscription
         from patients.models import SocialStatus, Patient
         from doctors.models import (
             Specialty, MedicalCategory, 
             Service, Language, LanguageLevel
         )
-        from a_base.models import AcademicDegree
+        from a_base.models import Subscription
 
         # 1. Регионы и города (полный список)
         self.stdout.write("Создание регионов и городов...")
@@ -91,70 +90,11 @@ class Command(BaseCommand):
 
         # 2. Подписки и преимущества (полный список)
         self.stdout.write("Создание подписок...")
-        advantages_data = [
-            {"name": "Базовый доступ", "description": "Доступ к базовым функциям приложения"},
-            {"name": "Расширенный поиск", "description": "Возможность использовать расширенный поиск врачей"},
-            {"name": "Приоритетная поддержка", "description": "Приоритет при обработке ваших запросов в поддержку"},
-            {"name": "Без рекламы", "description": "Полное отсутствие рекламы в приложении"},
-            {"name": "Экспресс-запись", "description": "Возможность записываться к врачам без очереди"},
-            {"name": "Персональный ассистент", "description": "Помощь в подборе врачей и записи на прием"},
-            {"name": "Неограниченные консультации", "description": "Неограниченное количество онлайн-консультаций"},
-            {"name": "Анализы со скидкой", "description": "Скидка 20% на все анализы в партнерских лабораториях"},
-        ]
-
-        advantages = Advantage.objects.bulk_create([
-            Advantage(**adv) for adv in advantages_data
-        ])
-
-        subscriptions_data = [
-            {
-                "name": "Базовая",
-                "description": "Базовый набор возможностей для комфортного использования сервиса",
-                "price": 100,
-                "duration_days": 30,
-                "advantages": ["Базовый доступ"]
-            },
-            {
-                "name": "Стандартная",
-                "description": "Расширенные возможности для более удобного поиска врачей",
-                "price": 299,
-                "duration_days": 30,
-                "advantages": [
-                    "Базовый доступ",
-                    "Расширенный поиск",
-                    "Приоритетная поддержка",
-                    "Без рекламы"
-                ]
-            },
-            {
-                "name": "Премиум",
-                "description": "Максимальный комфорт и персональный подход к вашему здоровью",
-                "price": 799,
-                "duration_days": 30,
-                "advantages": [
-                    "Базовый доступ",
-                    "Расширенный поиск",
-                    "Приоритетная поддержка",
-                    "Без рекламы",
-                    "Экспресс-запись",
-                    "Персональный ассистент",
-                    "Неограниченные консультации",
-                    "Анализы со скидкой"
-                ]
-            }
-        ]
-
-        for sub_data in subscriptions_data:
-            sub = Subscription.objects.create(
-                name=sub_data["name"],
-                description=sub_data["description"],
-                price=sub_data["price"],
-                duration_days=sub_data["duration_days"]
-            )
-            sub.advantages.add(*[
-                adv for adv in advantages 
-                if adv.name in sub_data["advantages"]
-            ])
+        try:
+            call_command('loaddata', 'a_base/fixtures/subscriptions.json')
+            self.stdout.write(self.style.SUCCESS('Информация о подписках успешно загружена.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке подписок: {str(e)}'))
         self.stdout.write(self.style.SUCCESS('Подписки созданы!'))
 
         # 3. Медицинские данные (полные списки)

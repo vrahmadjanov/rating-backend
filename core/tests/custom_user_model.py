@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import timedelta
 from core.models import CustomUser
 from a_base.models import District, Region
-from subscriptions.models import Subscription
+from a_base.models import Subscription
 
 class CustomUserModelTest(TestCase):
     def setUp(self):

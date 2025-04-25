@@ -66,7 +66,6 @@ INSTALLED_APPS = [
 
     # Пользовательские приложения
     'a_base',
-    'subscriptions',
     'core',
     'doctors',
     'appointments',

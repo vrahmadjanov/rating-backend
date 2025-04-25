@@ -2,7 +2,7 @@ from modeltranslation.translator import register, TranslationOptions
 from .models import (
     Region, District,
     Advantage, Subscription,
-    AcademicDegree,
+    AcademicDegree, Gender
     )
 
 @register(Region)
@@ -24,3 +24,7 @@ class AdvantageTranslationOptions(TranslationOptions):
 @register(Subscription)
 class SubscriptionTranslationOptions(TranslationOptions):
     fields = ('name', 'description')
+
+@register(Gender)
+class GenderTranslationOptions(TranslationOptions):
+    fields = ('name',)

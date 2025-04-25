@@ -4,13 +4,15 @@ from django.utils import timezone
 from datetime import timedelta
 from core.models import CustomUser
 from a_base.models import District, Region
-from a_base.models import Subscription
+from a_base.models import Subscription, Gender
 
 class CustomUserModelTest(TestCase):
     def setUp(self):
         """Создаем тестовые данные для всех тестов"""
         self.region = Region.objects.create(name="Душанбе")
         self.district = District.objects.create(name="Душанбе", region=self.region)
+        self.gender_male = Gender.objects.create(name="Мужской", name_ru="Мужской", name_tg="Мард")
+        self.gender_female = Gender.objects.create(name="Женский", name_ru="Женский", name_tg="Зан")
         self.subscription = Subscription.objects.create(
             name="Премиум",
             duration_days=30,
@@ -89,13 +91,14 @@ class CustomUserModelTest(TestCase):
 
     def test_gender_choices(self):
         """Тест выбора пола"""
-        self.user.gender = CustomUser.Gender.MALE
-        self.assertEqual(self.user.gender, 'M')
-        self.assertEqual(self.user.get_gender_display(), 'Мужской')
+        self.user.gender = self.gender_male
+        self.user.save()
+        self.assertEqual(self.user.gender.name, 'Мужской')
         
-        self.user.gender = CustomUser.Gender.FEMALE
-        self.assertEqual(self.user.gender, 'F')
-        self.assertEqual(self.user.get_gender_display(), 'Женский')
+        self.user.gender = self.gender_female
+        self.user.save()
+        self.assertEqual(self.user.gender.name, 'Женский')
+
 
     def test_confirmation_code_methods(self):
         """Тест методов для работы с кодом подтверждения"""

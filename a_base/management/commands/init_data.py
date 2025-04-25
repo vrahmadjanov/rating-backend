@@ -15,8 +15,8 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.clean_database()
         self.create_groups()
-        self.create_superusers()
         self.create_all_test_data()
+        self.create_superusers()
 
     def clean_database(self):
         """Очистка всей базы данных"""
@@ -42,7 +42,6 @@ class Command(BaseCommand):
             'last_name': 'Admin',
             'password': 'admin',
             'middle_name': '',
-            'gender': User.Gender.MALE,
             'inn': '123456786',
             'date_of_birth': "2002-08-08",
             'is_superuser': True,
@@ -56,7 +55,6 @@ class Command(BaseCommand):
             'last_name': 'Staff',
             'password': 'admin',
             'middle_name': '',
-            'gender': User.Gender.MALE,
             'inn': '123456785',
             'date_of_birth': "2002-12-12",
             'is_staff': True
@@ -78,7 +76,7 @@ class Command(BaseCommand):
             Specialty, MedicalCategory, 
             Service, Language, LanguageLevel
         )
-        from a_base.models import Subscription
+        from a_base.models import Subscription, Gender
 
         # 1. Регионы и города (полный список)
         self.stdout.write("Создание регионов и городов...")
@@ -154,6 +152,29 @@ class Command(BaseCommand):
         ])
         self.stdout.write(self.style.SUCCESS('Медицинские данные созданы!'))
 
+        # Пол
+        self.stdout.write("Создание полов...")
+        genders_dt = [
+            {
+                "name": "Мужской",
+                "name_ru": "Мужской",
+                "name_tg": "Мард"
+            },
+            {
+                "name": "Женский",
+                "name_ru": "Женский",
+                "name_tg": "Зан"
+            }
+        ]
+
+        for gender in genders_dt:
+            Gender.objects.create(
+                name=gender["name"],
+                name_ru=gender["name_ru"],
+                name_tg=gender["name_tg"]
+                )
+        self.stdout.write(self.style.SUCCESS('Полы успешно созданы!'))
+
         # 4. Социальные статусы (полный список)
         self.stdout.write("Создание социальных статусов...")
         SocialStatus.objects.bulk_create([
@@ -218,7 +239,7 @@ class Command(BaseCommand):
                 'subscription': subscriptions[0],
                 'subscription_start_date': timezone.now(),
                 'subscription_end_date': timezone.now() + timedelta(days=30),
-                'gender': User.Gender.MALE,
+                'gender': Gender.objects.get(name="Мужской"),
                 'inn': '123456789',
                 'date_of_birth': "2002-08-08",
                 'district': District.objects.get(id=101)
@@ -233,7 +254,7 @@ class Command(BaseCommand):
                 'subscription': subscriptions[1],
                 'subscription_start_date': timezone.now(),
                 'subscription_end_date': timezone.now() + timedelta(days=30),
-                'gender': User.Gender.MALE,
+                'gender':  Gender.objects.get(name="Мужской"),
                 'inn': '123456788',
                 'date_of_birth': "2002-08-08",
                 'district': District.objects.get(id=201)
@@ -248,7 +269,7 @@ class Command(BaseCommand):
                 'subscription': subscriptions[2],
                 'subscription_start_date': timezone.now(),
                 'subscription_end_date': timezone.now() + timedelta(days=30),
-                'gender': User.Gender.MALE,
+                'gender':  Gender.objects.get(name="Женский"),
                 'inn': '123456787',
                 'date_of_birth': "2002-08-08",
                 'district': District.objects.get(id=301)

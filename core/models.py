@@ -4,8 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from a_base.models import District
-from a_base.models import Subscription
+from a_base.models import District, Subscription, Gender
 
 from .managers import CustomUserManager
 from storages.backends.s3boto3 import S3Boto3Storage
@@ -14,10 +13,6 @@ media_storage = S3Boto3Storage()
 
 class CustomUser(AbstractUser):
     """Кастомная модель пользователя"""
-
-    class Gender(models.TextChoices):
-        MALE = 'M', _('Мужской')
-        FEMALE = 'F', _('Женский')
     
     # Валидатор для номера телефона
     phone_regex = RegexValidator(
@@ -37,13 +32,12 @@ class CustomUser(AbstractUser):
         help_text=_("Дата рождения пользователя."),
     )
 
-    gender = models.CharField(
-        _('gender'),
-        max_length=1,
-        choices=Gender.choices,
+    gender = models.ForeignKey(
+        Gender,
+        on_delete=models.PROTECT,
         blank=True,
         null=True,
-        help_text=_("Пол пользователя (необязательное)."),
+        help_text=_("Пол пользователя"),
     )
 
     district = models.ForeignKey(District, verbose_name="Район проживания пользователя", on_delete=models.SET_NULL, null=True)

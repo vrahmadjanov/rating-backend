@@ -1,4 +1,5 @@
 from django.db import models
+from clinics.models import Clinic
 from django.utils.translation import gettext_lazy as _
 
 class Workplace(models.Model):
@@ -18,8 +19,8 @@ class Workplace(models.Model):
 
     # Связь с медицинским учреждением
     medical_institution = models.ForeignKey(
-        "MedicalInstitution",
-        on_delete=models.CASCADE,
+        Clinic,
+        on_delete=models.PROTECT,
         related_name="workplaces",
         verbose_name="Медицинское учреждение",
         help_text="Медицинское учреждение, где работал или работает врач"

@@ -104,6 +104,15 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f'Ошибка при загрузке специализаций: {str(e)}'))
         self.stdout.write(self.style.SUCCESS('Специализации созданы!'))
 
+        # Клиники
+        self.stdout.write("Создание клиник...")
+        try:
+            call_command('loaddata', 'a_base/fixtures/clinics.json')
+            self.stdout.write(self.style.SUCCESS('Информация о клиниках успешно загружена.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке клиник: {str(e)}'))
+        self.stdout.write(self.style.SUCCESS('Клиники созданы!'))
+
         # Медицинские категории
         MedicalCategory.objects.bulk_create([
             MedicalCategory(name=name) for name in [

@@ -8,4 +8,5 @@ from .subscriptions import (AdvantageModelTest, SubscriptionModelTest,
                             SubscriptionAdvantageRelationshipTest, ModelTranslationTest,
                             SubscriptionSerializerTest, SubscriptionViewSetTest, SubscriptionAPIIntegrationTest)
 
-from .specialties import (SpecialtyModelTest, SpecialtySerializerTest, SpecialtyViewSetTest)
+from .specialties import (SpecialtyModelTest, SpecialtySerializerTest, SpecialtyViewSetTest, 
+                          SpecialtyAdminAPITest, SpecialtyAdminPermissionTest)

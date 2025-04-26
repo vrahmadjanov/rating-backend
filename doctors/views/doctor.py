@@ -4,13 +4,13 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from doctors.models import Doctor, Education
-from doctors.serializers import DoctorCardSerializer, EducationSerializer
+from doctors.serializers import EducationSerializer, DoctorSerializer
 from doctors.permissions import IsAdminOrReadOnly
 from doctors.filters import DoctorFilter
 
 class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
-    serializer_class = DoctorCardSerializer
+    serializer_class = DoctorSerializer
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
     filterset_class = DoctorFilter

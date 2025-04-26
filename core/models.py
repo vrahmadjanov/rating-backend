@@ -34,7 +34,7 @@ class CustomUser(AbstractUser):
 
     gender = models.ForeignKey(
         Gender,
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
         help_text=_("Пол пользователя"),

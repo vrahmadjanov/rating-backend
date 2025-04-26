@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from .models import (Doctor, Service, Language, MedicalCategory, 
-                     MedicalInstitution, 
                      Workplace, Education, UserLanguage, LanguageLevel, 
                      Schedule)
 
@@ -11,7 +10,6 @@ admin.site.register(Language)
 admin.site.register(UserLanguage)
 admin.site.register(LanguageLevel)
 admin.site.register(MedicalCategory)
-admin.site.register(MedicalInstitution)
 admin.site.register(Workplace)
 admin.site.register(Education)
 
@@ -22,7 +20,7 @@ class ScheduleAdmin(admin.ModelAdmin):
     search_fields = (
         'workplace__doctor__user__first_name',
         'workplace__doctor__user__last_name',
-        'workplace__medical_institution__name'
+        'workplace__clinic__name'
     )
     ordering = ('workplace__doctor__user__last_name',)
     
@@ -50,7 +48,7 @@ class ScheduleAdmin(admin.ModelAdmin):
     def doctor_info(self, obj):
         """Отображает информацию о враче и месте работы."""
         if obj.workplace and obj.workplace.doctor:
-            return f"{obj.workplace.doctor.user.get_full_name} ({obj.workplace.medical_institution.name})"
+            return f"{obj.workplace.doctor.user.get_full_name} ({obj.workplace.clinic.name})"
         return "-"
     doctor_info.short_description = _('Врач (место работы)')
     doctor_info.admin_order_field = 'workplace__doctor__user__last_name'
@@ -103,5 +101,5 @@ class ScheduleAdmin(admin.ModelAdmin):
         """Оптимизация запросов к БД."""
         return super().get_queryset(request).select_related(
             'workplace__doctor__user',
-            'workplace__medical_institution'
+            'workplace__clinic'
         )

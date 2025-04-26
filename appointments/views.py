@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .serializers import AppointmentSerializer, AppointmentShortSerializer
+from .serializers import AppointmentSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from .models import Appointment
@@ -7,7 +7,7 @@ from .permissions import IsAdminOrPatientOwner
 from patients.models import Patient
 
 class AppointmentViewSet(viewsets.ModelViewSet):
-    serializer_class = AppointmentShortSerializer
+    serializer_class = AppointmentSerializer
     permission_classes = [IsAuthenticated, IsAdminOrPatientOwner]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['patient']

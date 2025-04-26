@@ -2,18 +2,7 @@
 import django_filters
 from dateutil.relativedelta import relativedelta
 import datetime
-from .models.medical_institution import MedicalInstitution
 from .models.doctors import Doctor
-
-class MedicalInstitutionFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(lookup_expr='icontains')  # Поиск по подстроке
-    city = django_filters.CharFilter(field_name='city__name', lookup_expr='icontains')  # Фильтрация по городу
-    region = django_filters.CharFilter(field_name='region__name', lookup_expr='icontains')  # Фильтрация по региону
-    institution_type = django_filters.CharFilter(lookup_expr='exact')  # Точное совпадение
-
-    class Meta:
-        model = MedicalInstitution
-        fields = ['name', 'city', 'region', 'institution_type']
 
 class DoctorFilter(django_filters.FilterSet):
     specialty = django_filters.CharFilter(field_name='specialty__name', lookup_expr='exact')

@@ -9,6 +9,10 @@ from a_base.models import Specialty
 from a_base.serializers import SpecialtySerializer
 from a_base.views import SpecialtyViewSet
 
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 class SpecialtyModelTest(TestCase):
     def setUp(self):
         self.specialty_data = {
@@ -156,3 +160,148 @@ class SpecialtyAPIIntegrationTest(TestCase):
             HTTP_ACCEPT_LANGUAGE='tg'
         )
         self.assertEqual(response_tg.data['name'], 'Чашмпизишк')
+
+class SpecialtyAdminAPITest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        # Создаем администратора
+        self.admin = User.objects.create_user(
+            phone_number='+992123456789',
+            password='testpass123',
+            first_name='Admin',
+            date_of_birth='1990-01-01',
+            is_staff=True,
+        )
+        # Аутентифицируем клиент как администратор
+        self.client.force_authenticate(user=self.admin)
+        
+        # Тестовая специальность
+        self.specialty = Specialty.objects.create(
+            name='Терапевт',
+            name_ru='Терапевт',
+            name_tg='Табиби амрози дарунӣ'
+        )
+        self.url_list = reverse('specialty-list')
+        self.url_detail = reverse('specialty-detail', args=[self.specialty.id])
+
+    def test_admin_can_create_specialty(self):
+        """Тест создания специальности администратором"""
+        data = {
+            'name': 'Невролог',
+            'name_ru': 'Невролог',
+            'name_tg': 'Асабшинос'
+        }
+        response = self.client.post(self.url_list, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Specialty.objects.count(), 2)
+        
+        # Получаем свежие данные из БД
+        new_specialty = Specialty.objects.get(id=response.data['id'])
+        self.assertEqual(new_specialty.name_ru, 'Невролог')
+        self.assertEqual(new_specialty.name_tg, 'Асабшинос')
+
+    def test_admin_can_update_specialty(self):
+        """Тест обновления специальности администратором"""
+        data = {
+            'name_ru': 'Обновленный терапевт',
+            'name_tg': 'Табиби нав'
+        }
+        response = self.client.put(self.url_detail, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.specialty.refresh_from_db()
+        self.assertEqual(self.specialty.name_ru, 'Обновленный терапевт')
+        self.assertEqual(self.specialty.name_tg, 'Табиби нав')
+
+    def test_admin_can_partially_update_specialty(self):
+        """Тест частичного обновления специальности администратором"""
+        data = {
+            'name_tg': 'Табиби нав'
+        }
+        response = self.client.patch(self.url_detail, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.specialty.refresh_from_db()
+        self.assertEqual(self.specialty.name_tg, 'Табиби нав')
+        # Проверяем что русское название не изменилось
+        self.assertEqual(self.specialty.name_ru, 'Терапевт')
+
+    def test_admin_can_delete_specialty(self):
+        """Тест удаления специальности администратором"""
+        response = self.client.delete(self.url_detail)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Specialty.objects.count(), 0)
+
+    def test_language_specific_updates(self):
+        """Тест обновления с учетом языка"""
+        # Обновляем только русское название
+        data_ru = {'name_ru': 'Кардиолог'}
+        response_ru = self.client.patch(self.url_detail, data_ru)
+        self.specialty.refresh_from_db()
+        self.assertEqual(self.specialty.name_ru, 'Кардиолог')
+        self.assertEqual(self.specialty.name_tg, 'Табиби амрози дарунӣ')
+        
+        # Обновляем только таджикское название
+        data_tg = {'name_tg': 'Дилшинос'}
+        response_tg = self.client.patch(self.url_detail, data_tg)
+        self.specialty.refresh_from_db()
+        self.assertEqual(self.specialty.name_ru, 'Кардиолог')
+        self.assertEqual(self.specialty.name_tg, 'Дилшинос')
+
+    def test_serializer_output_after_update(self):
+        """Тест вывода сериализатора после обновления"""
+        # Обновляем данные
+        update_data = {
+            'name_ru': 'Офтальмолог',
+            'name_tg': 'Чашмпизишк'
+        }
+        self.client.put(self.url_detail, update_data)
+        
+        # Проверяем вывод на русском
+        response_ru = self.client.get(
+            self.url_detail,
+            HTTP_ACCEPT_LANGUAGE='ru'
+        )
+        self.assertEqual(response_ru.data['name'], 'Офтальмолог')
+        
+        # Проверяем вывод на таджикском
+        response_tg = self.client.get(
+            self.url_detail,
+            HTTP_ACCEPT_LANGUAGE='tg'
+        )
+        self.assertEqual(response_tg.data['name'], 'Чашмпизишк')
+
+
+class SpecialtyAdminPermissionTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        # Создаем обычного пользователя (не админа)
+        self.user = User.objects.create_user(
+            phone_number='+992987654321',
+            password='userpass123',
+            first_name='User',
+            date_of_birth='1995-01-01'
+        )
+        self.client.force_authenticate(user=self.user)
+        
+        self.specialty = Specialty.objects.create(
+            name_ru='Педиатр',
+            name_tg='Педиатр'
+        )
+        self.url_list = reverse('specialty-list')
+        self.url_detail = reverse('specialty-detail', args=[self.specialty.id])
+
+    def test_non_admin_cannot_create(self):
+        """Тест что обычный пользователь не может создавать"""
+        data = {'name_ru': 'Хирург', 'name_tg': 'Ҷарроҳ'}
+        response = self.client.post(self.url_list, data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_non_admin_cannot_update(self):
+        """Тест что обычный пользователь не может обновлять"""
+        data = {'name_ru': 'Обновленный'}
+        response = self.client.patch(self.url_detail, data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_non_admin_cannot_delete(self):
+        """Тест что обычный пользователь не может удалять"""
+        response = self.client.delete(self.url_detail)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

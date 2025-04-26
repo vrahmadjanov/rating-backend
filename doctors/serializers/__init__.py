@@ -5,7 +5,6 @@ from .education import EducationSerializer
 from .medical_institution import MedicalInstitutionSerializer, MedicalInstitutionShortSerializer
 from .schedule import ScheduleSerializer
 from .workplace import WorkplaceSerializer, WorkplaceShortSerializer
-from .specialty import SpecialtySerializers
 
 __all__ = [
     'DoctorSerializer',
@@ -18,5 +17,4 @@ __all__ = [
     'ScheduleSerializer',
     'WorkplaceSerializer',
     'WorkplaceShortSerializer',
-    'SpecialtySerializers'
 ]

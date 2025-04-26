@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from .models import (Doctor, Service, Language, MedicalCategory, 
-                     Specialty, MedicalInstitution, 
+                     MedicalInstitution, 
                      Workplace, Education, UserLanguage, LanguageLevel, 
                      Schedule)
 
@@ -11,7 +11,6 @@ admin.site.register(Language)
 admin.site.register(UserLanguage)
 admin.site.register(LanguageLevel)
 admin.site.register(MedicalCategory)
-admin.site.register(Specialty)
 admin.site.register(MedicalInstitution)
 admin.site.register(Workplace)
 admin.site.register(Education)
@@ -51,7 +50,7 @@ class ScheduleAdmin(admin.ModelAdmin):
     def doctor_info(self, obj):
         """Отображает информацию о враче и месте работы."""
         if obj.workplace and obj.workplace.doctor:
-            return f"{obj.workplace.doctor.user.get_full_name()} ({obj.workplace.medical_institution.name})"
+            return f"{obj.workplace.doctor.user.get_full_name} ({obj.workplace.medical_institution.name})"
         return "-"
     doctor_info.short_description = _('Врач (место работы)')
     doctor_info.admin_order_field = 'workplace__doctor__user__last_name'

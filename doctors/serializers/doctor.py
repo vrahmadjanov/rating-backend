@@ -1,16 +1,12 @@
 from rest_framework import serializers
-from ..models.doctors import Doctor, Specialty, MedicalCategory, Service
-from a_base.serializers import AcademicDegreeSerializer
+from ..models.doctors import Doctor, MedicalCategory, Service
+from a_base.serializers import AcademicDegreeSerializer, SpecialtySerializer
 from .language import UserLanguageSerializer
 from core.serializers import CustomUserSerializer, CustomUserShortSerializer
 from .workplace import WorkplaceSerializer, WorkplaceShortSerializer
 from .education import EducationSerializer
 from .schedule import ScheduleSerializer
 
-class SpecialtySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Specialty
-        fields = ['name']
 
 class MedicalCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,7 +20,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 class DoctorSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer()
-    specialty = SpecialtySerializer()
+    specialties = SpecialtySerializer(many=True)
     medical_category = MedicalCategorySerializer()
     services = ServiceSerializer(many=True)
     workplaces = WorkplaceSerializer(many=True, read_only=True)
@@ -36,7 +32,7 @@ class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = [
-            'id', 'user', 'specialty', 'medical_category', 'academic_degree', 
+            'id', 'user', 'specialties', 'medical_category', 'academic_degree', 
             'philosophy', 'services', 'license_number', 'is_verified', 'verification_date', 
             'verified_by', 'titles_and_merits', 'workplaces', 'educations', 'schedules', 
             'experience_years', 'user_languages'
@@ -50,22 +46,22 @@ class DoctorCardSerializer(serializers.ModelSerializer):
     academic_degree = AcademicDegreeSerializer()
     services = ServiceSerializer(many=True)
     user_languages = UserLanguageSerializer(many=True)
-    specialty = SpecialtySerializer(many=True)
+    specialties = SpecialtySerializer(many=True)
 
     class Meta:
         model = Doctor
         fields = [
-            'user', 'experience_years', 'academic_degree', 'specialty',
+            'user', 'experience_years', 'academic_degree', 'specialties',
             'medical_category', 'services', 'user_languages', 'workplaces'
         ]
 
 class DoctorShortSerializer(serializers.ModelSerializer):
     user = CustomUserShortSerializer(read_only=True)
     workplaces = WorkplaceShortSerializer(many=True, read_only=True)
-    specialty = SpecialtySerializer(many=True)
+    specialties = SpecialtySerializer(many=True)
 
     class Meta:
         model = Doctor
         fields = [
-            'id', 'user', 'workplaces', 'specialty'
+            'id', 'user', 'workplaces', 'specialties'
         ]

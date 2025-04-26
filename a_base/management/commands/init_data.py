@@ -73,10 +73,10 @@ class Command(BaseCommand):
         """Создание всех тестовых данных (полная версия)"""
         from patients.models import SocialStatus, Patient
         from doctors.models import (
-            Specialty, MedicalCategory, 
+            MedicalCategory, 
             Service, Language, LanguageLevel
         )
-        from a_base.models import Subscription, Gender
+        from a_base.models import Subscription, Gender, Specialty
 
         # 1. Регионы и города (полный список)
         self.stdout.write("Создание регионов и городов...")
@@ -96,17 +96,13 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Подписки созданы!'))
 
         # 3. Медицинские данные (полные списки)
-        self.stdout.write("Создание медицинских данных...")
-        
-        # Специальности
-        specialties = [
-            "Терапевт", "Анестезиолог-реаниматолог", "Реаниматолог",
-            "Рентгенолог", "УЗИ-специалист", "Пульмонолог", "Кардиолог",
-            "Судебно-медицинский эксперт"
-        ]
-        Specialty.objects.bulk_create([
-            Specialty(name=name) for name in sorted(set(specialties), key=lambda x: x.lower())
-        ])
+        self.stdout.write("Создание специализаций...")
+        try:
+            call_command('loaddata', 'a_base/fixtures/specialties.json')
+            self.stdout.write(self.style.SUCCESS('Информация о специализациях успешно загружена.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке специализаций: {str(e)}'))
+        self.stdout.write(self.style.SUCCESS('Специализации созданы!'))
 
         # Медицинские категории
         MedicalCategory.objects.bulk_create([

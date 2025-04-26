@@ -7,3 +7,5 @@ from .academic_degrees import (AcademicDegreeModelTest, AcademicDegreeSerializer
 from .subscriptions import (AdvantageModelTest, SubscriptionModelTest,
                             SubscriptionAdvantageRelationshipTest, ModelTranslationTest,
                             SubscriptionSerializerTest, SubscriptionViewSetTest, SubscriptionAPIIntegrationTest)
+
+from .specialties import (SpecialtyModelTest, SpecialtySerializerTest, SpecialtyViewSetTest)

@@ -1,9 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from .specialty import Specialty
 from .medical_category import MedicalCategory
 from .service import Service
-from a_base.models import AcademicDegree
+from a_base.models import AcademicDegree, Specialty
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
@@ -23,9 +22,8 @@ class Doctor(models.Model):
     )
 
     # Специализация, медицинская категория и ученая степень
-    specialty = models.ManyToManyField(
+    specialties = models.ManyToManyField(
         Specialty,
-        null=True,
         blank=True,
         verbose_name="Специализации",
         help_text="Основные специализации врача"
@@ -164,6 +162,6 @@ class Doctor(models.Model):
         Возвращает строковое представление врача: ФИО + специализация.
         """
         user_name = self.user.get_full_name or self.user.email
-        specialty_name = self.specialty.name if self.specialty else "Без специализации"
+        specialty_name = self.specialties.name if self.specialties else "Без специализации"
         academic_degree = self.academic_degree or "Без степени"
         return f"{user_name} ({specialty_name}, {academic_degree})"

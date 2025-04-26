@@ -1,0 +1,227 @@
+[
+    {
+        "model": "a_base.specialty",
+        "pk": 1,
+        "fields": {
+            "name": "Акушер-гинеколог",
+            "name_ru": "Акушер-гинеколог",
+            "name_tg": "Акушер-гинеколог"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 2,
+        "fields": {
+            "name": "Анестезиолог-реаниматолог",
+            "name_ru": "Анестезиолог-реаниматолог",
+            "name_tg": "Анестезиолог-реаниматолог"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 3,
+        "fields": {
+            "name": "Гастроэнтеролог",
+            "name_ru": "Гастроэнтеролог",
+            "name_tg": "Гастроэнтеролог"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 4,
+        "fields": {
+            "name": "Дерматовенеролог",
+            "name_ru": "Дерматовенеролог",
+            "name_tg": "Дерматовенеролог"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 5,
+        "fields": {
+            "name": "Детский невролог",
+            "name_ru": "Детский невролог",
+            "name_tg": "Неврологи кӯдакон"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 6,
+        "fields": {
+            "name": "Детский хирург",
+            "name_ru": "Детский хирург",
+            "name_tg": "Ҷарроҳи кӯдакон"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 7,
+        "fields": {
+            "name": "Кардиолог",
+            "name_ru": "Кардиолог",
+            "name_tg": "Кардиолог"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 8,
+        "fields": {
+            "name": "ЛОР",
+            "name_ru": "ЛОР (оториноларинголог)",
+            "name_tg": "Гӯш-гулу-бинӣ"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 9,
+        "fields": {
+            "name": "Лечебное дело",
+            "name_ru": "Лечебное дело",
+            "name_tg": "Кори табобатӣ"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 10,
+        "fields": {
+            "name": "Невролог",
+            "name_ru": "Невролог",
+            "name_tg": "Асабшинос"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 11,
+        "fields": {
+            "name": "Неонатолог",
+            "name_ru": "Неонатолог",
+            "name_tg": "Неонатолог"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 12,
+        "fields": {
+            "name": "Онколог",
+            "name_ru": "Онколог",
+            "name_tg": "Саратоншинос"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 13,
+        "fields": {
+            "name": "Ортопед",
+            "name_ru": "Ортопед",
+            "name_tg": "Ортопед"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 14,
+        "fields": {
+            "name": "Офтальмолог",
+            "name_ru": "Офтальмолог",
+            "name_tg": "Чашмпизишк"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 15,
+        "fields": {
+            "name": "Педиатр",
+            "name_ru": "Педиатр",
+            "name_tg": "Педиатр"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 16,
+        "fields": {
+            "name": "Психиатр",
+            "name_ru": "Психиатр",
+            "name_tg": "Равоншинос"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 17,
+        "fields": {
+            "name": "Ревматолог",
+            "name_ru": "Ревматолог",
+            "name_tg": "Ревматолог"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 18,
+        "fields": {
+            "name": "Семейный врач",
+            "name_ru": "Семейный врач",
+            "name_tg": "Табиби оилавӣ"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 19,
+        "fields": {
+            "name": "Стоматолог",
+            "name_ru": "Стоматолог",
+            "name_tg": "Дандонпизишк"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 20,
+        "fields": {
+            "name": "Терапевт",
+            "name_ru": "Терапевт",
+            "name_tg": "Табиби амрози дарунӣ"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 21,
+        "fields": {
+            "name": "Травматолог",
+            "name_ru": "Травматолог",
+            "name_tg": "Осебшинос"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 22,
+        "fields": {
+            "name": "Уролог",
+            "name_ru": "Уролог",
+            "name_tg": "Уролог"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 23,
+        "fields": {
+            "name": "Физиотерапевт",
+            "name_ru": "Физиотерапевт",
+            "name_tg": "Физиотерапевт"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 24,
+        "fields": {
+            "name": "Хирург",
+            "name_ru": "Хирург",
+            "name_tg": "Ҷарроҳ"
+        }
+    },
+    {
+        "model": "a_base.specialty",
+        "pk": 25,
+        "fields": {
+            "name": "Эндокринолог",
+            "name_ru": "Эндокринолог",
+            "name_tg": "Эндокринолог"
+        }
+    }
+]

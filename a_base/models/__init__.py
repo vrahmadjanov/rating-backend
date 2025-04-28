@@ -4,3 +4,4 @@ from .genders import Gender
 
 from .specialties import Specialty
 from .academic_degrees import AcademicDegree
+from .medical_categories import MedicalCategory

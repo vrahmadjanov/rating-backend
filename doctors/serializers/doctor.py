@@ -1,15 +1,9 @@
 from rest_framework import serializers
-from ..models.doctors import Doctor, MedicalCategory, Service
-from a_base.serializers import AcademicDegreeSerializer, SpecialtySerializer
+from ..models.doctors import Doctor, Service
+from a_base.serializers import AcademicDegreeSerializer, SpecialtySerializer, MedicalCategorySerializer
 from .language import UserLanguageSerializer
 from core.serializers import CustomUserSerializer
 from .education import EducationSerializer
-
-
-class MedicalCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MedicalCategory
-        fields = ['name']
 
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:

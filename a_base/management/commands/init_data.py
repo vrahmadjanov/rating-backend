@@ -73,10 +73,9 @@ class Command(BaseCommand):
         """Создание всех тестовых данных (полная версия)"""
         from patients.models import SocialStatus, Patient
         from doctors.models import (
-            MedicalCategory, 
             Service, Language, LanguageLevel
         )
-        from a_base.models import Subscription, Gender, Specialty
+        from a_base.models import Subscription, Gender
 
         # 1. Регионы и города (полный список)
         self.stdout.write("Создание регионов и городов...")
@@ -114,11 +113,13 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Клиники созданы!'))
 
         # Медицинские категории
-        MedicalCategory.objects.bulk_create([
-            MedicalCategory(name=name) for name in [
-                "Категорияи олӣ", "Категорияи аввал", "Категорияи дуюм"
-            ]
-        ])
+        self.stdout.write("Создание медицинских категорий для врачей...")
+        try:
+            call_command('loaddata', 'a_base/fixtures/medical_categories.json')
+            self.stdout.write(self.style.SUCCESS('Информация о медицинских категориях успешно загружена'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке медицинских категорий: {str(e)}'))
+        self.stdout.write(self.style.SUCCESS('Медицинские категории созданы!'))
 
         # Ученые степени
         self.stdout.write("Создание ученых степеней...")
@@ -231,7 +232,6 @@ class Command(BaseCommand):
         # 5. Тестовые пользователи с подписками
         from a_base.models import District
         self.stdout.write("Создание тестовых пользователей...")
-        subscriptions = Subscription.objects.all()
         
         users_data = [
             {
@@ -241,7 +241,7 @@ class Command(BaseCommand):
                 'last_name': 'Пользователь',
                 'password': 'admin',
                 'middle_name': 'Системы',
-                'subscription': subscriptions[0],
+                'subscription': Subscription.objects.get(id=1),
                 'subscription_start_date': timezone.now(),
                 'subscription_end_date': timezone.now() + timedelta(days=30),
                 'gender': Gender.objects.get(name="Мужской"),
@@ -256,7 +256,7 @@ class Command(BaseCommand):
                 'last_name': 'Пользователь',
                 'password': 'admin',
                 'middle_name': 'Системы',
-                'subscription': subscriptions[1],
+                'subscription': Subscription.objects.get(id=2),
                 'subscription_start_date': timezone.now(),
                 'subscription_end_date': timezone.now() + timedelta(days=30),
                 'gender':  Gender.objects.get(name="Мужской"),
@@ -271,7 +271,7 @@ class Command(BaseCommand):
                 'last_name': 'Пользователь',
                 'password': 'admin',
                 'middle_name': 'Системы',
-                'subscription': subscriptions[2],
+                'subscription': Subscription.objects.get(id=3),
                 'subscription_start_date': timezone.now(),
                 'subscription_end_date': timezone.now() + timedelta(days=30),
                 'gender':  Gender.objects.get(name="Женский"),

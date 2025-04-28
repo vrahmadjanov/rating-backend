@@ -2,7 +2,6 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils import translation
-from django.shortcuts import get_object_or_404
 
 from a_base.permissions import ReadOnlyOrAdmin
 from clinics.models import Clinic

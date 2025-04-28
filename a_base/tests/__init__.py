@@ -10,3 +10,5 @@ from .subscriptions import (AdvantageModelTest, SubscriptionModelTest,
 
 from .specialties import (SpecialtyModelTest, SpecialtySerializerTest, SpecialtyViewSetTest, 
                           SpecialtyAdminAPITest, SpecialtyAdminPermissionTest)
+
+from .medical_categories import (MedicalCategoryModelTest, MedicalCategorySerializerTest, MedicalCategoryViewSetTest)

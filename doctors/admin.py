@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from .models import (Doctor, Service, Language, MedicalCategory, 
+from .models import (Doctor, Service, Language,
                      Workplace, Education, UserLanguage, LanguageLevel, 
                      Schedule)
 
@@ -9,7 +9,6 @@ admin.site.register(Service)
 admin.site.register(Language)
 admin.site.register(UserLanguage)
 admin.site.register(LanguageLevel)
-admin.site.register(MedicalCategory)
 admin.site.register(Workplace)
 admin.site.register(Education)
 

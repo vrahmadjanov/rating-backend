@@ -9,6 +9,9 @@ class ReadOnlyOrAdmin(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         
+        if view.action == 'subscribe' and request.method == 'POST':
+            return request.user and request.user.is_authenticated
+        
         # Для небезопасных методов проверяем аутентификацию и права
         if not request.user or not request.user.is_authenticated:
             return False  # Будет 403 Forbidden

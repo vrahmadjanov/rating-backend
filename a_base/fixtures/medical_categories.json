@@ -1,0 +1,29 @@
+[
+    {
+        "model": "a_base.medicalcategory",
+        "pk": 1,
+        "fields": {
+            "name": "Первая категория",
+            "name_ru": "Первая категория",
+            "name_tg": "Категорияи аввал"
+        }
+    },
+    {
+        "model": "a_base.medicalcategory",
+        "pk": 2,
+        "fields": {
+            "name": "Вторая категория",
+            "name_ru": "Вторая категория",
+            "name_tg": "Категорияи дуввум"
+        }
+    },
+    {
+        "model": "a_base.medicalcategory",
+        "pk": 3,
+        "fields": {
+            "name": "Высшая категория",
+            "name_ru": "Высшая категория",
+            "name_tg": "Категорияи олий"
+        }
+    }
+]

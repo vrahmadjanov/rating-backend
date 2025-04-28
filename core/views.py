@@ -3,6 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.generics import CreateAPIView
 from rest_framework.views import APIView
 from .models import CustomUser
+from a_base.models import Subscription
 from .serializers import CustomUserSerializer, RegisterSerializer, CustomTokenObtainPairSerializer, CustomUserShortSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .permissions import IsAdminOrSelf, IsAdminOrReadOnlyForSelf
@@ -53,6 +54,8 @@ class RegisterView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        user.subscription = Subscription.objects.get(id=1)
+        user.activate_subscription()
         Patient.objects.create(user=user)
 
         return Response(

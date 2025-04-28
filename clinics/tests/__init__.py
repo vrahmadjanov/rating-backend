@@ -1,0 +1,1 @@
+from .clinics import ClinicTypeModelTest, ClinicModelTest, ClinicTypeSerializerTest, ClinicSerializerTest, ClinicAPITest

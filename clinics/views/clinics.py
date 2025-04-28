@@ -19,7 +19,6 @@ class ClinicViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [ReadOnlyOrAdmin]
     filter_backends = [DjangoFilterBackend]
     filterset_class = ClinicFilter
-    lookup_field = 'pk'
 
     def get_queryset(self):
         """
@@ -41,7 +40,7 @@ class ClinicViewSet(viewsets.ReadOnlyModelViewSet):
             return Clinic.objects.none()
 
         user_subscription = getattr(self.request.user, 'subscription', None)
-        user_region = getattr(getattr(self.request.user, 'city', None), 'region', None)
+        user_region = self.request.user.district.region
 
         # Определение доступных клиник по типу подписки
         subscription_access = {
@@ -50,10 +49,7 @@ class ClinicViewSet(viewsets.ReadOnlyModelViewSet):
             'Базовая': queryset.filter(district__region=user_region) if user_region else Clinic.objects.none(),
         }
 
-        return subscription_access.get(
-            getattr(user_subscription, 'name', None), 
-            Clinic.objects.none()
-        )
+        return subscription_access.get(user_subscription.name)
 
     def list(self, request, *args, **kwargs):
         """
@@ -81,9 +77,30 @@ class ClinicViewSet(viewsets.ReadOnlyModelViewSet):
         Детальная информация о клинике с проверкой доступа.
         """
         self._activate_language_from_header(request)
-        instance = get_object_or_404(self.get_queryset(), pk=kwargs['pk'])
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+        
+        try:
+            # Получаем queryset с учетом прав доступа
+            queryset = self.get_queryset()
+            
+            # Получаем конкретную клинику или возвращаем 404
+            instance = queryset.get(id=kwargs['pk'])
+            
+            # Сериализуем данные
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+            
+        except Clinic.DoesNotExist:
+            # Если клиника не найдена в доступном queryset
+            return Response(
+                {"detail": "Клиника не найдена или у вас нет доступа"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            # Обработка других ошибок
+            return Response(
+                {"detail": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def _activate_language_from_header(self, request):
         """

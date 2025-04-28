@@ -134,7 +134,7 @@ class Patient(models.Model):
         Возвращает строковое представление пациента.
         Формат: "Фамилия Имя Отчество (Пользователь: email)".
         """
-        return f"{self.user.get_full_name()} (Пользователь: {self.user.email})"
+        return f"{self.user.get_full_name} (Пользователь: {self.user.email})"
 
     def save(self, *args, **kwargs):
         """

@@ -131,6 +131,7 @@ class CustomUser(AbstractUser):
     def activate_subscription(self):
         """Активирует подписку для пользователя"""
         duration_days = self.subscription.duration_days
+        self.subscription_start_date = timezone.now()
         self.subscription_end_date = self.subscription_start_date + timezone.timedelta(days=duration_days)
         self.save()
 

@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from .service import Service
-from a_base.models import AcademicDegree, Specialty, MedicalCategory
+from a_base.models import AcademicDegree, Specialty, MedicalCategory, Service
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 

@@ -73,7 +73,7 @@ class Command(BaseCommand):
         """Создание всех тестовых данных (полная версия)"""
         from patients.models import SocialStatus, Patient
         from doctors.models import (
-            Service, Language, LanguageLevel
+            Language, LanguageLevel
         )
         from a_base.models import Subscription, Gender
 
@@ -130,16 +130,12 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f'Ошибка при загрузке ученых степеней: {str(e)}'))
 
         # Услуги
-        Service.objects.bulk_create([
-            Service(name=name) for name in [
-                "Индивидуальная консультация (на рабочем месте)",
-                "Онлайн консультация", 
-                "Консультация с посещением пациента", 
-                "Консультации в вечернее время вне рабочих часов", 
-                "Консультации в выходные и праздничные дни",
-                "Выдача рецептов"
-            ]
-        ])
+        self.stdout.write("Создание списка услуг...")
+        try:
+            call_command('loaddata', 'a_base/fixtures/services.json')
+            self.stdout.write(self.style.SUCCESS('Список услуг успешно загружен.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке писка услуг: {str(e)}'))
 
         # Языки
         Language.objects.bulk_create([

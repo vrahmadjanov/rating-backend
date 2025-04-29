@@ -2,7 +2,8 @@ from modeltranslation.translator import register, TranslationOptions
 from .models import (
     Region, District,
     Advantage, Subscription, Gender,
-    Specialty, AcademicDegree, MedicalCategory, Service, ServicePlace, Language, LanguageLevel
+    Specialty, AcademicDegree, MedicalCategory, Service, ServicePlace, 
+    Language, LanguageLevel, ExperienceLevel
     )
 
 # locations
@@ -48,6 +49,10 @@ class ServiceTranslationOptions(TranslationOptions):
 @register(ServicePlace)
 class ServiceTranslationOptions(TranslationOptions):
     fields = ('name',)
+    
+@register(ExperienceLevel)
+class ExperienceLevelTranslationOptions(TranslationOptions):
+    fields = ('level',)
 
 # languages
 @register(Language)

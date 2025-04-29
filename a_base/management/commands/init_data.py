@@ -142,6 +142,12 @@ class Command(BaseCommand):
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Ошибка при загрузке списка языков: {str(e)}'))
 
+        self.stdout.write("Создание списка уровней опыта...")
+        try:
+            call_command('loaddata', 'a_base/fixtures/experience_levels.json')
+            self.stdout.write(self.style.SUCCESS('Список уровней опыта успешно загружен.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке списка уровней опыта: {str(e)}'))
 
         self.stdout.write(self.style.SUCCESS('Медицинские данные созданы!'))
 

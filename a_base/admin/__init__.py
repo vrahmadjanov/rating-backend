@@ -5,3 +5,4 @@ from .specialties import SpecialtyAdmin, DoctorSpecialtyInline
 from .medical_categories import MedicalCategoryAdmin
 from .services import ServiceAdmin, ServicePlaceAdmin
 from .languages import LanguageAdmin, LanguageLevelAdmin
+from .experience_levels import ExperienceLevelAdmin

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from a_base.models import AcademicDegree, Specialty, MedicalCategory, Service
+from a_base.models import AcademicDegree, Specialty, MedicalCategory, Service, ExperienceLevel
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
@@ -16,15 +16,16 @@ class Doctor(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="doctor_profile",
-        verbose_name="Пользователь"
+        verbose_name=_("Пользователь"),
+        help_text=_("Связанный аккаунт пользователя")
     )
 
     # Специализация, медицинская категория и ученая степень
     specialties = models.ManyToManyField(
         Specialty,
         blank=True,
-        verbose_name="Специализации",
-        help_text="Основные специализации врача"
+        verbose_name=_("Специализации"),
+        help_text=_("Основные специализации врача")
     )
 
     medical_category = models.ForeignKey(
@@ -32,8 +33,8 @@ class Doctor(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name="Медицинская категория",
-        help_text="Категория врача (например, высшая, первая)"
+        verbose_name=_("Медицинская категория"),
+        help_text=_("Категория врача (например, высшая, первая)")
     )
 
     academic_degree = models.ForeignKey(
@@ -41,45 +42,39 @@ class Doctor(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name="Ученая степень",
-        help_text="Ученая степень врача (если есть)"
+        verbose_name=_("Ученая степень"),
+        help_text=_("Ученая степень врача (если есть)")
     )
 
-    class ExperienceChoices(models.TextChoices):
-        JUNIOR = '0-3', '0-3 года'
-        MIDDLE = '4-10', '4-10 лет'
-        SENIOR = '11-20', '11-20 лет'
-        EXPERT = '20+', 'Более 20 лет'
-
-    experience_years = models.CharField(
-        max_length=7,
-        null = True,
-        choices=ExperienceChoices.choices,
-        verbose_name="Стаж работы",
-        help_text="Общий стаж работы врача"
+    experience_level = models.ForeignKey(
+        ExperienceLevel,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Уровень опыта"),
+        help_text=_("Уровень профессионального опыта врача")
     )
 
     about = models.TextField(
         blank=True,
         null=True,
-        verbose_name="Краткое описание",
-        help_text="Краткое описание своей деятельности"
+        verbose_name=_("Краткое описание"),
+        help_text=_("Краткое описание своей деятельности")
     )
 
     # Описание
     philosophy = models.TextField(
         blank=True,
         null=True,
-        verbose_name="Философия работы",
-        help_text="Краткое описание подхода к пациентам"
+        verbose_name=_("Философия работы"),
+        help_text=_("Краткое описание подхода к пациентам")
     )
 
     # Услуги, которые предоставляет врач
     services = models.ManyToManyField(
         Service,
         blank=True,
-        verbose_name="Услуги",
-        help_text="Медицинские услуги, которые предоставляет врач"
+        verbose_name=_("Услуги"),
+        help_text=_("Медицинские услуги, которые предоставляет врач")
     )
 
     # Контактная информация
@@ -87,8 +82,8 @@ class Doctor(models.Model):
         max_length=100,
         blank=True,
         null=True,
-        verbose_name="Номер лицензии",
-        help_text="Регистрационный номер лицензии врача"
+        verbose_name=_("Номер лицензии"),
+        help_text=_("Регистрационный номер лицензии врача")
     )
 
     # Валидатор для номера телефона (таджикский формат: +992XXYYYYYY)
@@ -99,67 +94,61 @@ class Doctor(models.Model):
 
     # Поле для номера телефона
     work_phone_number = models.CharField(
-        _('phone number'),
+        _('Рабочий телефон'),
         validators=[phone_regex],
         max_length=13,
-        help_text=_("Рабочий телефон в формате +992XXYYYYYY."),
+        blank=True,
+        null=True,
+        help_text=_("Рабочий телефон в формате +992XXYYYYYY.")
     )
 
     whatsapp = models.CharField(
         _('Номер телефона WhatsApp'),
         validators=[phone_regex],
+        max_length=13,
         blank=True,
         null=True,
-        help_text="Номер телефона для связи через WhatsApp"
+        help_text=_("Номер телефона для связи через WhatsApp")
     )
 
     telegram = models.CharField(
-        _('Номер телефона Telegram'),
-        validators=[phone_regex],
+        _('Номер телефона или никнейм в Telegram'),
+        max_length=100,
         blank=True,
         null=True,
-        help_text="Номер телефона для связи через Telegram"
-    )
-
-    # Верификация
-    is_verified = models.BooleanField(
-        default=True,
-        verbose_name="Верифицирован",
-        help_text="Флаг, указывающий, верифицирован ли врач"
-    )
-
-    verification_date = models.DateField(
-        null=True,
-        blank=True,
-        verbose_name="Дата верификации",
-        help_text="Дата прохождения верификации"
-    )
-
-    verified_by = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True,
-        verbose_name="Кем верифицирован",
-        help_text="Имя администратора, который провел верификацию"
+        help_text=_("Номер телефона или никнейм для связи через Telegram")
     )
 
     # Звания и заслуги
     titles_and_merits = models.TextField(
         blank=True,
         null=True,
-        verbose_name="Звания и заслуги",
-        help_text="Например: Отличник здравоохранения, член-корреспондент АМН"
+        verbose_name=_("Звания и заслуги"),
+        help_text=_("Например: Отличник здравоохранения, член-корреспондент АМН")
+    )
+
+    created_at = models.DateTimeField(
+        _("Дата создания"),
+        auto_now_add=True,
+        help_text=_("Дата и время создания записи")
+    )
+    
+    updated_at = models.DateTimeField(
+        _("Дата обновления"),
+        auto_now=True,
+        help_text=_("Дата и время последнего обновления записи")
     )
 
     class Meta:
-        verbose_name = "Врач"
-        verbose_name_plural = "Врачи"
+        verbose_name = _("Врач")
+        verbose_name_plural = _("Врачи")
+        ordering = ['-created_at']
 
     def __str__(self):
         """
         Возвращает строковое представление врача: ФИО + специализация.
         """
-        user_name = self.user.get_full_name or self.user.email
-        specialty_name = self.specialties.name if self.specialties else "Без специализации"
-        academic_degree = self.academic_degree or "Без степени"
-        return f"{user_name} ({specialty_name}, {academic_degree})"
+        user_name = self.user.get_full_name() or self.user.email
+        specialty_names = ", ".join([s.name for s in self.specialties.all()]) if self.specialties.exists() else _("Без специализации")
+        academic_degree = self.academic_degree.name if self.academic_degree else _("Без степени")
+        return f"{user_name} ({specialty_names}, {academic_degree})"

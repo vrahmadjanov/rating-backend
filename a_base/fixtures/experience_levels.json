@@ -1,0 +1,38 @@
+[
+    {
+        "model": "a_base.experiencelevel",
+        "pk": 1,
+        "fields": {
+            "level": "0-3 года",
+            "level_ru": "0-3 года",
+            "level_tg": "0-3 сол"
+        }
+    },
+    {
+        "model": "a_base.experiencelevel",
+        "pk": 2,
+        "fields": {
+            "level": "4-10 лет",
+            "level_ru": "4-10 лет",
+            "level_tg": "4-10 сол"
+        }
+    },
+    {
+        "model": "a_base.experiencelevel",
+        "pk": 3,
+        "fields": {
+            "level": "11-20 лет",
+            "level_ru": "11-20 лет",
+            "level_tg": "11-20 сол"
+        }
+    },
+    {
+        "model": "a_base.experiencelevel",
+        "pk": 4,
+        "fields": {
+            "level": "Более 20 лет",
+            "level_ru": "Более 20 лет",
+            "level_tg": "Зиёда аз 20 сол"
+        }
+    }
+]

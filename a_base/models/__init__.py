@@ -6,3 +6,4 @@ from .specialties import Specialty
 from .academic_degrees import AcademicDegree
 from .medical_categories import MedicalCategory
 from .services import Service, ServicePlace
+from .languages import Language, LanguageLevel

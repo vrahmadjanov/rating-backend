@@ -18,9 +18,9 @@ class Workplace(models.Model):
     )
 
     # Связь с медицинским учреждением
-    medical_institution = models.ForeignKey(
+    clinic = models.ForeignKey(
         Clinic,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="workplaces",
         verbose_name="Медицинское учреждение",
         help_text="Медицинское учреждение, где работал или работает врач"

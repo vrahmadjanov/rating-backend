@@ -14,3 +14,5 @@ from .specialties import (SpecialtyModelTest, SpecialtySerializerTest, Specialty
 from .medical_categories import (MedicalCategoryModelTest, MedicalCategorySerializerTest, MedicalCategoryViewSetTest)
 
 from .services import (ServiceModelTest, ServicePlaceModelTest, ServiceSerializerTest, ServiceViewSetTest)
+
+from .languages import (LanguageModelTest, LanguageLevelModelTest, LanguageSerializerTest, LanguageLevelSerializerTest)

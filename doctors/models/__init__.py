@@ -1,4 +1,4 @@
-from .language import Language, UserLanguage, LanguageLevel
+from .doc_languages import DoctorLanguage
 from .doctors import Doctor
 from .education import Education
 from .workplace import Workplace

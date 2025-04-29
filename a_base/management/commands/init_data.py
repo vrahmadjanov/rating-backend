@@ -72,9 +72,6 @@ class Command(BaseCommand):
     def create_all_test_data(self):
         """Создание всех тестовых данных (полная версия)"""
         from patients.models import SocialStatus, Patient
-        from doctors.models import (
-            Language, LanguageLevel
-        )
         from a_base.models import Subscription, Gender
 
         # 1. Регионы и города (полный список)
@@ -138,20 +135,14 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f'Ошибка при загрузке писка услуг: {str(e)}'))
 
         # Языки
-        Language.objects.bulk_create([
-            Language(name=name) for name in [
-                "Таджикский", "Русский", "Английский", "Хинди", 
-                "Узбекский", "Турецкий", "Немецкий", "Кыргызский"
-            ]
-        ])
+        self.stdout.write("Создание списка языков и их уровней...")
+        try:
+            call_command('loaddata', 'a_base/fixtures/languages.json')
+            self.stdout.write(self.style.SUCCESS('Список языков и их уровней успешно загружен.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке списка языков: {str(e)}'))
 
-        # Уровни языков
-        LanguageLevel.objects.bulk_create([
-            LanguageLevel(level=level) for level in [
-                "Родной язык", "Свободное владение", 
-                "Рабочий уровень", "Элементарный уровень"
-            ]
-        ])
+
         self.stdout.write(self.style.SUCCESS('Медицинские данные созданы!'))
 
         # Пол

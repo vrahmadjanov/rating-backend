@@ -1,0 +1,101 @@
+[
+    {
+        "model": "a_base.language",
+        "pk": 1,
+        "fields": {
+            "name": "Таджикский",
+            "name_ru": "Таджикский",
+            "name_tg": "Точикӣ"
+        }
+    },
+    {
+        "model": "a_base.language",
+        "pk": 2,
+        "fields": {
+            "name": "Русский",
+            "name_ru": "Русский",
+            "name_tg": "Русӣ"
+        }
+    },
+    {
+        "model": "a_base.language",
+        "pk": 3,
+        "fields": {
+            "name": "Английский",
+            "name_ru": "Английский",
+            "name_tg": "Англисӣ"
+        }
+    },
+    {
+        "model": "a_base.language",
+        "pk": 4,
+        "fields": {
+            "name": "Хинди",
+            "name_ru": "Хинди",
+            "name_tg": "Ҳинду"
+        }
+    },
+    {
+        "model": "a_base.language",
+        "pk": 5,
+        "fields": {
+            "name": "Узбекский",
+            "name_ru": "Узбекский",
+            "name_tg": "Узбекӣ"
+        }
+    },
+    {
+        "model": "a_base.language",
+        "pk": 6,
+        "fields": {
+            "name": "Турецкий",
+            "name_ru": "Турецкий",
+            "name_tg": "Туркӣ"
+        }
+    },
+    {
+        "model": "a_base.language",
+        "pk": 7,
+        "fields": {
+            "name": "Немецкий",
+            "name_ru": "Немецкий",
+            "name_tg": "Олмонӣ"
+        }
+    },
+    {
+        "model": "a_base.language",
+        "pk": 8,
+        "fields": {
+            "name": "Кыргызский",
+            "name_ru": "Кыргызский",
+            "name_tg": "Қирғизӣ"
+        }
+    },
+    {
+        "model": "a_base.languagelevel",
+        "pk": 1,
+        "fields": {
+            "level": "Родной язык",
+            "level_ru": "Родной язык",
+            "level_tg": "Забони модарӣ"
+        }
+    },
+    {
+        "model": "a_base.languagelevel",
+        "pk": 2,
+        "fields": {
+            "level": "Свободное владение",
+            "level_ru": "Свободное владение",
+            "level_tg": "Гуфтугӯи озод"
+        }
+    },
+    {
+        "model": "a_base.languagelevel",
+        "pk": 3,
+        "fields": {
+            "level": "Рабочий уровень",
+            "level_ru": "Рабочий уровень",
+            "level_tg": "Сатҳи корӣ"
+        }
+    }
+]

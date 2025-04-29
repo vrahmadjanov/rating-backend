@@ -5,3 +5,4 @@ from .academic_degrees import AcademicDegreeViewSet
 from .specialties import SpecialtyViewSet
 from .medical_categories import MedicalCategoryViewSet
 from .services import ServiceViewSet
+from .languages import LanguageViewSet, LanguageLevelViewSet

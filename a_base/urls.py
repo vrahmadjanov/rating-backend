@@ -1,7 +1,8 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (DistrictViewSet, RegionViewSet, SubscriptionViewSet, 
-                    AcademicDegreeViewSet, SpecialtyViewSet, MedicalCategoryViewSet, ServiceViewSet)
+                    AcademicDegreeViewSet, SpecialtyViewSet, MedicalCategoryViewSet, ServiceViewSet,
+                    LanguageViewSet, LanguageLevelViewSet)
 
 router = DefaultRouter()
 router.register(r'regions', RegionViewSet, basename='region')
@@ -12,6 +13,9 @@ router.register(r'academic_degrees', AcademicDegreeViewSet, basename='academic_d
 router.register(r'medical_categories', MedicalCategoryViewSet, basename='medical_category')
 router.register(r'specialties', SpecialtyViewSet, basename='specialty')
 router.register(r'services', ServiceViewSet, basename='service')
+
+router.register(r'languages', LanguageViewSet, basename='language')
+router.register(r'language_levels', LanguageLevelViewSet, basename='language_level')
 
 
 urlpatterns = [

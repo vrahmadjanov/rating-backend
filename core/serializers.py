@@ -17,7 +17,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     district = DistrictSerializer(read_only=True)
     groups = GroupSerializer(many=True, read_only=True)
     subscription = SubscriptionSerializer(read_only=True)
-    gender = GenderSerializer()
+    gender = GenderSerializer(read_only=True)
     
     class Meta:
         model = CustomUser

@@ -50,13 +50,13 @@ class Doctor(models.Model):
         ExperienceLevel,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         verbose_name=_("Уровень опыта"),
         help_text=_("Уровень профессионального опыта врача")
     )
 
     about = models.TextField(
         blank=True,
-        null=True,
         verbose_name=_("Краткое описание"),
         help_text=_("Краткое описание своей деятельности")
     )
@@ -64,7 +64,6 @@ class Doctor(models.Model):
     # Описание
     philosophy = models.TextField(
         blank=True,
-        null=True,
         verbose_name=_("Философия работы"),
         help_text=_("Краткое описание подхода к пациентам")
     )
@@ -122,7 +121,6 @@ class Doctor(models.Model):
     # Звания и заслуги
     titles_and_merits = models.TextField(
         blank=True,
-        null=True,
         verbose_name=_("Звания и заслуги"),
         help_text=_("Например: Отличник здравоохранения, член-корреспондент АМН")
     )
@@ -148,7 +146,7 @@ class Doctor(models.Model):
         """
         Возвращает строковое представление врача: ФИО + специализация.
         """
-        user_name = self.user.get_full_name() or self.user.email
+        user_name = self.user.get_full_name or self.user.email
         specialty_names = ", ".join([s.name for s in self.specialties.all()]) if self.specialties.exists() else _("Без специализации")
         academic_degree = self.academic_degree.name if self.academic_degree else _("Без степени")
         return f"{user_name} ({specialty_names}, {academic_degree})"

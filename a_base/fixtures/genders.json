@@ -1,0 +1,20 @@
+[
+    {
+        "model": "a_base.gender",
+        "pk": 1,
+        "fields": {
+            "name": "Мужской",
+            "name_ru": "Мужской",
+            "name_tg": "Мард"
+        }
+    },
+    {
+        "model": "a_base.gender",
+        "pk": 2,
+        "fields": {
+            "name": "Женский",
+            "name_ru": "Женский",
+            "name_tg": "Зан"
+        }
+    }
+]

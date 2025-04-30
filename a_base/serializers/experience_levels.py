@@ -10,7 +10,7 @@ class ExperienceLevelSerializer(serializers.ModelSerializer):
         model = ExperienceLevel
         fields = ['id', 'level']
     
-    def get_name(self, obj):
+    def get_level(self, obj):
         lang = translation.get_language()
         fallback_lang = settings.FALLBACK_LANGUAGES.get(lang, 'ru')
         return getattr(obj, f'level_{lang}', getattr(obj, f'level_{fallback_lang}', 'Нет перевода'))

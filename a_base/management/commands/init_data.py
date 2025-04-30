@@ -149,30 +149,15 @@ class Command(BaseCommand):
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Ошибка при загрузке списка уровней опыта: {str(e)}'))
 
-        self.stdout.write(self.style.SUCCESS('Медицинские данные созданы!'))
-
         # Пол
-        self.stdout.write("Создание полов...")
-        genders_dt = [
-            {
-                "name": "Мужской",
-                "name_ru": "Мужской",
-                "name_tg": "Мард"
-            },
-            {
-                "name": "Женский",
-                "name_ru": "Женский",
-                "name_tg": "Зан"
-            }
-        ]
+        self.stdout.write("Создание списка полов...")
+        try:
+            call_command('loaddata', 'a_base/fixtures/genders.json')
+            self.stdout.write(self.style.SUCCESS('Данные о полах успешно загружены.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке данных о полах: {str(e)}'))
 
-        for gender in genders_dt:
-            Gender.objects.create(
-                name=gender["name"],
-                name_ru=gender["name_ru"],
-                name_tg=gender["name_tg"]
-                )
-        self.stdout.write(self.style.SUCCESS('Полы успешно созданы!'))
+        self.stdout.write(self.style.SUCCESS('Данные созданы!'))
 
         # 4. Социальные статусы (полный список)
         self.stdout.write("Создание социальных статусов...")

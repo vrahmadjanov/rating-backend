@@ -6,3 +6,5 @@ from .specialties import SpecialtyViewSet
 from .medical_categories import MedicalCategoryViewSet
 from .services import ServiceViewSet
 from .languages import LanguageViewSet, LanguageLevelViewSet
+from .genders import GenderViewSet
+from .experience_levels import ExperienceLevelViewSet

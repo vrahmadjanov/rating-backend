@@ -1,4 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
+from django.contrib.auth.models import Group
 from .models import (
     Region, District,
     Advantage, Subscription, Gender,
@@ -23,6 +24,11 @@ class AdvantageTranslationOptions(TranslationOptions):
 @register(Subscription)
 class SubscriptionTranslationOptions(TranslationOptions):
     fields = ('name', 'description')
+
+# group
+@register(Group)
+class GroupTranslationOptions(TranslationOptions):
+    fields = ('name',)
 
 # gender
 @register(Gender)

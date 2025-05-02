@@ -1,17 +1,17 @@
 # doctors/views/doctor.py
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 
-from doctors.models import Doctor, Education
-from doctors.serializers import EducationSerializer, DoctorSerializer
-from doctors.permissions import IsAdminOrReadOnly
+from doctors.models import Doctor
+from doctors.serializers import DoctorSerializer
 from doctors.filters import DoctorFilter
+from doctors.permissions import IsDoctorOwnerOrReadOnly
 
 class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated, IsDoctorOwnerOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filterset_class = DoctorFilter
 
@@ -34,7 +34,7 @@ class DoctorViewSet(viewsets.ModelViewSet):
             return Doctor.objects.none()
             
         # Получаем регион пользователя
-        user_region = self.request.user.city.region if self.request.user.city else None
+        user_region = self.request.user.district.region if self.request.user.district else None
         
         # Определяем доступные регионы в зависимости от подписки
         if user_subscription.name == 'Премиум':
@@ -44,17 +44,13 @@ class DoctorViewSet(viewsets.ModelViewSet):
         elif user_subscription.name == 'Стандартная':
             # Для базовой подписки только врачи из своего региона
             if user_region:
-                return queryset.filter(user__city__region=user_region)
+                return queryset.filter(user__district__region=user_region)
 
         elif user_subscription.name == 'Базовая':
             # Для базовой подписки только врачи из своего региона
             if user_region:
-                return queryset.filter(user__city__region=user_region)
+                return queryset.filter(user__district__region=user_region)
             return Doctor.objects.none()
         else:
             # Для других типов подписок (если будут добавлены)
             return Doctor.objects.none()
-
-class EducationViewSet(viewsets.ModelViewSet):
-    queryset = Education.objects.all()
-    serializer_class = EducationSerializer

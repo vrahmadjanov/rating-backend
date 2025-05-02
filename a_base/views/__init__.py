@@ -1,3 +1,4 @@
+from .groups import GroupViewSet
 from .locations import RegionViewSet, DistrictViewSet
 from .subscriptions import SubscriptionViewSet
 

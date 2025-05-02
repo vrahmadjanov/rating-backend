@@ -16,3 +16,5 @@ from .medical_categories import (MedicalCategoryModelTest, MedicalCategorySerial
 from .services import (ServiceModelTest, ServicePlaceModelTest, ServiceSerializerTest, ServiceViewSetTest)
 
 from .languages import (LanguageModelTest, LanguageLevelModelTest, LanguageSerializerTest, LanguageLevelSerializerTest)
+
+from .experience_levels import (ExperienceLevelModelTest, ExperienceLevelSerializerTest, ExperienceLevelViewSetTest)

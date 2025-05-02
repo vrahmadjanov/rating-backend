@@ -5,6 +5,9 @@ from a_base.serializers import (AcademicDegreeSerializer, SpecialtySerializer, M
                                 ServiceSerializer, ExperienceLevelSerializer)
 from core.serializers import CustomUserSerializer
 
+from django.utils import translation
+from django.conf import settings
+
 class DoctorSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer()
     specialties = SpecialtySerializer(many=True, read_only=True)
@@ -13,41 +16,71 @@ class DoctorSerializer(serializers.ModelSerializer):
     experience_level = ExperienceLevelSerializer(read_only=True)
     services = ServiceSerializer(many=True, read_only=True)
 
+    about = serializers.SerializerMethodField()
+    philosophy = serializers.SerializerMethodField()
+    titles_and_merits = serializers.SerializerMethodField()
+    about_ru = serializers.CharField(write_only=True, required=True)
+    about_tg = serializers.CharField(write_only=True, required=False)
+    philosophy_ru = serializers.CharField(write_only=True, required=True)
+    philosophy_tg = serializers.CharField(write_only=True, required=False)
+    titles_and_merits_ru = serializers.CharField(write_only=True, required=True)
+    titles_and_merits_tg = serializers.CharField(write_only=True, required=False)
+
+    def get_about(self, obj):
+        lang = translation.get_language()
+        fallback_lang = settings.FALLBACK_LANGUAGES.get(lang, 'ru')
+        return getattr(obj, f'about_{lang}', getattr(obj, f'about_{fallback_lang}', 'Нет перевода'))
+    
+    def get_philosophy(self, obj):
+        lang = translation.get_language()
+        fallback_lang = settings.FALLBACK_LANGUAGES.get(lang, 'ru')
+        return getattr(obj, f'philosophy_{lang}', getattr(obj, f'philosophy_{fallback_lang}', 'Нет перевода'))
+
+    def get_titles_and_merits(self, obj):
+        lang = translation.get_language()
+        fallback_lang = settings.FALLBACK_LANGUAGES.get(lang, 'ru')
+        return getattr(obj, f'titles_and_merits_{lang}', getattr(obj, f'titles_and_merits_{fallback_lang}', 'Нет перевода'))
+
     specialties_ids = serializers.PrimaryKeyRelatedField(
         queryset=Specialty.objects.all(),
         source='specialties',
-        allow_null=True,
+        required=False,
         many=True,
-        write_only=True
+        write_only=True,
+        allow_null=True
     )
 
     medical_category_id = serializers.PrimaryKeyRelatedField(
         queryset=MedicalCategory.objects.all(),
         source='medical_category',
-        allow_null=True,
-        write_only=True
+        required=False,
+        write_only=True,
+        allow_null=True
     )
 
     academic_degree_id = serializers.PrimaryKeyRelatedField(
         queryset=AcademicDegree.objects.all(),
         source='academic_degree',
-        allow_null=True,
-        write_only=True
+        required=False,
+        write_only=True,
+        allow_null=True
     )
 
     experience_level_id = serializers.PrimaryKeyRelatedField(
         queryset=ExperienceLevel.objects.all(),
         source='experience_level',
-        allow_null=True,
-        write_only=True
+        required=False,
+        write_only=True,
+        allow_null=True
     )
 
     services_ids = serializers.PrimaryKeyRelatedField(
         queryset=Service.objects.all(),
         source='services',
-        allow_null=True,
+        required=False,
         many=True,
-        write_only=True
+        write_only=True,
+        allow_null=True
     )
 
     class Meta:
@@ -55,8 +88,9 @@ class DoctorSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'user', 
             'specialties', 'medical_category', 'academic_degree', 'license_number',
-            'experience_level', 'services', 'about', 'philosophy', 'titles_and_merits', 
-            'work_phone_number', 'whatsapp', 'telegram',
+            'experience_level', 'services', 'about', 'about_ru', 'about_tg', 'philosophy', 
+            'philosophy_ru', 'philosophy_tg', 'titles_and_merits', 'titles_and_merits_ru', 
+            'titles_and_merits_tg', 'work_phone_number', 'whatsapp', 'telegram',
             'created_at', 'updated_at',
             'specialties_ids', 'medical_category_id', 'academic_degree_id', 'experience_level_id', 'services_ids',
         ]
@@ -76,12 +110,18 @@ class DoctorSerializer(serializers.ModelSerializer):
             instance.experience_level = validated_data['experience_level']
         if 'services' in validated_data:
             instance.services.set(validated_data['services'])
-        if 'about' in validated_data:
-            instance.about = validated_data['about']
-        if 'philosophy' in validated_data:
-            instance.philosophy = validated_data['philosophy']
-        if 'titles_and_merits' in validated_data:
-            instance.titles_and_merits = validated_data['titles_and_merits']
+        if 'about_ru' in validated_data:
+            instance.about_ru = validated_data['about_ru']
+        if 'about_tg' in validated_data:
+            instance.about_tg = validated_data['about_tg']
+        if 'philosophy_ru' in validated_data:
+            instance.philosophy_ru = validated_data['philosophy_ru']
+        if 'philosophy_tg' in validated_data:
+            instance.philosophy_tg = validated_data['philosophy_tg']
+        if 'titles_and_merits_ru' in validated_data:
+            instance.titles_and_merits_ru = validated_data['titles_and_merits_ru']
+        if 'titles_and_merits_tg' in validated_data:
+            instance.titles_and_merits_tg = validated_data['titles_and_merits_tg']
         if 'work_phone_number' in validated_data:
             instance.work_phone_number = validated_data['work_phone_number']
         if 'whatsapp' in validated_data:

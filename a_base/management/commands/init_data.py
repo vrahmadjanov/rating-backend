@@ -28,10 +28,12 @@ class Command(BaseCommand):
 
     def create_groups(self):
         """Создание групп пользователей"""
-        groups = ["Doctors", "Patients", "Admins"]
-        for name in groups:
-            Group.objects.get_or_create(name=name)
-        self.stdout.write(self.style.SUCCESS("Группы пользователей созданы!"))
+        self.stdout.write("Создание групп пользователей...")
+        try:
+            call_command('loaddata', 'a_base/fixtures/groups.json')
+            self.stdout.write(self.style.SUCCESS('Группы пользователей успешно загружены.'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Ошибка при загрузке групп пользователей: {str(e)}'))
 
     def create_superusers(self):
         """Создание администраторов системы"""
@@ -63,7 +65,7 @@ class Command(BaseCommand):
         admin = User.objects.create_user(**admin_data)
         staff = User.objects.create_user(**staff_data)
         
-        admin_group = Group.objects.get(name="Admins")
+        admin_group = Group.objects.get(name="Администратор")
         admin.groups.add(admin_group)
         staff.groups.add(admin_group)
 

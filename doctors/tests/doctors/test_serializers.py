@@ -1,5 +1,4 @@
 from rest_framework.test import APITestCase
-from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from doctors.models import Doctor
 from doctors.serializers import DoctorSerializer
@@ -35,13 +34,16 @@ class DoctorSerializerTestCase(APITestCase):
             medical_category=self.medical_category,
             academic_degree=self.academic_degree,
             experience_level=self.experience_level,
-            about='Опытный врач',
-            philosophy='Индивидуальный подход',
+            about_ru='Опытный врач',
+            about_tg='Опытный врач (tj)',
+            philosophy_ru='Индивидуальный подход',
+            philosophy_tg='Индивидуальный подход (tj)',
             license_number='LIC123',
             work_phone_number='+992987654321',
             whatsapp='+992987654321',
             telegram='@johndoe',
-            titles_and_merits='Отличник здравоохранения'
+            titles_and_merits_ru='Отличник здравоохранения',
+            titles_and_merits_tg='Отличник здравоохранения (tj)'
         )
         self.doctor.specialties.add(self.specialty1, self.specialty2)
         self.doctor.services.add(self.service1, self.service2)
@@ -61,12 +63,18 @@ class DoctorSerializerTestCase(APITestCase):
             'experience_level_id': self.experience_level.id,
             'services_ids': [self.service1.id, self.service2.id],
             'about': 'Новый врач',
+            'about_ru': 'Новый врач',
+            'about_tg': 'Духтури нав',
             'philosophy': 'Новый подход',
+            'philosophy_ru': 'Новый подход',
+            'philosophy_tg': 'Новый подход (tj)',
             'license_number': 'LIC456',
             'work_phone_number': '+992987654322',
             'whatsapp': '+992987654322',
             'telegram': '@janesmith',
-            'titles_and_merits': 'Новые заслуги'
+            'titles_and_merits': 'Новые заслуги',
+            'titles_and_merits_ru': 'Новые заслуги',
+            'titles_and_merits_tg': 'Новые заслуги (tj)'
         }
 
     def test_serialization(self):
@@ -76,7 +84,7 @@ class DoctorSerializerTestCase(APITestCase):
         
         # Проверяем основные поля
         self.assertEqual(data['id'], self.doctor.id)
-        self.assertEqual(data['about'], self.doctor.about)
+        self.assertEqual(data['about'], self.doctor.about_ru)
         self.assertEqual(data['license_number'], self.doctor.license_number)
         
         # Проверяем вложенные сериализаторы
@@ -102,7 +110,7 @@ class DoctorSerializerTestCase(APITestCase):
         doctor = serializer.save()
         
         # Проверяем созданные объекты
-        self.assertEqual(doctor.about, self.valid_doctor_data['about'])
+        self.assertEqual(doctor.about, self.valid_doctor_data['about_ru'])
         self.assertEqual(doctor.medical_category.id, self.valid_doctor_data['medical_category_id'])
         self.assertEqual(doctor.academic_degree.id, self.valid_doctor_data['academic_degree_id'])
         self.assertEqual(doctor.experience_level.id, self.valid_doctor_data['experience_level_id'])
@@ -126,8 +134,10 @@ class DoctorSerializerTestCase(APITestCase):
             'medical_category_id': None,  # Удаляем категорию
             'academic_degree_id': self.academic_degree.id,
             'services_ids': [self.service2.id],
-            'about': 'Обновленное описание',
-            'philosophy': 'Новая философия',
+            'about_ru': 'Обновленное описание',
+            'about_tg': 'Обновленное описание (tj)',
+            'philosophy_ru': 'Новая философия',
+            'philosophy_tj': 'Новая философия (tj)',
             'work_phone_number': '+992987654333',
             'user': {
                 'first_name': 'John Updated',
@@ -141,8 +151,8 @@ class DoctorSerializerTestCase(APITestCase):
         doctor = serializer.save()
         
         # Проверяем обновленные поля
-        self.assertEqual(doctor.about, update_data['about'])
-        self.assertEqual(doctor.philosophy, update_data['philosophy'])
+        self.assertEqual(doctor.about, update_data['about_ru'])
+        self.assertEqual(doctor.philosophy, update_data['philosophy_ru'])
         self.assertEqual(doctor.work_phone_number, update_data['work_phone_number'])
         self.assertIsNone(doctor.medical_category)
         
@@ -178,25 +188,27 @@ class DoctorSerializerTestCase(APITestCase):
             'medical_category': self.medical_category,
             'academic_degree': None,
             'services': [self.service1],
-            'about': 'Новое описание',
-            'philosophy': 'Новая философия',
+            'about_ru': 'Новое описание',
+            'about_tg': 'Новое описание (tj)',
+            'philosophy_ru': 'Новая философия',
+            'philosophy_tg': 'Новая философия (tj)',
             'license_number': 'NEW123',
             'work_phone_number': '+992987654444',
             'whatsapp': '+992987654444',
             'telegram': '@updated',
-            'titles_and_merits': 'Новые заслуги'
+            'titles_and_merits_ru': 'Новые заслуги'
         }
         
         updated_doctor = serializer.update(self.doctor, update_data)
         
         # Проверяем обновленные поля
-        self.assertEqual(updated_doctor.about, update_data['about'])
-        self.assertEqual(updated_doctor.philosophy, update_data['philosophy'])
+        self.assertEqual(updated_doctor.about, update_data['about_ru'])
+        self.assertEqual(updated_doctor.philosophy, update_data['philosophy_ru'])
         self.assertEqual(updated_doctor.license_number, update_data['license_number'])
         self.assertEqual(updated_doctor.work_phone_number, update_data['work_phone_number'])
         self.assertEqual(updated_doctor.whatsapp, update_data['whatsapp'])
         self.assertEqual(updated_doctor.telegram, update_data['telegram'])
-        self.assertEqual(updated_doctor.titles_and_merits, update_data['titles_and_merits'])
+        self.assertEqual(updated_doctor.titles_and_merits, update_data['titles_and_merits_ru'])
         
         # Проверяем обновленные связи
         self.assertEqual(list(updated_doctor.specialties.all()), update_data['specialties'])

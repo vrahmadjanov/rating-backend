@@ -1,2 +1,3 @@
-from .doctors.models import DoctorModelTestCase
-from .doctors.serializers import DoctorSerializerTestCase
+from .doctors.test_models import DoctorModelTestCase
+from .doctors.test_serializers import DoctorSerializerTestCase
+from .doctors.test_views import DoctorViewSetTestCase

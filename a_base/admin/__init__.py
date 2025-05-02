@@ -7,3 +7,4 @@ from .services import ServiceAdmin, ServicePlaceAdmin
 from .languages import LanguageAdmin, LanguageLevelAdmin
 from .experience_levels import ExperienceLevelAdmin
 from .genders import GenderAdmin
+from .social_statuses import SocialStatusAdmin

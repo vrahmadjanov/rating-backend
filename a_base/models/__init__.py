@@ -8,3 +8,5 @@ from .medical_categories import MedicalCategory
 from .services import Service, ServicePlace
 from .languages import Language, LanguageLevel
 from .experience_levels import ExperienceLevel
+
+from .social_statuses import SocialStatus

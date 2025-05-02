@@ -1,2 +1,3 @@
-from .custom_user_model import CustomUserModelTest
-from .customuser_manager import CustomUserManagerTest
+from .test_models import CustomUserModelTest
+from .test_managers import CustomUserManagerTest
+from .test_serializers import CustomUserSerializerTests

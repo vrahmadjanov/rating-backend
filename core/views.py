@@ -4,7 +4,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.views import APIView
 from .models import CustomUser
 from a_base.models import Subscription
-from .serializers import CustomUserSerializer, RegisterSerializer, CustomTokenObtainPairSerializer, CustomUserShortSerializer
+from .serializers import CustomUserPublicSerializer, RegisterSerializer, CustomTokenObtainPairSerializer, CustomUserPrivateSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .permissions import IsAdminOrSelf, IsAdminOrReadOnlyForSelf
 from rest_framework.response import Response
@@ -15,13 +15,13 @@ from patients.models import Patient
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
+    serializer_class = CustomUserPrivateSerializer
     permission_classes = [IsAuthenticated, IsAdminOrReadOnlyForSelf]
 
     def get_serializer_class(self):
         # Для списка пользователей используем укороченный сериализатор
         if self.action == 'list':
-            return CustomUserShortSerializer
+            return CustomUserPublicSerializer
         return super().get_serializer_class()
 
     def get_queryset(self):

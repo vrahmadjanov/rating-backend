@@ -9,3 +9,5 @@ from .services import ServiceViewSet
 from .languages import LanguageViewSet, LanguageLevelViewSet
 from .genders import GenderViewSet
 from .experience_levels import ExperienceLevelViewSet
+
+from .social_statuses import SocialStatusViewSet

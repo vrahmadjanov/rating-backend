@@ -1,10 +1,12 @@
 # doctors/views/doctor.py
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 
 from doctors.models import Doctor
-from doctors.serializers import DoctorSerializer
+from doctors.serializers import DoctorSerializer, DoctorUpdateSerializer
 from doctors.filters import DoctorFilter
 from doctors.permissions import IsDoctorOwnerOrReadOnly
 
@@ -14,6 +16,11 @@ class DoctorViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsDoctorOwnerOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filterset_class = DoctorFilter
+
+    def get_serializer_class(self):
+        if self.action in ['update', 'partial_update']:
+            return DoctorUpdateSerializer
+        return DoctorSerializer
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -54,3 +61,21 @@ class DoctorViewSet(viewsets.ModelViewSet):
         else:
             # Для других типов подписок (если будут добавлены)
             return Doctor.objects.none()
+        
+    @action(detail=True, methods=['put', 'patch'], url_path='update-profile')
+    def update_profile(self, request, pk=None):
+        """Кастомный эндпоинт для обновления своего профиля"""
+        doctor = self.get_object()
+        
+        # Проверка владельца
+        if doctor.user != request.user:
+            return Response(
+                {"detail": "Вы не можете редактировать этот профиль"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+            
+        serializer = self.get_serializer(doctor, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        
+        return Response(serializer.data)

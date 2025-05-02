@@ -3,13 +3,13 @@ from doctors.models import Doctor
 from a_base.models import Specialty, MedicalCategory, AcademicDegree, ExperienceLevel, Service
 from a_base.serializers import (AcademicDegreeSerializer, SpecialtySerializer, MedicalCategorySerializer, 
                                 ServiceSerializer, ExperienceLevelSerializer)
-from core.serializers import CustomUserSerializer
+from core.serializers import CustomUserPublicSerializer, CustomUserPrivateSerializer
 
 from django.utils import translation
 from django.conf import settings
 
 class DoctorSerializer(serializers.ModelSerializer):
-    user = CustomUserSerializer()
+    user = serializers.SerializerMethodField()
     specialties = SpecialtySerializer(many=True, read_only=True)
     medical_category = MedicalCategorySerializer(read_only=True)
     academic_degree = AcademicDegreeSerializer(read_only=True)
@@ -25,6 +25,13 @@ class DoctorSerializer(serializers.ModelSerializer):
     philosophy_tg = serializers.CharField(write_only=True, required=False)
     titles_and_merits_ru = serializers.CharField(write_only=True, required=True)
     titles_and_merits_tg = serializers.CharField(write_only=True, required=False)
+
+    def get_user(self, obj):
+        request = self.context.get('request')
+        if request and request.user == obj.user:
+            return CustomUserPrivateSerializer(obj.user).data
+        else: 
+            return CustomUserPublicSerializer(obj.user).data
 
     def get_about(self, obj):
         lang = translation.get_language()
@@ -97,7 +104,15 @@ class DoctorSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """Обновляет профиль врача"""
-        
+        if 'user' in validated_data:
+            user_data = validated_data.pop('user')
+            user_serializer = CustomUserPrivateSerializer(
+                instance.user, 
+                data=user_data, 
+                partial=True
+            )
+            user_serializer.is_valid(raise_exception=True)
+            user_serializer.save()
         if 'specialties' in validated_data:
             instance.specialties.set(validated_data['specialties'])
         if 'medical_category' in validated_data:
@@ -130,25 +145,39 @@ class DoctorSerializer(serializers.ModelSerializer):
             instance.telegram = validated_data['telegram']
         instance.save()
         return instance
+
+class DoctorUpdateSerializer(DoctorSerializer):
+    user = CustomUserPrivateSerializer(required=False)
     
-    def create(self, validated_data):
-        """Создает профиль врача"""
-        user_data = validated_data.pop('user')
-        specialties = validated_data.pop('specialties', [])
-        services = validated_data.pop('services', [])
+    class Meta(DoctorSerializer.Meta):
+        pass  # Наследуем все поля
+
+    def update(self, instance, validated_data):
+        # Обработка данных пользователя
+        user_data = validated_data.pop('user', None)
+        if user_data:
+            user_serializer = CustomUserPrivateSerializer(
+                instance.user, 
+                data=user_data, 
+                partial=True,
+                context=self.context
+            )
+            user_serializer.is_valid(raise_exception=True)
+            user_serializer.save()
+
+        # Обработка ManyToMany полей
+        m2m_fields = {
+            'specialties': instance.specialties,
+            'services': instance.services
+        }
         
-        # Создаем пользователя
-        user_serializer = CustomUserSerializer(data=user_data)
-        if user_serializer.is_valid():
-            user = user_serializer.save()
-        else:
-            raise serializers.ValidationError(user_serializer.errors)
-        
-        # Создаем врача
-        doctor = Doctor.objects.create(user=user, **validated_data)
-        
-        # Добавляем many-to-many отношения
-        doctor.specialties.set(specialties)
-        doctor.services.set(services)
-        
-        return doctor
+        for field, manager in m2m_fields.items():
+            if field in validated_data:
+                manager.set(validated_data.pop(field))
+
+        # Обновление остальных полей
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        return instance

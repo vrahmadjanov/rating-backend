@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Appointment, Review
-from patients.serializers import PatientSerializer, PatientShortSerializer
+from patients.serializers import PatientSerializer
 from doctors.serializers import DoctorSerializer
 
 class AppointmentSerializer(serializers.ModelSerializer):

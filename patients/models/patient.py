@@ -1,10 +1,11 @@
 from datetime import timezone
 from django.db import models
+from a_base.models import SocialStatus
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from decimal import Decimal
+
 
 User = get_user_model()
 
@@ -107,13 +108,13 @@ class Patient(models.Model):
 
     # Социальный статус пациента
     social_status = models.ForeignKey(
-        'SocialStatus',  # Ссылка на модель SocialStatus
+        SocialStatus,  # Ссылка на модель SocialStatus
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         verbose_name=_('Социальный статус'),
         help_text=_("Социальный статус пациента."),
-    )
+    ) 
 
     created_at = models.DateTimeField(
         _('Дата создания'),
@@ -136,17 +137,6 @@ class Patient(models.Model):
         """
         return f"{self.user.get_full_name} (Пользователь: {self.user.email})"
 
-    def save(self, *args, **kwargs):
-        """
-        При сохранении автоматически добавляет пользователя в группу 'Patients' (если не добавлен).
-        """
-        # Сохраняем объект, чтобы убедиться, что он существует в базе данных
-        super().save(*args, **kwargs)
-
-        # Добавляем пользователя в группу 'Patients'
-        group, _ = Group.objects.get_or_create(name='Patients')
-        self.user.groups.add(group)
-
     @property
     def bmi(self):
         """Рассчитывает и возвращает индекс массы тела (BMI)"""
@@ -154,8 +144,9 @@ class Patient(models.Model):
             height_in_meters = self.height / 100
             return round(self.weight / (height_in_meters ** 2), 2)
         return None
-
-    def get_age(self):
+    
+    @property
+    def age(self):
         """Рассчитывает возраст пациента на основе даты рождения"""
         today = timezone.now().date()
         born = self.user.date_of_birth

@@ -4,7 +4,8 @@ from .models import (
     Region, District,
     Advantage, Subscription, Gender,
     Specialty, AcademicDegree, MedicalCategory, Service, ServicePlace, 
-    Language, LanguageLevel, ExperienceLevel
+    Language, LanguageLevel, ExperienceLevel,
+    SocialStatus
     )
 
 # locations
@@ -68,3 +69,8 @@ class ServiceTranslationOptions(TranslationOptions):
 @register(LanguageLevel)
 class ServiceTranslationOptions(TranslationOptions):
     fields = ('level',)
+
+# social statuses
+@register(SocialStatus)
+class SocialStatusTranslationOptions(TranslationOptions):
+    fields = ('name', 'description')

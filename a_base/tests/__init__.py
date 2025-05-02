@@ -18,3 +18,5 @@ from .services import (ServiceModelTest, ServicePlaceModelTest, ServiceSerialize
 from .languages import (LanguageModelTest, LanguageLevelModelTest, LanguageSerializerTest, LanguageLevelSerializerTest)
 
 from .experience_levels import (ExperienceLevelModelTest, ExperienceLevelSerializerTest, ExperienceLevelViewSetTest)
+
+from .social_statuses import (SocialStatusModelTest,)

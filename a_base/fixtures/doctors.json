@@ -1,0 +1,668 @@
+[
+    {
+        "model": "core.customuser",
+        "pk": 100,
+        "fields": {
+            "first_name": "Мухаммад",
+            "last_name": "Мухаммадшоев",
+            "middle_name": "Озарович",
+            "phone_number": "+992000000001",
+            "email": "mmuhammad@gmail.com",
+            "date_of_birth": "1975-08-08",
+            "gender": 1,
+            "district": 101,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 1,
+        "fields": {
+            "user": 100,
+            "specialties": [2],
+            "medical_category": 2,
+            "academic_degree": 3,
+            "experience_level": 4,
+            "about": "Анестезиолог-реаниматолог с 20-летним стажем",
+            "about_ru": "Анестезиолог-реаниматолог с 20-летним стажем",
+            "about_tg": "Анестезиолог-реаниматолог бо 20 сол таҷриба",
+            "philosophy": "Главное - индивидуальный подход к каждому пациенту",
+            "philosophy_ru": "Главное - индивидуальный подход к каждому пациенту",
+            "philosophy_tg": "Аҳамият додан ба ҳар як пациент бо тарзи инфиродӣ",
+            "services": [1, 2, 3],
+            "license_number": "МД123456789",
+            "work_phone_number": "+992000000001",
+            "whatsapp": "+992000000001",
+            "telegram": "@mmuhammad",
+            "titles_and_merits": "Заслуженный врач Таджикистана",
+            "titles_and_merits_ru": "Заслуженный врач Таджикистана",
+            "titles_and_merits_tg": "Духтури ҳуқуқдошти Тоҷикистон",
+            "created_at": "2023-01-01T12:00:00Z",
+            "updated_at": "2023-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 1,
+        "fields": {
+            "doctor": 1,
+            "language": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 2,
+        "fields": {
+            "doctor": 1,
+            "language": 2,
+            "level": 2
+        }
+    },
+
+
+
+    {
+        "model": "core.customuser",
+        "pk": 101,
+        "fields": {
+            "first_name": "Фаррух",
+            "last_name": "Саидов",
+            "middle_name": "Абдуллоевич",
+            "phone_number": "+992000000002",
+            "email": "fsaidov@gmail.com",
+            "date_of_birth": "1980-05-15",
+            "gender": 1,
+            "district": 102,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 2,
+        "fields": {
+            "user": 101,
+            "specialties": [7],
+            "medical_category": 3,
+            "academic_degree": 4,
+            "experience_level": 4,
+            "about": "Кардиолог высшей категории",
+            "about_ru": "Кардиолог высшей категории",
+            "about_tg": "Кардиолог аз категорияи олӣ",
+            "philosophy": "Сердце - самый важный орган, требующий особого внимания",
+            "philosophy_ru": "Сердце - самый важный орган, требующий особого внимания",
+            "philosophy_tg": "Дил - муҳимтарин узв, ки нигоҳи махсусро талаб мекунад",
+            "services": [4, 5, 6],
+            "license_number": "МД234567890",
+            "work_phone_number": "+992000000002",
+            "whatsapp": "+992000000002",
+            "telegram": "@fsaidov",
+            "titles_and_merits": "Профессор кардиологии",
+            "titles_and_merits_ru": "Профессор кардиологии",
+            "titles_and_merits_tg": "Профессори кардиология",
+            "created_at": "2023-02-01T12:00:00Z",
+            "updated_at": "2023-02-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 3,
+        "fields": {
+            "doctor": 2,
+            "language": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 4,
+        "fields": {
+            "doctor": 2,
+            "language": 2,
+            "level": 2
+        }
+    },
+
+
+
+    {
+        "model": "core.customuser",
+        "pk": 102,
+        "fields": {
+            "first_name": "Зебо",
+            "last_name": "Рахимова",
+            "middle_name": "Исмаиловна",
+            "phone_number": "+992000000003",
+            "email": "zrahimova@gmail.com",
+            "date_of_birth": "1985-11-20",
+            "gender": 2,
+            "district": 201,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 3,
+        "fields": {
+            "user": 102,
+            "specialties": [1],
+            "medical_category": 2,
+            "academic_degree": 2,
+            "experience_level": 3,
+            "about": "Акушер-гинеколог с 15-летним стажем",
+            "about_ru": "Акушер-гинеколог с 15-летним стажем",
+            "about_tg": "Акушер-гинеколог бо 15 сол таҷриба",
+            "philosophy": "Здоровье женщины - здоровье нации",
+            "philosophy_ru": "Здоровье женщины - здоровье нации",
+            "philosophy_tg": "Саломатии зан - саломатии миллат",
+            "services": [7, 8, 9],
+            "license_number": "МД345678901",
+            "work_phone_number": "+992000000003",
+            "whatsapp": "+992000000003",
+            "telegram": "@zrahimova",
+            "titles_and_merits": "Лучший акушер-гинеколог 2022 года",
+            "titles_and_merits_ru": "Лучший акушер-гинеколог 2022 года",
+            "titles_and_merits_tg": "Беҳтарин акушер-гинеколог соли 2022",
+            "created_at": "2023-03-01T12:00:00Z",
+            "updated_at": "2023-03-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 5,
+        "fields": {
+            "doctor": 3,
+            "language": 1,
+            "level": 2
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 6,
+        "fields": {
+            "doctor": 3,
+            "language": 2,
+            "level": 1
+        }
+    },
+
+
+
+    {
+        "model": "core.customuser",
+        "pk": 103,
+        "fields": {
+            "first_name": "Шоди",
+            "last_name": "Каримов",
+            "middle_name": "Фаррухович",
+            "phone_number": "+992000000004",
+            "email": "skarimov@gmail.com",
+            "date_of_birth": "1978-04-10",
+            "gender": 1,
+            "district": 203,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 4,
+        "fields": {
+            "user": 103,
+            "specialties": [24],
+            "medical_category": 3,
+            "academic_degree": 4,
+            "experience_level": 4,
+            "about": "Хирург с 25-летним стажем",
+            "about_ru": "Хирург с 25-летним стажем",
+            "about_tg": "Ҷарроҳ бо 25 сол таҷриба",
+            "philosophy": "Точность и аккуратность - залог успешной операции",
+            "philosophy_ru": "Точность и аккуратность - залог успешной операции",
+            "philosophy_tg": "Дақиқӣ ва эҳтиёткорӣ - калиди амалиёти муваффақ",
+            "services": [10, 11, 12],
+            "license_number": "МД456789012",
+            "work_phone_number": "+992000000004",
+            "whatsapp": "+992000000004",
+            "telegram": "@skarimov",
+            "titles_and_merits": "Заслуженный хирург Таджикистана",
+            "titles_and_merits_ru": "Заслуженный хирург Таджикистана",
+            "titles_and_merits_tg": "Ҷарроҳи ҳуқуқдошти Тоҷикистон",
+            "created_at": "2023-04-01T12:00:00Z",
+            "updated_at": "2023-04-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 7,
+        "fields": {
+            "doctor": 4,
+            "language": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 8,
+        "fields": {
+            "doctor": 4,
+            "language": 2,
+            "level": 2
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 9,
+        "fields": {
+            "doctor": 4,
+            "language": 3,
+            "level": 3
+        }
+    },
+
+
+
+    {
+        "model": "core.customuser",
+        "pk": 104,
+        "fields": {
+            "first_name": "Нозия",
+            "last_name": "Юсупова",
+            "middle_name": "Шарифовна",
+            "phone_number": "+992000000005",
+            "email": "nyusupova@gmail.com",
+            "date_of_birth": "1982-07-25",
+            "gender": 2,
+            "district": 301,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 5,
+        "fields": {
+            "user": 104,
+            "specialties": [10],
+            "medical_category": 2,
+            "academic_degree": 3,
+            "experience_level": 3,
+            "about": "Невролог с 12-летним стажем",
+            "about_ru": "Невролог с 12-летним стажем",
+            "about_tg": "Асабшинос бо 12 сол таҷриба",
+            "philosophy": "Нервная система - основа здоровья",
+            "philosophy_ru": "Нервная система - основа здоровья",
+            "philosophy_tg": "Системаи асаб - асоси саломатӣ",
+            "services": [13, 14, 15],
+            "license_number": "МД567890123",
+            "work_phone_number": "+992000000005",
+            "whatsapp": "+992000000005",
+            "telegram": "@nyusupova",
+            "titles_and_merits": "Кандидат медицинских наук",
+            "titles_and_merits_ru": "Кандидат медицинских наук",
+            "titles_and_merits_tg": "Номзади илмҳои тиб",
+            "created_at": "2023-05-01T12:00:00Z",
+            "updated_at": "2023-05-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 10,
+        "fields": {
+            "doctor": 5,
+            "language": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 11,
+        "fields": {
+            "doctor": 5,
+            "language": 3,
+            "level": 4
+        }
+    },
+
+
+
+    {
+        "model": "core.customuser",
+        "pk": 105,
+        "fields": {
+            "first_name": "Равшан",
+            "last_name": "Азизов",
+            "middle_name": "Назирович",
+            "phone_number": "+992000000006",
+            "email": "razizov@gmail.com",
+            "date_of_birth": "1970-09-30",
+            "gender": 1,
+            "district": 304,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 6,
+        "fields": {
+            "user": 105,
+            "specialties": [25],
+            "medical_category": 3,
+            "academic_degree": 4,
+            "experience_level": 4,
+            "about": "Эндокринолог с 30-летним стажем",
+            "about_ru": "Эндокринолог с 30-летним стажем",
+            "about_tg": "Эндокринолог бо 30 сол таҷриба",
+            "philosophy": "Гормоны управляют нашим здоровьем",
+            "philosophy_ru": "Гормоны управляют нашим здоровьем",
+            "philosophy_tg": "Гормонҳо саломатии моро идора мекунанд",
+            "services": [1, 2, 3],
+            "license_number": "МД678901234",
+            "work_phone_number": "+992000000006",
+            "whatsapp": "+992000000006",
+            "telegram": "@razizov",
+            "titles_and_merits": "Заслуженный врач Республики Таджикистан",
+            "titles_and_merits_ru": "Заслуженный врач Республики Таджикистан",
+            "titles_and_merits_tg": "Духтури ҳуқуқдошти Ҷумҳурии Тоҷикистон",
+            "created_at": "2023-06-01T12:00:00Z",
+            "updated_at": "2023-06-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 12,
+        "fields": {
+            "doctor": 6,
+            "language": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 13,
+        "fields": {
+            "doctor": 6,
+            "language": 2,
+            "level": 3
+        }
+    },
+
+
+
+    {
+        "model": "core.customuser",
+        "pk": 106,
+        "fields": {
+            "first_name": "Дилафруз",
+            "last_name": "Хакимова",
+            "middle_name": "Рахимовна",
+            "phone_number": "+992000000007",
+            "email": "dhakimova@gmail.com",
+            "date_of_birth": "1987-12-05",
+            "gender": 2,
+            "district": 401,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 7,
+        "fields": {
+            "user": 106,
+            "specialties": [14],
+            "medical_category": 1,
+            "academic_degree": 2,
+            "experience_level": 2,
+            "about": "Офтальмолог с 8-летним стажем",
+            "about_ru": "Офтальмолог с 8-летним стажем",
+            "about_tg": "Чашмпизишк бо 8 сол таҷриба",
+            "philosophy": "Зрение - бесценный дар",
+            "philosophy_ru": "Зрение - бесценный дар",
+            "philosophy_tg": "Биноӣ - туҳфаи бебаҳо",
+            "services": [4, 5, 6],
+            "license_number": "МД789012345",
+            "work_phone_number": "+992000000007",
+            "whatsapp": "+992000000007",
+            "telegram": "@dhakimova",
+            "titles_and_merits": "Специалист по катаракте",
+            "titles_and_merits_ru": "Специалист по катаракте",
+            "titles_and_merits_tg": "Мутахассиси катаракта",
+            "created_at": "2023-07-01T12:00:00Z",
+            "updated_at": "2023-07-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 14,
+        "fields": {
+            "doctor": 7,
+            "language": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 15,
+        "fields": {
+            "doctor": 7,
+            "language": 4,
+            "level": 2
+        }
+    },
+
+
+
+    {
+        "model": "core.customuser",
+        "pk": 107,
+        "fields": {
+            "first_name": "Фирдавс",
+            "last_name": "Нуров",
+            "middle_name": "Шухратович",
+            "phone_number": "+992000000008",
+            "email": "fnurov@gmail.com",
+            "date_of_birth": "1973-03-18",
+            "gender": 1,
+            "district": 402,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 8,
+        "fields": {
+            "user": 107,
+            "specialties": [22],
+            "medical_category": 2,
+            "academic_degree": 3,
+            "experience_level": 3,
+            "about": "Уролог с 15-летним стажем",
+            "about_ru": "Уролог с 15-летним стажем",
+            "about_tg": "Уролог бо 15 сол таҷриба",
+            "philosophy": "Мужское здоровье - основа семьи",
+            "philosophy_ru": "Мужское здоровье - основа семьи",
+            "philosophy_tg": "Саломатии мард - асоси оила",
+            "services": [7, 8, 9],
+            "license_number": "МД890123456",
+            "work_phone_number": "+992000000008",
+            "whatsapp": "+992000000008",
+            "telegram": "@fnurov",
+            "titles_and_merits": "Член ассоциации урологов Таджикистана",
+            "titles_and_merits_ru": "Член ассоциации урологов Таджикистана",
+            "titles_and_merits_tg": "Аъзои ассотсиатсияи урологҳои Тоҷикистон",
+            "created_at": "2023-08-01T12:00:00Z",
+            "updated_at": "2023-08-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 16,
+        "fields": {
+            "doctor": 8,
+            "language": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 17,
+        "fields": {
+            "doctor": 8,
+            "language": 5,
+            "level": 2
+        }
+    },
+
+
+
+    {
+        "model": "core.customuser",
+        "pk": 108,
+        "fields": {
+            "first_name": "Манижа",
+            "last_name": "Каримова",
+            "middle_name": "Фарходовна",
+            "phone_number": "+992000000009",
+            "email": "mkarimova@gmail.com",
+            "date_of_birth": "1984-06-22",
+            "gender": 2,
+            "district": 501,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 9,
+        "fields": {
+            "user": 108,
+            "specialties": [3],
+            "medical_category": 2,
+            "academic_degree": 3,
+            "experience_level": 3,
+            "about": "Гастроэнтеролог с 10-летним стажем",
+            "about_ru": "Гастроэнтеролог с 10-летним стажем",
+            "about_tg": "Гастроэнтеролог бо 10 сол таҷриба",
+            "philosophy": "Здоровый желудок - залог долголетия",
+            "philosophy_ru": "Здоровый желудок - залог долголетия",
+            "philosophy_tg": "Меъдаи солим - калиди умри дароз",
+            "services": [10, 11, 12],
+            "license_number": "МД901234567",
+            "work_phone_number": "+992000000009",
+            "whatsapp": "+992000000009",
+            "telegram": "@mkarimova",
+            "titles_and_merits": "Специалист по эндоскопии",
+            "titles_and_merits_ru": "Специалист по эндоскопии",
+            "titles_and_merits_tg": "Мутахассиси эндоскопия",
+            "created_at": "2023-09-01T12:00:00Z",
+            "updated_at": "2023-09-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 18,
+        "fields": {
+            "doctor": 9,
+            "language": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 19,
+        "fields": {
+            "doctor": 9,
+            "language": 6,
+            "level": 2
+        }
+    },
+
+
+
+    {
+        "model": "core.customuser",
+        "pk": 109,
+        "fields": {
+            "first_name": "Шерали",
+            "last_name": "Бобоев",
+            "middle_name": "Джураевич",
+            "phone_number": "+992000000010",
+            "email": "sboboev@gmail.com",
+            "date_of_birth": "1965-10-12",
+            "gender": 1,
+            "district": 503,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 10,
+        "fields": {
+            "user": 109,
+            "specialties": [12],
+            "medical_category": 3,
+            "academic_degree": 4,
+            "experience_level": 4,
+            "about": "Онколог с 25-летним стажем",
+            "about_ru": "Онколог с 25-летним стажем",
+            "about_tg": "Саратоншинос бо 25 сол таҷриба",
+            "philosophy": "Ранняя диагностика спасает жизни",
+            "philosophy_ru": "Ранняя диагностика спасает жизни",
+            "philosophy_tg": "Ташхиси барвақт ҳаётҳоро наҷот медиҳад",
+            "services": [13, 14, 15],
+            "license_number": "МД012345678",
+            "work_phone_number": "+992000000010",
+            "whatsapp": "+992000000010",
+            "telegram": "@sboboev",
+            "titles_and_merits": "Профессор онкологии",
+            "titles_and_merits_ru": "Профессор онкологии",
+            "titles_and_merits_tg": "Профессори саратоншиносӣ",
+            "created_at": "2023-10-01T12:00:00Z",
+            "updated_at": "2023-10-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 20,
+        "fields": {
+            "doctor": 10,
+            "language": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "doctors.doctorlanguage",
+        "pk": 21,
+        "fields": {
+            "doctor": 10,
+            "language": 7,
+            "level": 2
+        }
+    }
+]

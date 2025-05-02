@@ -10,8 +10,6 @@ class Doctor(models.Model):
     """
     Модель врача, содержащая основную информацию о специалисте
     """
-
-    # Связь с пользователем
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -20,7 +18,6 @@ class Doctor(models.Model):
         help_text=_("Связанный аккаунт пользователя")
     )
 
-    # Специализация, медицинская категория и ученая степень
     specialties = models.ManyToManyField(
         Specialty,
         blank=True,
@@ -61,14 +58,12 @@ class Doctor(models.Model):
         help_text=_("Краткое описание своей деятельности")
     )
 
-    # Описание
     philosophy = models.TextField(
         blank=True,
         verbose_name=_("Философия работы"),
         help_text=_("Краткое описание подхода к пациентам")
     )
 
-    # Услуги, которые предоставляет врач
     services = models.ManyToManyField(
         Service,
         blank=True,
@@ -76,7 +71,6 @@ class Doctor(models.Model):
         help_text=_("Медицинские услуги, которые предоставляет врач")
     )
 
-    # Контактная информация
     license_number = models.CharField(
         max_length=100,
         blank=True,
@@ -91,7 +85,6 @@ class Doctor(models.Model):
         message=_("Номер телефона должен быть в формате: '+992XXYYYYYY'."),
     )
 
-    # Поле для номера телефона
     work_phone_number = models.CharField(
         _('Рабочий телефон'),
         validators=[phone_regex],
@@ -118,7 +111,6 @@ class Doctor(models.Model):
         help_text=_("Номер телефона или никнейм для связи через Telegram")
     )
 
-    # Звания и заслуги
     titles_and_merits = models.TextField(
         blank=True,
         verbose_name=_("Звания и заслуги"),

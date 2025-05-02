@@ -1,0 +1,368 @@
+[
+    {
+        "model": "core.customuser",
+        "pk": 200,
+        "fields": {
+            "first_name": "Дилшод",
+            "last_name": "Садриддинов",
+            "middle_name": "Озарович",
+            "phone_number": "+992100000001",
+            "email": "dsadriddinov1@gmail.com",
+            "date_of_birth": "1975-08-08",
+            "gender": 1,
+            "subscription": 1,
+            "district": 101,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 1,
+        "fields": {
+            "user": 200,
+            "passport": "P123456789",
+            "registration_address": "Таджикистан, г. Душанбе, улица Айни 18, дом 33",
+            "actual_address": "Таджикистан, г. Душанбе, улица Айни 18, дом 33",
+            "sin": "123456789",
+            "eng": "123456789",
+            "weight": "85.50",
+            "height": "185.70",
+            "blood_type": "A+",
+            "social_status": 3,
+            "created_at": "2023-01-01T12:00:00Z",
+            "updated_at": "2023-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 201,
+        "fields": {
+            "first_name": "Фаррух",
+            "last_name": "Каримов",
+            "middle_name": "Саидович",
+            "phone_number": "+992200000002",
+            "email": "fkarimov@gmail.com",
+            "date_of_birth": "1980-05-15",
+            "gender": 1,
+            "district": 201,
+            "subscription": 1,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 2,
+        "fields": {
+            "user": 201,
+            "passport": "P987654321",
+            "registration_address": "Таджикистан, РРП, район Рудаки, ул. Центральная 5",
+            "actual_address": "Таджикистан, РРП, район Рудаки, ул. Центральная 5",
+            "sin": "987654321",
+            "eng": "987654321",
+            "weight": "78.20",
+            "height": "178.00",
+            "blood_type": "B+",
+            "social_status": 7,
+            "created_at": "2023-01-02T12:00:00Z",
+            "updated_at": "2023-01-02T12:00:00Z"
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 202,
+        "fields": {
+            "first_name": "Зебо",
+            "last_name": "Рахимова",
+            "middle_name": "Фарруховна",
+            "phone_number": "+992300000003",
+            "email": "zrahimova@gmail.com",
+            "date_of_birth": "1990-11-20",
+            "gender": 2,
+            "district": 301,
+            "subscription": 2,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 3,
+        "fields": {
+            "user": 202,
+            "passport": "P456123789",
+            "registration_address": "Таджикистан, Согдийская обл., г. Худжанд, ул. Ленина 45",
+            "actual_address": "Таджикистан, Согдийская обл., г. Худжанд, ул. Ленина 45",
+            "sin": "456123789",
+            "eng": "456123789",
+            "weight": "65.00",
+            "height": "168.50",
+            "blood_type": "AB+",
+            "social_status": 8,
+            "created_at": "2023-01-03T12:00:00Z",
+            "updated_at": "2023-01-03T12:00:00Z"
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 203,
+        "fields": {
+            "first_name": "Шоди",
+            "last_name": "Юсупов",
+            "middle_name": "Каримович",
+            "phone_number": "+992400000004",
+            "email": "syusupov@gmail.com",
+            "date_of_birth": "1972-03-25",
+            "gender": 1,
+            "district": 401,
+            "subscription": 2,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 4,
+        "fields": {
+            "user": 203,
+            "passport": "P789456123",
+            "registration_address": "Таджикистан, Хатлонская обл., г. Бохтар, ул. Саади 12",
+            "actual_address": "Таджикистан, Хатлонская обл., г. Бохтар, ул. Саади 12",
+            "sin": "789456123",
+            "eng": "789456123",
+            "weight": "90.00",
+            "height": "182.00",
+            "blood_type": "O+",
+            "social_status": 2,
+            "created_at": "2023-01-04T12:00:00Z",
+            "updated_at": "2023-01-04T12:00:00Z"
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 204,
+        "fields": {
+            "first_name": "Малика",
+            "last_name": "Алиева",
+            "middle_name": "Шодиевна",
+            "phone_number": "+992500000005",
+            "email": "malieva@gmail.com",
+            "date_of_birth": "1985-07-12",
+            "gender": 2,
+            "district": 501,
+            "subscription": 3,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 5,
+        "fields": {
+            "user": 204,
+            "passport": "P321654987",
+            "registration_address": "Таджикистан, ГБАО, г. Хорог, ул. Помирская 7",
+            "actual_address": "Таджикистан, ГБАО, г. Хорог, ул. Помирская 7",
+            "sin": "321654987",
+            "eng": "321654987",
+            "weight": "60.50",
+            "height": "165.00",
+            "blood_type": "A-",
+            "social_status": 9,
+            "created_at": "2023-01-05T12:00:00Z",
+            "updated_at": "2023-01-05T12:00:00Z"
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 205,
+        "fields": {
+            "first_name": "Рустам",
+            "last_name": "Хакимов",
+            "middle_name": "Фарходович",
+            "phone_number": "+992100000006",
+            "email": "rhakimov@gmail.com",
+            "date_of_birth": "1995-02-18",
+            "gender": 1,
+            "district": 102,
+            "subscription": 3,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 6,
+        "fields": {
+            "user": 205,
+            "passport": "P654987321",
+            "registration_address": "Таджикистан, г. Душанбе, ул. Сомони 25",
+            "actual_address": "Таджикистан, г. Душанбе, ул. Сомони 25",
+            "sin": "654987321",
+            "eng": "654987321",
+            "weight": "75.00",
+            "height": "180.00",
+            "blood_type": "B-",
+            "social_status": 1,
+            "created_at": "2023-01-06T12:00:00Z",
+            "updated_at": "2023-01-06T12:00:00Z"
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 206,
+        "fields": {
+            "first_name": "Нигина",
+            "last_name": "Шарипова",
+            "middle_name": "Рустамовна",
+            "phone_number": "+992200000007",
+            "email": "nsharipova@gmail.com",
+            "date_of_birth": "2000-09-30",
+            "gender": 2,
+            "district": 202,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 7,
+        "fields": {
+            "user": 206,
+            "passport": "P987321654",
+            "registration_address": "Таджикистан, РРП, район Вахдат, ул. Школьная 10",
+            "actual_address": "Таджикистан, РРП, район Вахдат, ул. Школьная 10",
+            "sin": "987321654",
+            "eng": "987321654",
+            "weight": "55.00",
+            "height": "160.00",
+            "blood_type": "O-",
+            "social_status": 6,
+            "created_at": "2023-01-07T12:00:00Z",
+            "updated_at": "2023-01-07T12:00:00Z"
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 207,
+        "fields": {
+            "first_name": "Бахтиёр",
+            "last_name": "Нуров",
+            "middle_name": "Шарифович",
+            "phone_number": "+992300000008",
+            "email": "bnurov@gmail.com",
+            "date_of_birth": "1968-12-05",
+            "gender": 1,
+            "district": 302,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 8,
+        "fields": {
+            "user": 207,
+            "passport": "P321987654",
+            "registration_address": "Таджикистан, Согдийская обл., г. Истаравшан, ул. Мирзо Турсунзаде 3",
+            "actual_address": "Таджикистан, Согдийская обл., г. Истаравшан, ул. Мирзо Турсунзаде 3",
+            "sin": "321987654",
+            "eng": "321987654",
+            "weight": "80.50",
+            "height": "175.00",
+            "blood_type": "AB-",
+            "social_status": 10,
+            "created_at": "2023-01-08T12:00:00Z",
+            "updated_at": "2023-01-08T12:00:00Z"
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 208,
+        "fields": {
+            "first_name": "Сабохат",
+            "last_name": "Кодирова",
+            "middle_name": "Бахтиёровна",
+            "phone_number": "+992400000009",
+            "email": "skodirova@gmail.com",
+            "date_of_birth": "1978-04-22",
+            "gender": 2,
+            "district": 402,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 9,
+        "fields": {
+            "user": 208,
+            "passport": "P654321987",
+            "registration_address": "Таджикистан, Хатлонская обл., г. Куляб, ул. Рудаки 15",
+            "actual_address": "Таджикистан, Хатлонская обл., г. Куляб, ул. Рудаки 15",
+            "sin": "654321987",
+            "eng": "654321987",
+            "weight": "70.00",
+            "height": "170.00",
+            "blood_type": "A+",
+            "social_status": 4,
+            "created_at": "2023-01-09T12:00:00Z",
+            "updated_at": "2023-01-09T12:00:00Z"
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 209,
+        "fields": {
+            "first_name": "Фирдавс",
+            "last_name": "Мирзоев",
+            "middle_name": "Бозорович",
+            "phone_number": "+992500000010",
+            "email": "fmirzoev@gmail.com",
+            "date_of_birth": "1983-06-14",
+            "gender": 1,
+            "district": 502,
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 10,
+        "fields": {
+            "user": 209,
+            "passport": "P789123456",
+            "registration_address": "Таджикистан, ГБАО, г. Мургаб, ул. Советская 8",
+            "actual_address": "Таджикистан, ГБАО, г. Мургаб, ул. Советская 8",
+            "sin": "789123456",
+            "eng": "789123456",
+            "weight": "72.50",
+            "height": "177.00",
+            "blood_type": "B+",
+            "social_status": 5,
+            "created_at": "2023-01-10T12:00:00Z",
+            "updated_at": "2023-01-10T12:00:00Z"
+        }
+    }
+]

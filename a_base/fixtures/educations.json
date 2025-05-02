@@ -1,0 +1,282 @@
+[
+    {
+        "model": "doctors.education",
+        "pk": 1,
+        "fields": {
+            "doctor": 1,
+            "institution_name_ru": "ТГМИ им. Абуали ибни Сино",
+            "institution_name_tg": "ДДТТ ба номи Абуали ибни Сино",
+            "city_ru": "Душанбе",
+            "city_tg": "Душанбе",
+            "country_ru": "Таджикистан",
+            "country_tg": "Тоҷикистон",
+            "graduation_year": 2003
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 2,
+        "fields": {
+            "doctor": 1,
+            "institution_name_ru": "Российский национальный исследовательский медицинский университет им. Н.И. Пирогова",
+            "institution_name_tg": "Донишгоҳи тиббии миллии таҳқиқотии Россия ба номи Н.И. Пирогов",
+            "city_ru": "Москва",
+            "city_tg": "Москва",
+            "country_ru": "Россия",
+            "country_tg": "Русия",
+            "graduation_year": 2010
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 3,
+        "fields": {
+            "doctor": 2,
+            "institution_name_ru": "Таджикский государственный медицинский университет",
+            "institution_name_tg": "Донишгоҳи давлатии тиббии Тоҷикистон",
+            "city_ru": "Душанбе",
+            "city_tg": "Душанбе",
+            "country_ru": "Таджикистан",
+            "country_tg": "Тоҷикистон",
+            "graduation_year": 1998
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 4,
+        "fields": {
+            "doctor": 2,
+            "institution_name_ru": "Медицинский университет Вены",
+            "institution_name_tg": "Донишгоҳи тиббии Вена",
+            "city_ru": "Вена",
+            "city_tg": "Вена",
+            "country_ru": "Австрия",
+            "country_tg": "Австрия",
+            "graduation_year": 2005
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 5,
+        "fields": {
+            "doctor": 3,
+            "institution_name_ru": "Казанский государственный медицинский университет",
+            "institution_name_tg": "Донишгоҳи давлатии тиббии Казан",
+            "city_ru": "Казань",
+            "city_tg": "Казан",
+            "country_ru": "Россия",
+            "country_tg": "Русия",
+            "graduation_year": 2012
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 6,
+        "fields": {
+            "doctor": 4,
+            "institution_name_ru": "Самаркандский государственный медицинский институт",
+            "institution_name_tg": "Институти давлатии тиббии Самарқанд",
+            "city_ru": "Самарканд",
+            "city_tg": "Самарқанд",
+            "country_ru": "Узбекистан",
+            "country_tg": "Узбакистон",
+            "graduation_year": 2007
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 7,
+        "fields": {
+            "doctor": 5,
+            "institution_name_ru": "Московская медицинская академия им. И.М. Сеченова",
+            "institution_name_tg": "Академияи тиббии Москва ба номи И.М. Сеченов",
+            "city_ru": "Москва",
+            "city_tg": "Москва",
+            "country_ru": "Россия",
+            "country_tg": "Русия",
+            "graduation_year": 2001
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 8,
+        "fields": {
+            "doctor": 5,
+            "institution_name_ru": "Гарвардская медицинская школа",
+            "institution_name_tg": "Макони тиббии Ҳарвард",
+            "city_ru": "Бостон",
+            "city_tg": "Бостон",
+            "country_ru": "США",
+            "country_tg": "ИМА",
+            "graduation_year": 2008
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 9,
+        "fields": {
+            "doctor": 6,
+            "institution_name_ru": "Кыргызская государственная медицинская академия",
+            "institution_name_tg": "Академияи давлатии тиббии Қирғизистон",
+            "city_ru": "Бишкек",
+            "city_tg": "Бишкек",
+            "country_ru": "Кыргызстан",
+            "country_tg": "Қирғизистон",
+            "graduation_year": 2015
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 10,
+        "fields": {
+            "doctor": 7,
+            "institution_name_ru": "Санкт-Петербургский государственный медицинский университет",
+            "institution_name_tg": "Донишгоҳи давлатии тиббии Санкт-Петербург",
+            "city_ru": "Санкт-Петербург",
+            "city_tg": "Санкт-Петербург",
+            "country_ru": "Россия",
+            "country_tg": "Русия",
+            "graduation_year": 2009
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 11,
+        "fields": {
+            "doctor": 7,
+            "institution_name_ru": "Берлинский университет имени Гумбольдта",
+            "institution_name_tg": "Донишгоҳи Гумбольдт дар Берлин",
+            "city_ru": "Берлин",
+            "city_tg": "Берлин",
+            "country_ru": "Германия",
+            "country_tg": "Олмон",
+            "graduation_year": 2014
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 12,
+        "fields": {
+            "doctor": 8,
+            "institution_name_ru": "Медицинский университет Карачи",
+            "institution_name_tg": "Донишгоҳи тиббии Карачи",
+            "city_ru": "Карачи",
+            "city_tg": "Карачи",
+            "country_ru": "Пакистан",
+            "country_tg": "Покистон",
+            "graduation_year": 2000
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 13,
+        "fields": {
+            "doctor": 9,
+            "institution_name_ru": "Тегеранский университет медицинских наук",
+            "institution_name_tg": "Донишгоҳи илмҳои тиббии Теҳрон",
+            "city_ru": "Тегеран",
+            "city_tg": "Теҳрон",
+            "country_ru": "Иран",
+            "country_tg": "Эрон",
+            "graduation_year": 2011
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 14,
+        "fields": {
+            "doctor": 9,
+            "institution_name_ru": "Королевский колледж хирургов в Ирландии",
+            "institution_name_tg": "Коллеҷи подшоҳии ҷарроҳон дар Ирландия",
+            "city_ru": "Дублин",
+            "city_tg": "Дублин",
+            "country_ru": "Ирландия",
+            "country_tg": "Ирландия",
+            "graduation_year": 2016
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 15,
+        "fields": {
+            "doctor": 10,
+            "institution_name_ru": "Медицинский университет Астаны",
+            "institution_name_tg": "Донишгоҳи тиббии Астана",
+            "city_ru": "Астана",
+            "city_tg": "Астана",
+            "country_ru": "Казахстан",
+            "country_tg": "Қазоқистон",
+            "graduation_year": 2017
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 16,
+        "fields": {
+            "doctor": 10,
+            "institution_name_ru": "Университет Джонса Хопкинса",
+            "institution_name_tg": "Донишгоҳи Ҷонс Ҳопкинс",
+            "city_ru": "Балтимор",
+            "city_tg": "Балтимор",
+            "country_ru": "США",
+            "country_tg": "ИМА",
+            "graduation_year": 2020
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 17,
+        "fields": {
+            "doctor": 3,
+            "institution_name_ru": "Токийский медицинский университет",
+            "institution_name_tg": "Донишгоҳи тиббии Токио",
+            "city_ru": "Токио",
+            "city_tg": "Токио",
+            "country_ru": "Япония",
+            "country_tg": "Ҷопон",
+            "graduation_year": 2018
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 18,
+        "fields": {
+            "doctor": 4,
+            "institution_name_ru": "Университет Торонто, медицинский факультет",
+            "institution_name_tg": "Донишгоҳи Торонто, факултаи тиб",
+            "city_ru": "Торонто",
+            "city_tg": "Торонто",
+            "country_ru": "Канада",
+            "country_tg": "Канада",
+            "graduation_year": 2006
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 19,
+        "fields": {
+            "doctor": 6,
+            "institution_name_ru": "Пекинский университет медицинских наук",
+            "institution_name_tg": "Донишгоҳи илмҳои тиббии Пекин",
+            "city_ru": "Пекин",
+            "city_tg": "Пекин",
+            "country_ru": "Китай",
+            "country_tg": "Хитой",
+            "graduation_year": 2013
+        }
+    },
+    {
+        "model": "doctors.education",
+        "pk": 20,
+        "fields": {
+            "doctor": 8,
+            "institution_name_ru": "Королевский колледж врачей Лондона",
+            "institution_name_tg": "Коллеҷи подшоҳии духтурон дар Лондон",
+            "city_ru": "Лондон",
+            "city_tg": "Лондон",
+            "country_ru": "Великобритания",
+            "country_tg": "Британияи Кабир",
+            "graduation_year": 2004
+        }
+    }
+]

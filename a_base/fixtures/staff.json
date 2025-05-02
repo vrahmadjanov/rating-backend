@@ -1,0 +1,31 @@
+[
+    {
+        "model": "core.customuser",
+        "pk": 1,
+        "fields": {
+            "first_name": "Администратор",
+            "last_name": "Системы",
+            "phone_number": "+992000502207",
+            "email": "rahmadjanov.of@gmail.com",
+            "date_of_birth": "2002-08-08",
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_staff": "True",
+            "is_superuser": "True",
+            "groups": [1]
+        }
+    },
+    {
+        "model": "core.customuser",
+        "pk": 2,
+        "fields": {
+            "first_name": "Поддержка",
+            "last_name": "Техническая",
+            "phone_number": "+992000502702",
+            "email": "support@fazo.example",
+            "date_of_birth": "2002-08-08",
+            "password": "pbkdf2_sha256$870000$FclPzFL1XVQQ7epvkmSmsU$GU3m77mM0id4di9CgZtxvut+JEGsuLGYltFejFZfAyg=",
+            "is_staff": "True",
+            "groups": [1]
+        }
+    }
+]

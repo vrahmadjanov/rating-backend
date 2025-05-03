@@ -61,21 +61,3 @@ class DoctorViewSet(viewsets.ModelViewSet):
         else:
             # Для других типов подписок (если будут добавлены)
             return Doctor.objects.none()
-        
-    @action(detail=True, methods=['put', 'patch'], url_path='update-profile')
-    def update_profile(self, request, pk=None):
-        """Кастомный эндпоинт для обновления своего профиля"""
-        doctor = self.get_object()
-        
-        # Проверка владельца
-        if doctor.user != request.user:
-            return Response(
-                {"detail": "Вы не можете редактировать этот профиль"},
-                status=status.HTTP_403_FORBIDDEN
-            )
-            
-        serializer = self.get_serializer(doctor, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        
-        return Response(serializer.data)

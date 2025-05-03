@@ -37,7 +37,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
         exclude = ['subscription_start_date', 'subscription_end_date', 
                    'confirmation_code', 'confirmation_code_created_at',
                    'user_permissions', 'is_staff', 'is_active', 'is_superuser', 
-                   'last_login', 'password']
+                   'last_login']
+        extra_kwargs = {
+            'password': {'write_only': True}
+            }
         
 
     def get_gender(self, obj):

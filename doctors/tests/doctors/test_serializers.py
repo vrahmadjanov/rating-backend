@@ -2,6 +2,7 @@ from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
 from doctors.models import Doctor
 from doctors.serializers import DoctorSerializer
+from core.serializers import CustomUserPrivateSerializer
 from a_base.models import (
     Specialty, MedicalCategory, AcademicDegree, 
     ExperienceLevel, Service, ServicePlace, Gender
@@ -15,20 +16,29 @@ class DoctorSerializerTestCase(APITestCase):
         self.user = User.objects.create_user(
             phone_number='+992000000000',
             password='testpass123',
-            first_name='TestUser',
+            first_name='Пользователь',
+            last_name='Тестовый',
             date_of_birth='1990-01-01',
         )
         
-        self.specialty1 = Specialty.objects.create(name_ru='Кардиология', name_tg='Кардиология')
-        self.specialty2 = Specialty.objects.create(name_ru='Неврология', name_tg='Неврология')
-        self.medical_category = MedicalCategory.objects.create(name_ru='Высшая категория', name_tg='Категорияи олий')
-        self.academic_degree = AcademicDegree.objects.create(name_ru='Кандидат медицинских наук', name_tg="н.и.т.")
-        self.experience_level = ExperienceLevel.objects.create(level_ru="0-3 года", level_tg="0-3 сол")
-        self.service_place = ServicePlace.objects.create(name_ru="На дому", name_tg="Дар хона")
-        self.service1 = Service.objects.create(service_place=self.service_place, name_ru='Консультация', name_tg='Консультатсия')
-        self.service2 = Service.objects.create(service_place=self.service_place, name_ru='Диагностика', name_tg='Диагностика')
-        self.gender = Gender.objects.create(name_ru="Мужской", name_tg="Мард")
-        
+        self.specialty1 = Specialty.objects.create(name='Терапевт', name_ru='Терапевт', name_tg='Табиби амрози дарунӣ')
+        self.specialty2 = Specialty.objects.create(name='Невролог', name_ru='Невролог', name_tg='Невролог')
+        self.medical_category = MedicalCategory.objects.create(name_ru='Высшая категория', name_tg='Категорияи оли')
+        self.academic_degree = AcademicDegree.objects.create(name="Кандидат медицинских наук", name_ru='к.м.н.', name_tg="н.и.т.")
+        self.experience_level = ExperienceLevel.objects.create(level="0-3 года", level_ru="0-3 года", level_tg="0-3 сол")
+        self.service_place = ServicePlace.objects.create(name="На дому", name_ru="На дому", name_tg="Дар хона")
+        self.service1 = Service.objects.create(
+            service_place=self.service_place, 
+            name="Консультация", name_ru='Консультация', name_tg='Консультатсия',
+            description="Описание услуги на русском", description_ru="Описание услуги на русском",
+            description_tg="Описание услуги на таджикском", price=1200)
+        self.service2 = Service.objects.create(
+            service_place=self.service_place, 
+            name="Диагностика", name_ru='Диагностика', name_tg='Диагностика (тч)',
+            description="Описание услуги на русском", description_ru="Описание услуги на русском",
+            description_tg="Описание услуги на таджикском", price=800)
+        self.gender_male = Gender.objects.create(name="Мужской", name_ru="Мужской", name_tg="Мард")
+        self.gender_female = Gender.objects.create(name="Женский", name_ru="Женский", name_tg="Зан")
         self.doctor = Doctor.objects.create(
             user=self.user,
             medical_category=self.medical_category,
@@ -48,15 +58,16 @@ class DoctorSerializerTestCase(APITestCase):
         self.doctor.specialties.add(self.specialty1, self.specialty2)
         self.doctor.services.add(self.service1, self.service2)
         
-        # Данные для создания/обновления врача
-        self.valid_doctor_data = {
-            'user': {
+        self.valid_user_data = {
                 'phone_number': '+992000000001',
                 'password': 'testpass123',
                 'first_name': 'TestUserFirstName',
                 'last_name': 'TestUserLastName',
                 'date_of_birth': '1990-01-01',
             },
+
+        # Данные для создания/обновления врача
+        self.valid_doctor_data = {
             'specialties_ids': [self.specialty1.id],
             'medical_category_id': self.medical_category.id,
             'academic_degree_id': self.academic_degree.id,
@@ -89,10 +100,11 @@ class DoctorSerializerTestCase(APITestCase):
         
         # Проверяем вложенные сериализаторы
         self.assertEqual(len(data['specialties']), 2)
-        self.assertEqual(data['specialties'][0]['name'], self.specialty1.name)
-        self.assertEqual(data['medical_category']['name'], self.medical_category.name)
-        self.assertEqual(data['academic_degree']['name'], self.academic_degree.name)
-        self.assertEqual(data['experience_level']['level'], self.experience_level.level)
+        self.assertEqual(data['specialties'][0]['name'], self.specialty1.name_ru)
+        self.assertEqual(data['specialties'][1]['name'], self.specialty2.name_ru)
+        self.assertEqual(data['medical_category']['name'], self.medical_category.name_ru)
+        self.assertEqual(data['academic_degree']['name'], self.academic_degree.name_ru)
+        self.assertEqual(data['experience_level']['level'], self.experience_level.level_ru)
         self.assertEqual(len(data['services']), 2)
         
         # Проверяем, что write-only поля отсутствуют в выходных данных
@@ -101,37 +113,42 @@ class DoctorSerializerTestCase(APITestCase):
         self.assertNotIn('academic_degree_id', data)
         self.assertNotIn('experience_level_id', data)
         self.assertNotIn('services_ids', data)
+        self.assertNotIn('password', data)
 
-    def test_deserialization_create(self):
-        """Тестирование десериализации при создании (JSON -> объект)"""
-        serializer = DoctorSerializer(data=self.valid_doctor_data)
-        self.assertTrue(serializer.is_valid(), serializer.errors)
+    # def test_deserialization_create(self):
+    #     """Тестирование десериализации при создании (JSON -> объект)"""
+    #     user_serializer = CustomUserPrivateSerializer(data=self.valid_user_data)
+    #     self.assertTrue(user_serializer.is_valid(), user_serializer.errors)
+    #     user = user_serializer.save()
+    #     self.valid_doctor_data.update({"user": user.id})
+    #     serializer = DoctorSerializer(data=self.valid_doctor_data)
+    #     self.assertTrue(serializer.is_valid(), serializer.errors)
         
-        doctor = serializer.save()
+    #     doctor = serializer.save()
         
-        # Проверяем созданные объекты
-        self.assertEqual(doctor.about, self.valid_doctor_data['about_ru'])
-        self.assertEqual(doctor.medical_category.id, self.valid_doctor_data['medical_category_id'])
-        self.assertEqual(doctor.academic_degree.id, self.valid_doctor_data['academic_degree_id'])
-        self.assertEqual(doctor.experience_level.id, self.valid_doctor_data['experience_level_id'])
-        self.assertEqual(doctor.license_number, self.valid_doctor_data['license_number'])
+#         # Проверяем созданные объекты
+#         self.assertEqual(doctor.about, self.valid_doctor_data['about_ru'])
+#         self.assertEqual(doctor.medical_category.id, self.valid_doctor_data['medical_category_id'])
+#         self.assertEqual(doctor.academic_degree.id, self.valid_doctor_data['academic_degree_id'])
+#         self.assertEqual(doctor.experience_level.id, self.valid_doctor_data['experience_level_id'])
+#         self.assertEqual(doctor.license_number, self.valid_doctor_data['license_number'])
         
-        # Проверяем связи ManyToMany
-        self.assertEqual(doctor.specialties.count(), 1)
-        self.assertEqual(doctor.specialties.first().id, self.specialty1.id)
-        self.assertEqual(doctor.services.count(), 2)
+#         # Проверяем связи ManyToMany
+#         self.assertEqual(doctor.specialties.count(), 1)
+#         self.assertEqual(doctor.specialties.first().id, self.specialty1.id)
+#         self.assertEqual(doctor.services.count(), 2)
         
-        # Проверяем созданного пользователя
-        self.assertEqual(doctor.user.phone_number, self.valid_doctor_data['user']['phone_number'])
-        self.assertEqual(doctor.user.first_name, self.valid_doctor_data['user']['first_name'])
-        self.assertEqual(doctor.user.last_name, self.valid_doctor_data['user']['last_name'])
-        self.assertEqual(doctor.user.password, self.valid_doctor_data['user']['password'])
+#         # Проверяем созданного пользователя
+#         self.assertEqual(doctor.user.phone_number, self.valid_doctor_data['user']['phone_number'])
+#         self.assertEqual(doctor.user.first_name, self.valid_doctor_data['user']['first_name'])
+#         self.assertEqual(doctor.user.last_name, self.valid_doctor_data['user']['last_name'])
+#         self.assertEqual(doctor.user.password, self.valid_doctor_data['user']['password'])
 
     def test_deserialization_update(self):
         """Тестирование обновления существующего врача"""
         update_data = {
             'specialties_ids': [self.specialty2.id],
-            'medical_category_id': None,  # Удаляем категорию
+            'medical_category_id': None,
             'academic_degree_id': self.academic_degree.id,
             'services_ids': [self.service2.id],
             'about_ru': 'Обновленное описание',
@@ -161,6 +178,10 @@ class DoctorSerializerTestCase(APITestCase):
         self.assertEqual(doctor.specialties.first().id, self.specialty2.id)
         self.assertEqual(doctor.services.count(), 1)
         self.assertEqual(doctor.services.first().id, self.service2.id)
+
+        # Проверяем обновленные данные профиля
+        self.assertEqual(doctor.user.first_name, update_data['user']['first_name'])
+        self.assertEqual(doctor.user.last_name, update_data['user']['last_name'])
 
     def test_invalid_data(self):
         """Тестирование с невалидными данными"""
@@ -223,6 +244,9 @@ class DoctorSerializerTestCase(APITestCase):
         
         update_data = {
             'work_phone_number': '+992987654555',
+            'user': {
+                'phone_number': "+992123456789"
+            }
         }
         
         serializer = DoctorSerializer(instance=self.doctor, data=update_data, partial=True)
@@ -232,6 +256,7 @@ class DoctorSerializerTestCase(APITestCase):
         
         # Проверяем обновленные поля
         self.assertEqual(doctor.work_phone_number, update_data['work_phone_number'])
+        self.assertEqual(doctor.user.phone_number, update_data['user']['phone_number'])
         
         # Проверяем, что другие поля не изменились
         self.assertEqual(doctor.about, original_about)

@@ -9,7 +9,7 @@ from django.utils import translation
 from django.conf import settings
 
 class DoctorSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
+    user = CustomUserPrivateSerializer()
     specialties = SpecialtySerializer(many=True, read_only=True)
     medical_category = MedicalCategorySerializer(read_only=True)
     academic_degree = AcademicDegreeSerializer(read_only=True)
@@ -25,13 +25,6 @@ class DoctorSerializer(serializers.ModelSerializer):
     philosophy_tg = serializers.CharField(write_only=True, required=False)
     titles_and_merits_ru = serializers.CharField(write_only=True, required=True)
     titles_and_merits_tg = serializers.CharField(write_only=True, required=False)
-
-    def get_user(self, obj):
-        request = self.context.get('request')
-        if request and request.user == obj.user:
-            return CustomUserPrivateSerializer(obj.user).data
-        else: 
-            return CustomUserPublicSerializer(obj.user).data
 
     def get_about(self, obj):
         lang = translation.get_language()
@@ -101,6 +94,7 @@ class DoctorSerializer(serializers.ModelSerializer):
             'created_at', 'updated_at',
             'specialties_ids', 'medical_category_id', 'academic_degree_id', 'experience_level_id', 'services_ids',
         ]
+
 
     def update(self, instance, validated_data):
         """Обновляет профиль врача"""

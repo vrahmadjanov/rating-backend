@@ -1,5 +1,6 @@
 from django.db import models
 from clinics.models import Clinic
+from .schedule import Schedule
 from django.utils.translation import gettext_lazy as _
 
 class Workplace(models.Model):
@@ -8,7 +9,6 @@ class Workplace(models.Model):
     Содержит информацию о должности и периоде работы.
     """
 
-    # Связь с врачом
     doctor = models.ForeignKey(
         "Doctor",
         on_delete=models.CASCADE,
@@ -17,7 +17,6 @@ class Workplace(models.Model):
         help_text="Врач, который работал или работает в этом учреждении"
     )
 
-    # Связь с медицинским учреждением
     clinic = models.ForeignKey(
         Clinic,
         on_delete=models.CASCADE,
@@ -26,7 +25,15 @@ class Workplace(models.Model):
         help_text="Медицинское учреждение, где работал или работает врач"
     )
 
-    # Должность врача
+    schedule = models.OneToOneField(
+        Schedule,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Расписание",
+        help_text="Расписание по дням недели по которому работает врач"
+    )
+
     position = models.CharField(
         null=True,
         blank=True,
@@ -35,7 +42,6 @@ class Workplace(models.Model):
         help_text="Должность, которую занимал или занимает врач"
     )
 
-    # Дата начала работы
     start_date = models.DateField(
         null=True,
         blank=True,
@@ -43,7 +49,6 @@ class Workplace(models.Model):
         help_text="Дата, когда врач начал работать в этом учреждении"
     )
 
-    # Дата окончания работы (может быть null, если врач продолжает работать)
     end_date = models.DateField(
         null=True,
         blank=True,
@@ -54,7 +59,7 @@ class Workplace(models.Model):
     class Meta:
         verbose_name = "Место работы"
         verbose_name_plural = "Места работы"
-        ordering = ["-start_date"]  # Сортировка по дате начала работы (сначала новые)
+        ordering = ["-start_date"]
 
     def __str__(self):
         """

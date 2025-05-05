@@ -22,3 +22,16 @@ class IsDoctorOwnerOrReadOnly(BasePermission):
         
         # Редактирование только владельцу профиля
         return obj.user == request.user or request.user.is_staff
+    
+class IsDoctorOrAdminOrReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        # Разрешаем чтение для всех аутентифицированных пользователей
+        if request.method in SAFE_METHODS:
+            return request.user and request.user.is_authenticated
+        
+        # Разрешаем запись только администраторам или пользователям в группе 'Доктор'
+        return (
+            request.user and 
+            request.user.is_authenticated and 
+            (request.user.is_staff or request.user.groups.filter(name='Доктор').exists())
+        )

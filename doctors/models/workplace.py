@@ -1,7 +1,8 @@
 from django.db import models
 from clinics.models import Clinic
-from .schedule import Schedule
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
+
 
 class Workplace(models.Model):
     """
@@ -25,15 +26,6 @@ class Workplace(models.Model):
         help_text="Медицинское учреждение, где работал или работает врач"
     )
 
-    schedule = models.OneToOneField(
-        Schedule,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name="Расписание",
-        help_text="Расписание по дням недели по которому работает врач"
-    )
-
     position = models.CharField(
         null=True,
         blank=True,
@@ -42,29 +34,34 @@ class Workplace(models.Model):
         help_text="Должность, которую занимал или занимает врач"
     )
 
-    start_date = models.DateField(
-        null=True,
-        blank=True,
-        verbose_name="Дата начала работы",
-        help_text="Дата, когда врач начал работать в этом учреждении"
-    )
+    monday_start = models.TimeField(verbose_name="Понедельник - начало",blank=True, null=True)
+    monday_end = models.TimeField(verbose_name="Понедельник - конец", blank=True, null=True)
+    tuesday_start = models.TimeField(verbose_name="Вторник - начало", blank=True, null=True)
+    tuesday_end = models.TimeField(verbose_name="Вторник - конец", blank=True, null=True)
+    wednesday_start = models.TimeField(verbose_name="Среда - начало", blank=True, null=True)
+    wednesday_end = models.TimeField(verbose_name="Среда - конец", blank=True, null=True)
+    thursday_start = models.TimeField(verbose_name="Четверг - начало", blank=True, null=True)
+    thursday_end = models.TimeField(verbose_name="Четверг - конец", blank=True, null=True)
+    friday_start = models.TimeField(verbose_name="Пятница - начало", blank=True, null=True)
+    friday_end = models.TimeField(verbose_name="Пятница - конец", blank=True, null=True)
+    saturday_start = models.TimeField(verbose_name="Суббота - начало", blank=True, null=True)
+    saturday_end = models.TimeField(verbose_name="Суббота - конец", blank=True, null=True)
+    sunday_start = models.TimeField(verbose_name="Воскресенье - начало", blank=True, null=True)
+    sunday_end = models.TimeField(verbose_name="Воскресенье - конец", blank=True, null=True)
 
-    end_date = models.DateField(
-        null=True,
-        blank=True,
-        verbose_name="Дата окончания работы",
-        help_text="Дата, когда врач закончил работать в этом учреждении (если продолжает работать, оставьте пустым)"
+    appointment_interval = models.PositiveSmallIntegerField(
+        verbose_name="Интервал приема",
+        default=30,
+        validators=[MinValueValidator(15), MaxValueValidator(360)],
+        help_text="Длительность одного приема пациента в минутах (15-360)"
     )
 
     class Meta:
         verbose_name = "Место работы"
         verbose_name_plural = "Места работы"
-        ordering = ["-start_date"]
 
     def __str__(self):
         """
         Возвращает строковое представление места работы.
-        Формат: "Должность в Название учреждения (Год начала - Год окончания)".
         """
-        end_date = self.end_date.strftime("%Y") if self.end_date else "настоящее время"
-        return f"{self.doctor.user.email} - {self.position} в {self.medical_institution.name} ({self.start_date.year} - {end_date})"
+        return f"{self.doctor.user.get_full_name} - {self.position} в {self.clinic.name}"

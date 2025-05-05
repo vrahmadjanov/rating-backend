@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (DistrictViewSet, RegionViewSet, SubscriptionViewSet, GroupViewSet,
                     AcademicDegreeViewSet, SpecialtyViewSet, MedicalCategoryViewSet, ServiceViewSet,
                     LanguageViewSet, LanguageLevelViewSet, GenderViewSet, ExperienceLevelViewSet,
-                    SocialStatusViewSet)
+                    SocialStatusViewSet, UniversityViewSet)
 
 router = DefaultRouter()
 router.register(r'regions', RegionViewSet, basename='region')
@@ -17,6 +17,7 @@ router.register(r'specialties', SpecialtyViewSet, basename='specialty')
 router.register(r'services', ServiceViewSet, basename='service')
 router.register(r'genders', GenderViewSet, basename='gender')
 router.register(r'experience_levels', ExperienceLevelViewSet, basename='experience_level')
+router.register(r'universities', UniversityViewSet, basename='university')
 
 router.register(r'languages', LanguageViewSet, basename='language')
 router.register(r'language_levels', LanguageLevelViewSet, basename='language_level')

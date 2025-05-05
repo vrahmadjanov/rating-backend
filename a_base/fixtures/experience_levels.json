@@ -3,27 +3,27 @@
         "model": "a_base.experiencelevel",
         "pk": 1,
         "fields": {
-            "level": "0-3 года",
-            "level_ru": "0-3 года",
-            "level_tg": "0-3 сол"
+            "level": "0-3",
+            "level_ru": "0-3",
+            "level_tg": "0-3"
         }
     },
     {
         "model": "a_base.experiencelevel",
         "pk": 2,
         "fields": {
-            "level": "4-10 лет",
-            "level_ru": "4-10 лет",
-            "level_tg": "4-10 сол"
+            "level": "4-10",
+            "level_ru": "4-10",
+            "level_tg": "4-10"
         }
     },
     {
         "model": "a_base.experiencelevel",
         "pk": 3,
         "fields": {
-            "level": "11-20 лет",
-            "level_ru": "11-20 лет",
-            "level_tg": "11-20 сол"
+            "level": "11-20",
+            "level_ru": "11-20",
+            "level_tg": "11-20"
         }
     },
     {

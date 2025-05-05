@@ -56,8 +56,16 @@ class Command(BaseCommand):
             'врачи'
         )
         self._load_fixture_with_logging(
+            'a_base/fixtures/universities.json',
+            'университетов'
+        )
+        self._load_fixture_with_logging(
             'a_base/fixtures/educations.json',
             'образования врачей'
+        )
+        self._load_fixture_with_logging(
+            'a_base/fixtures/workplaces.json',
+            'мест работы врачей'
         )
         self._load_fixture_with_logging(
             'a_base/fixtures/patients.json',

@@ -1,10 +1,10 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Doctor, Education
+from .models import Doctor, Workplace
 
 @register(Doctor)
 class DoctorTranslationOptions(TranslationOptions):
     fields = ('about', 'philosophy', 'titles_and_merits')
 
-@register(Education)
-class EducationTranslationOptions(TranslationOptions):
-    fields = ('institution_name', 'city', 'country')  
+@register(Workplace)
+class WorkplaceTranslationOptions(TranslationOptions):
+    fields = ('position',)  

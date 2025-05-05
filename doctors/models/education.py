@@ -1,11 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .doctors import Doctor
+from a_base.models import University
 
 class Education(models.Model):
     """
     Модель для хранения информации об образовании врача.
-    Содержит данные о вузе, городе, стране и годе окончания.
+    Содержит данные о вузе и годе окончания.
     """
 
     doctor = models.ForeignKey(
@@ -16,22 +17,12 @@ class Education(models.Model):
         help_text=_("Врач, к которому относится это образование")
     )
 
-    institution_name = models.CharField(
-        max_length=255,
-        verbose_name=_("Название вуза"),
-        help_text=_("Название учебного заведения")
-    )
-
-    city = models.CharField(
-        max_length=100,
-        verbose_name=_("Город"),
-        help_text=_("Город, где находится учебное заведение")
-    )
-
-    country = models.CharField(
-        max_length=100,
-        verbose_name=_("Страна"),
-        help_text=_("Страна, где находится учебное заведение")
+    university = models.ForeignKey(
+        University, 
+        on_delete=models.CASCADE,
+        related_name="educations",
+        verbose_name=_("Университет"),
+        help_text=_("Университет, в котором доктор получил образование")
     )
 
     graduation_year = models.PositiveIntegerField(
@@ -49,4 +40,4 @@ class Education(models.Model):
         Возвращает строковое представление образования.
         Формат: "Название вуза, Город, Страна (Год окончания)".
         """
-        return f"{self.institution_name}, {self.city}, {self.country} ({self.graduation_year})"
+        return f"{self.doctor.user.get_full_name} | {self.university.name} ({self.graduation_year})"

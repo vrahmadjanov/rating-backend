@@ -58,12 +58,6 @@ class Doctor(models.Model):
         help_text=_("Краткое описание своей деятельности")
     )
 
-    philosophy = models.TextField(
-        blank=True,
-        verbose_name=_("Философия работы"),
-        help_text=_("Краткое описание подхода к пациентам")
-    )
-
     services = models.ManyToManyField(
         Service,
         blank=True,

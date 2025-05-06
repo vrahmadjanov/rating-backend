@@ -46,8 +46,6 @@ class DoctorSerializerTestCase(APITestCase):
             experience_level=self.experience_level,
             about_ru='Опытный врач',
             about_tg='Опытный врач (tj)',
-            philosophy_ru='Индивидуальный подход',
-            philosophy_tg='Индивидуальный подход (tj)',
             license_number='LIC123',
             work_phone_number='+992987654321',
             whatsapp='+992987654321',
@@ -76,9 +74,6 @@ class DoctorSerializerTestCase(APITestCase):
             'about': 'Новый врач',
             'about_ru': 'Новый врач',
             'about_tg': 'Духтури нав',
-            'philosophy': 'Новый подход',
-            'philosophy_ru': 'Новый подход',
-            'philosophy_tg': 'Новый подход (tj)',
             'license_number': 'LIC456',
             'work_phone_number': '+992987654322',
             'whatsapp': '+992987654322',
@@ -153,8 +148,6 @@ class DoctorSerializerTestCase(APITestCase):
             'services_ids': [self.service2.id],
             'about_ru': 'Обновленное описание',
             'about_tg': 'Обновленное описание (tj)',
-            'philosophy_ru': 'Новая философия',
-            'philosophy_tj': 'Новая философия (tj)',
             'work_phone_number': '+992987654333',
             'user': {
                 'first_name': 'John Updated',
@@ -169,7 +162,6 @@ class DoctorSerializerTestCase(APITestCase):
         
         # Проверяем обновленные поля
         self.assertEqual(doctor.about, update_data['about_ru'])
-        self.assertEqual(doctor.philosophy, update_data['philosophy_ru'])
         self.assertEqual(doctor.work_phone_number, update_data['work_phone_number'])
         self.assertIsNone(doctor.medical_category)
         
@@ -211,8 +203,6 @@ class DoctorSerializerTestCase(APITestCase):
             'services': [self.service1],
             'about_ru': 'Новое описание',
             'about_tg': 'Новое описание (tj)',
-            'philosophy_ru': 'Новая философия',
-            'philosophy_tg': 'Новая философия (tj)',
             'license_number': 'NEW123',
             'work_phone_number': '+992987654444',
             'whatsapp': '+992987654444',
@@ -224,7 +214,6 @@ class DoctorSerializerTestCase(APITestCase):
         
         # Проверяем обновленные поля
         self.assertEqual(updated_doctor.about, update_data['about_ru'])
-        self.assertEqual(updated_doctor.philosophy, update_data['philosophy_ru'])
         self.assertEqual(updated_doctor.license_number, update_data['license_number'])
         self.assertEqual(updated_doctor.work_phone_number, update_data['work_phone_number'])
         self.assertEqual(updated_doctor.whatsapp, update_data['whatsapp'])
@@ -240,7 +229,6 @@ class DoctorSerializerTestCase(APITestCase):
     def test_partial_update(self):
         """Тестирование частичного обновления"""
         original_about = self.doctor.about
-        original_philosophy = self.doctor.philosophy
         
         update_data = {
             'work_phone_number': '+992987654555',
@@ -260,6 +248,5 @@ class DoctorSerializerTestCase(APITestCase):
         
         # Проверяем, что другие поля не изменились
         self.assertEqual(doctor.about, original_about)
-        self.assertEqual(doctor.philosophy, original_philosophy)
         self.assertEqual(doctor.medical_category, self.medical_category)
         self.assertEqual(doctor.academic_degree, self.academic_degree)

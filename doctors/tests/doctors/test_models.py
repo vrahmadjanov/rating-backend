@@ -35,7 +35,6 @@ class DoctorModelTestCase(TestCase):
             'academic_degree': self.academic_degree,
             'experience_level': self.experience_level,
             'about': 'Опытный врач с 3-летним стажем',
-            'philosophy': 'Индивидуальный подход к каждому пациенту',
             'license_number': 'LIC123456',
             'work_phone_number': '+992987654321',
             'whatsapp': '+992987654321',
@@ -56,7 +55,6 @@ class DoctorModelTestCase(TestCase):
         self.assertEqual(doctor.academic_degree, self.academic_degree)
         self.assertEqual(doctor.experience_level, self.experience_level)
         self.assertEqual(doctor.about, self.doctor_data['about'])
-        self.assertEqual(doctor.philosophy, self.doctor_data['philosophy'])
         self.assertEqual(doctor.license_number, self.doctor_data['license_number'])
         self.assertEqual(doctor.work_phone_number, self.doctor_data['work_phone_number'])
         self.assertEqual(doctor.whatsapp, self.doctor_data['whatsapp'])
@@ -94,7 +92,6 @@ class DoctorModelTestCase(TestCase):
         self.assertEqual(doctor.specialties.count(), 0)
         self.assertEqual(doctor.services.count(), 0)
         self.assertEqual(doctor.about, '')
-        self.assertEqual(doctor.philosophy, '')
         self.assertIsNone(doctor.license_number)
         self.assertIsNone(doctor.work_phone_number)
         self.assertIsNone(doctor.whatsapp)

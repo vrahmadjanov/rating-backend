@@ -4,8 +4,6 @@
         "pk": 1,
         "fields": {
             "name": "Администратор",
-            "name_ru": "Администратор",
-            "name_tg": "Мудир",
             "permissions": []
         }
     },
@@ -14,8 +12,6 @@
         "pk": 2,
         "fields": {
             "name": "Доктор",
-            "name_ru": "Доктор",
-            "name_tg": "Духтур",
             "permissions": []
         }
     },
@@ -24,8 +20,6 @@
         "pk": 3,
         "fields": {
             "name": "Пациент",
-            "name_ru": "Пациент",
-            "name_tg": "Бемор",
             "permissions": []
         }
     }

@@ -60,10 +60,13 @@ def clean_graduation_year(graduation_year):
     if pd.isna(graduation_year) or not graduation_year:
         return False
     
-    graduation_year = int(graduation_year)
-    if graduation_year < 1900 and graduation_year > 2025:
+    try:
+        graduation_year = int(graduation_year)
+        if graduation_year < 1900 or graduation_year > 2025:  # Исправлено условие с and на or
+            return False
+        return graduation_year
+    except ValueError:
         return False
-    return graduation_year
 
 class Command(BaseCommand):
     help = 'Imports doctors from a fixed Excel file path'
@@ -131,6 +134,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         file_path = os.path.join(settings.BASE_DIR, "sughd_db.xlsx")
+        error_rows = []  # Список для хранения строк с ошибками
+        error_indices = []  # Список для хранения индексов строк с ошибками
+        error_reasons = []  # Список для хранения причин ошибок
 
         try:
             # Чтение и переименование столбцов
@@ -153,12 +159,18 @@ class Command(BaseCommand):
                     phone_number = clean_phone(row.get('work_phone_number'))
                     if not phone_number:
                         not_processed += 1
+                        error_rows.append(row)
+                        error_indices.append(index)
+                        error_reasons.append("Неверный номер телефона")
                         continue
 
                     # 2. Проверка даты рождения
                     date_of_birth = clean_date(row.get('date_of_birth'))
                     if not date_of_birth:
                         not_processed += 1
+                        error_rows.append(row)
+                        error_indices.append(index)
+                        error_reasons.append("Неверная дата рождения")
                         continue
                     date_of_birth = datetime.strptime(row['date_of_birth'], "%d/%m/%Y").date()
 
@@ -166,21 +178,50 @@ class Command(BaseCommand):
                     inn = clean_inn(row.get('inn'))
                     if inn is False:
                         not_processed += 1
+                        error_rows.append(row)
+                        error_indices.append(index)
+                        error_reasons.append("Неверный ИНН")
                         continue
 
                     # Проверка существования пользователя
                     if user_exists(phone_number=phone_number, inn=inn, email=row.get('email')):
                         not_processed += 1
+                        error_rows.append(row)
+                        error_indices.append(index)
+                        error_reasons.append("Пользователь уже существует")
                         continue
 
                     first_name = row['first_name_tg'] if pd.isna(row['first_name_ru']) or row['first_name_ru'] == '' else row['first_name_ru']
                     last_name = row['last_name_tg'] if pd.isna(row['last_name_ru']) or row['last_name_ru'] == '' else row['last_name_tg']
                     middle_name = row['middle_name_tg'] if pd.isna(row['middle_name_ru']) or row['middle_name_ru'] == '' else row['middle_name_tg']
-                    gender = Gender.objects.get(name_ru=row['gender']) 
-                    district = District.objects.get(name_ru=row['district']) 
+                    
+                    try:
+                        gender = Gender.objects.get(name_ru=row['gender']) 
+                    except Gender.DoesNotExist:
+                        not_processed += 1
+                        error_rows.append(row)
+                        error_indices.append(index)
+                        error_reasons.append("Неверный пол")
+                        continue
+                    
+                    try:
+                        district = District.objects.get(name_ru=row['district']) 
+                    except District.DoesNotExist:
+                        not_processed += 1
+                        error_rows.append(row)
+                        error_indices.append(index)
+                        error_reasons.append("Неверный район")
+                        continue
 
                     clinic_type = ClinicType.objects.get(id=1)                
-                    experience_level = ExperienceLevel.objects.get(level_ru=row['experience_level'])
+                    try:
+                        experience_level = ExperienceLevel.objects.get(level_ru=row['experience_level'])
+                    except ExperienceLevel.DoesNotExist:
+                        not_processed += 1
+                        error_rows.append(row)
+                        error_indices.append(index)
+                        error_reasons.append("Неверный уровень опыта")
+                        continue
 
                     clinic = Clinic.objects.filter(
                         Q(name_ru=row['clinic_name_ru']) | 
@@ -255,14 +296,20 @@ class Command(BaseCommand):
 
                         medical_category_name = row['medical_category']
                         if pd.notna(medical_category_name) and medical_category_name != 'Нет категории':
+                            try:
                                 medical_category = MedicalCategory.objects.get(name_ru=medical_category_name)
+                            except MedicalCategory.DoesNotExist:
+                                medical_category = None
                         else:
                             medical_category = None
 
                         academic_degree_name = row['academic_degree']
                         if pd.notna(academic_degree_name) and academic_degree_name != 'надорам;':
+                            try:
                                 academic_degree_name, _ = academic_degree_name.split(';')
                                 academic_degree = AcademicDegree.objects.get(name_tg=academic_degree_name)
+                            except (ValueError, AcademicDegree.DoesNotExist):
+                                academic_degree = None
                         else:
                             academic_degree = None
 
@@ -299,37 +346,61 @@ class Command(BaseCommand):
 
                     if doctor.user.first_name == row['first_name_ru'] or doctor.user.first_name == row['first_name_tg']:
                         if pd.notna(row['lang_tg']):
-                            language = Language.objects.get(name_ru='Таджикский')
-                            level = LanguageLevel.objects.get(level_ru=row['lang_tg'])
-                            DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            try:
+                                language = Language.objects.get(name_ru='Таджикский')
+                                level = LanguageLevel.objects.get(level_ru=row['lang_tg'])
+                                DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            except (Language.DoesNotExist, LanguageLevel.DoesNotExist):
+                                pass
                         if pd.notna(row['lang_ru']):
-                            language = Language.objects.get(name_ru='Русский')
-                            level = LanguageLevel.objects.get(level_ru=row['lang_ru'])
-                            DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            try:
+                                language = Language.objects.get(name_ru='Русский')
+                                level = LanguageLevel.objects.get(level_ru=row['lang_ru'])
+                                DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            except (Language.DoesNotExist, LanguageLevel.DoesNotExist):
+                                pass
                         if pd.notna(row['lang_uz']):
-                            language = Language.objects.get(name_ru='Узбекский')
-                            level = LanguageLevel.objects.get(level_ru=row['lang_uz'])
-                            DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            try:
+                                language = Language.objects.get(name_ru='Узбекский')
+                                level = LanguageLevel.objects.get(level_ru=row['lang_uz'])
+                                DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            except (Language.DoesNotExist, LanguageLevel.DoesNotExist):
+                                pass
                         if pd.notna(row['lang_en']):
-                            language = Language.objects.get(name_ru='Английский')
-                            level = LanguageLevel.objects.get(level_ru=row['lang_en'])
-                            DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            try:
+                                language = Language.objects.get(name_ru='Английский')
+                                level = LanguageLevel.objects.get(level_ru=row['lang_en'])
+                                DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            except (Language.DoesNotExist, LanguageLevel.DoesNotExist):
+                                pass
                         if pd.notna(row['lang_kg']):
-                            language = Language.objects.get(name_ru='Кыргызский')
-                            level = LanguageLevel.objects.get(level_ru=row['lang_kg'])
-                            DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            try:
+                                language = Language.objects.get(name_ru='Кыргызский')
+                                level = LanguageLevel.objects.get(level_ru=row['lang_kg'])
+                                DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            except (Language.DoesNotExist, LanguageLevel.DoesNotExist):
+                                pass
                         if pd.notna(row['lang_dt']):
-                            language = Language.objects.get(name_ru='Немецкий')
-                            level = LanguageLevel.objects.get(level_ru=row['lang_dt'])
-                            DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            try:
+                                language = Language.objects.get(name_ru='Немецкий')
+                                level = LanguageLevel.objects.get(level_ru=row['lang_dt'])
+                                DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            except (Language.DoesNotExist, LanguageLevel.DoesNotExist):
+                                pass
                         if pd.notna(row['lang_in']):
-                            language = Language.objects.get(name_ru='Хинди')
-                            level = LanguageLevel.objects.get(level_ru=row['lang_in'])
-                            DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            try:
+                                language = Language.objects.get(name_ru='Хинди')
+                                level = LanguageLevel.objects.get(level_ru=row['lang_in'])
+                                DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            except (Language.DoesNotExist, LanguageLevel.DoesNotExist):
+                                pass
                         if pd.notna(row['lang_tr']):
-                            language = Language.objects.get(name_ru="Турецкий")
-                            level = LanguageLevel.objects.get(level_ru=row['lang_tr'])
-                            DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            try:
+                                language = Language.objects.get(name_ru="Турецкий")
+                                level = LanguageLevel.objects.get(level_ru=row['lang_tr'])
+                                DoctorLanguage.objects.create(doctor=doctor, language=language, level=level)
+                            except (Language.DoesNotExist, LanguageLevel.DoesNotExist):
+                                pass
 
                     for s in self.service_list:
                         service_name, service_place = s.split(';')
@@ -361,9 +432,26 @@ class Command(BaseCommand):
 
                 except Exception as e:
                     errors += 1
+                    error_rows.append(row)
+                    error_indices.append(index)
+                    error_reasons.append(str(e))
                     self.stdout.write(self.style.ERROR(f'{errors-1}. Error processing row {index}: {str(e)}'))
                     continue
             
+            # Сохраняем ошибки в Excel файл
+            if error_rows:
+                error_df = pd.DataFrame(error_rows)
+                error_df['Оригинальный индекс'] = error_indices
+                error_df['Причина ошибки'] = error_reasons
+                
+                # Восстанавливаем оригинальные названия столбцов
+                reverse_mapping = {v: k for k, v in self.COLUMN_MAPPING.items()}
+                error_df.rename(columns=reverse_mapping, inplace=True)
+                
+                error_file_path = os.path.join(settings.BASE_DIR, "import_errors.xlsx")
+                error_df.to_excel(error_file_path, index=False)
+                self.stdout.write(self.style.WARNING(f'Файл с ошибками сохранен: {error_file_path}'))
+
             self.stdout.write(self.style.SUCCESS(
                 f'Import completed. Created: {created_doctors} doctors, {created_clinics} clinics, {created_workplaces} workplaces, {created_universities} universities, {created_educations} educations, {created_specialties} specialties. Errors: {errors}, Not Processed: {not_processed}'
             ))

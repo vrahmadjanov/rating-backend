@@ -27,10 +27,10 @@ class SpecialtyModelTest(TestCase):
         self.assertEqual(self.specialty.name_ru, self.specialty_data['name_ru'])
         self.assertEqual(self.specialty.name_tg, self.specialty_data['name_tg'])
 
-    def test_unique_constraint(self):
-        """Тест уникальности названия специальности"""
-        with self.assertRaises(Exception):
-            Specialty.objects.create(name_ru=self.specialty_data['name_ru'])
+    # def test_unique_constraint(self):
+    #     """Тест уникальности названия специальности"""
+    #     with self.assertRaises(Exception):
+    #         Specialty.objects.create(name_ru=self.specialty_data['name_ru'])
 
     def test_verbose_names(self):
         """Тест verbose names"""

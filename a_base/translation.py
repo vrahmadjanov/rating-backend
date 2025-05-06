@@ -26,11 +26,6 @@ class AdvantageTranslationOptions(TranslationOptions):
 class SubscriptionTranslationOptions(TranslationOptions):
     fields = ('name', 'description')
 
-# group
-@register(Group)
-class GroupTranslationOptions(TranslationOptions):
-    fields = ('name',)
-
 # gender
 @register(Gender)
 class GenderTranslationOptions(TranslationOptions):

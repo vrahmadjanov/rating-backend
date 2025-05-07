@@ -6,7 +6,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from a_base.models import District, Subscription, Gender
 
-from .managers import CustomUserManager
+from core.managers import CustomUserManager
 from storages.backends.s3boto3 import S3Boto3Storage
 
 media_storage = S3Boto3Storage()

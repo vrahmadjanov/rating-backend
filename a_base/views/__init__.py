@@ -1,6 +1,7 @@
 from .groups import GroupViewSet
 from .locations import RegionViewSet, DistrictViewSet
 from .subscriptions import SubscriptionViewSet
+from .appointment_statuses import AppointmentStatusViewSet
 
 from .academic_degrees import AcademicDegreeViewSet
 from .specialties import SpecialtyViewSet
@@ -12,3 +13,4 @@ from .experience_levels import ExperienceLevelViewSet
 from .universities import UniversityViewSet
 
 from .social_statuses import SocialStatusViewSet
+from .cancel_reasons import CancelReasonViewSet

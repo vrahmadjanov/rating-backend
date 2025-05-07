@@ -2,6 +2,7 @@ from .locations import RegionSerializer, DistrictSerializer
 from .subscriptions import AdvantageSerializer, SubscriptionSerializer
 from .genders import GenderSerializer
 from .groups import GroupSerializer
+from .appointment_statuses import AppointmentStatusSerializer
 
 from .specialties import SpecialtySerializer
 from .academic_degrees import AcademicDegreeSerializer
@@ -12,3 +13,4 @@ from .experience_levels import ExperienceLevelSerializer
 from .universities import UniversitySerializer
 
 from .social_statuses import SocialStatusSerializer
+from .cancel_reasons import CancelReasonSerializer

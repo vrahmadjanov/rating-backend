@@ -9,3 +9,5 @@ from .experience_levels import ExperienceLevelAdmin
 from .genders import GenderAdmin
 from .social_statuses import SocialStatusAdmin
 from .universities import UniversityAdmin
+from .appointment_statuses import AppointmentStatusAdmin
+from .cancel_reasons import CancelReasonAdmin

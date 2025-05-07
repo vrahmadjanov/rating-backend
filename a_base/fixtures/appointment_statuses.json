@@ -1,0 +1,38 @@
+[
+    {
+        "model": "a_base.appointmentstatus",
+        "pk": 1,
+        "fields": {
+            "name": "Предстоящий",
+            "name_ru": "Предстоящий",
+            "name_tg": "Омадаистода"
+        }
+    },
+    {
+        "model": "a_base.appointmentstatus",
+        "pk": 2,
+        "fields": {
+            "name": "Завершен",
+            "name_ru": "Завершен",
+            "name_tg": "Анҷомёфта"
+        }
+    },
+    {
+        "model": "a_base.appointmentstatus",
+        "pk": 3,
+        "fields": {
+            "name": "Отменен",
+            "name_ru": "Отменен",
+            "name_tg": "Бекор карда шуд"
+        }
+    },
+    {
+        "model": "a_base.appointmentstatus",
+        "pk": 4,
+        "fields": {
+            "name": "Пациент не явился",
+            "name_ru": "Пациент не явился",
+            "name_tg": "Бемор наомад"
+        }
+    }
+]

@@ -1,0 +1,56 @@
+[
+    {
+        "model": "a_base.cancelreason",
+        "pk": 1,
+        "fields": {
+            "name": "Перенос приема",
+            "name_ru": "Перенос приема",
+            "name_tg": "Гузориши қабул"
+        }
+    },
+    {
+        "model": "a_base.cancelreason",
+        "pk": 2,
+        "fields": {
+            "name": "Погодные условия",
+            "name_ru": "Погодные условия",
+            "name_tg": "Шароити обу ҳаво"
+        }
+    },
+    {
+        "model": "a_base.cancelreason",
+        "pk": 3,
+        "fields": {
+            "name": "Неожиданные рабочие обстоятельства",
+            "name_ru": "Неожиданные рабочие обстоятельства",
+            "name_tg": "Ҳолатҳои ғайричаҳони корӣ"
+        }
+    },
+    {
+        "model": "a_base.cancelreason",
+        "pk": 4,
+        "fields": {
+            "name": "Личные причины",
+            "name_ru": "Личные причины",
+            "name_tg": "Сабабҳои шахсӣ"
+        }
+    },
+    {
+        "model": "a_base.cancelreason",
+        "pk": 5,
+        "fields": {
+            "name": "Проблемы со здоровьем",
+            "name_ru": "Проблемы со здоровьем",
+            "name_tg": "Мушкилотҳо бо саломатӣ"
+        }
+    },
+    {
+        "model": "a_base.cancelreason",
+        "pk": 6,
+        "fields": {
+            "name": "Другое",
+            "name_ru": "Другое",
+            "name_tg": "Дигар"
+        }
+    }
+]

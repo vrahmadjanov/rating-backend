@@ -1,11 +1,10 @@
 from modeltranslation.translator import register, TranslationOptions
-from django.contrib.auth.models import Group
 from .models import (
     Region, District,
-    Advantage, Subscription, Gender,
+    Advantage, Subscription, Gender, AppointmentStatus,
     Specialty, AcademicDegree, MedicalCategory, Service, ServicePlace, 
     Language, LanguageLevel, ExperienceLevel,
-    SocialStatus, University
+    SocialStatus, CancelReason, University
     )
 
 # locations
@@ -29,6 +28,11 @@ class SubscriptionTranslationOptions(TranslationOptions):
 # gender
 @register(Gender)
 class GenderTranslationOptions(TranslationOptions):
+    fields = ('name',)
+
+# appointment status
+@register(AppointmentStatus)
+class AppointmentStatusTranslationOptions(TranslationOptions):
     fields = ('name',)
 
 # doctor profile information
@@ -74,3 +78,8 @@ class SocialStatusTranslationOptions(TranslationOptions):
 @register(University)
 class UniversityTranslationOptions(TranslationOptions):
     fields = ('name', 'city', 'country')
+
+# cancel reasons
+@register(CancelReason)
+class CancelReasonTranslationOptions(TranslationOptions):
+    fields = ('name',)

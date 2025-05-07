@@ -37,6 +37,8 @@ class Command(BaseCommand):
             ('academic_degrees.json', 'ученые степени'),
             ('services.json', 'услуги'),
             ('experience_levels.json', 'уровни опыта'),
+            ('appointment_statuses.json', 'статусы записей'),
+            ('cancel_reasons.json', 'причины отмены'),
         ]
 
         for fixture, name in medical_fixtures:

@@ -1,6 +1,7 @@
 from .locations import Region, District
 from .subscriptions import Advantage, Subscription
 from .genders import Gender
+from .appointment_statuses import AppointmentStatus
 
 from .specialties import Specialty
 from .academic_degrees import AcademicDegree
@@ -11,3 +12,4 @@ from .experience_levels import ExperienceLevel
 from .universities import University
 
 from .social_statuses import SocialStatus
+from .cancel_reasons import CancelReason

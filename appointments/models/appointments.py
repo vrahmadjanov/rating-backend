@@ -1,46 +1,27 @@
-# appointments.models.appointments.py
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from a_base.models import AppointmentStatus, Gender, CancelReason
 from patients.models import Patient
 from doctors.models import Doctor
-
+ 
 class Appointment(models.Model):
     """Модель записи на прием к врачу с встроенным временем приема."""
-    
-    class Status(models.TextChoices):
-        COMPLETE = 'complete', _('Завершен')
-        UPCOMING = 'upcoming', _('Предстоящий')
-        CANCELLED = 'cancelled', _('Отменен')
-        NOSHOW = 'noshow', _('Пациент не явился')
-
-    class Gender(models.TextChoices):
-        MALE = 'M', _('Мужской')
-        FEMALE = 'F', _('Женский')
-        OTHER = 'other', _('Другое')
-
-    class CancelReason(models.TextChoices):
-        RESCHEDULING = 'rescheduling', _('Перенос приема')
-        WEATHER = 'weather', _('Погодные условия')
-        WORK = 'work', _('Неожиданные рабочие обстоятельства')
-        PERSONAL = 'personal', _('Личные причины')
-        HEALTH = 'health', _('Проблемы со здоровьем')
-        OTHERS = 'others', _('Другое')
 
     # Основные связи
     doctor = models.ForeignKey(
         Doctor,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         verbose_name="Врач",
-        related_name='appointments'
+        related_name="appointments"
     )
     
     patient = models.ForeignKey(
         Patient,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         verbose_name="Пациент",
-        related_name='appointments'
+        related_name="appointments"
     )
 
     # Время приема
@@ -60,19 +41,20 @@ class Appointment(models.Model):
     )
 
     # Статус и отмена
-    status = models.CharField(
-        max_length=10,
-        choices=Status.choices,
-        default=Status.UPCOMING,
-        verbose_name="Статус приема"
+    status = models.ForeignKey(
+        AppointmentStatus,
+        on_delete=models.CASCADE,
+        verbose_name=_("Статус приема"),
+        help_text=_("Статус приема")
     )
     
-    cancellation_reason = models.CharField(
-        max_length=20,
-        choices=CancelReason.choices,
-        blank=True,
+    cancellation_reason = models.ForeignKey(
+        CancelReason,
+        on_delete=models.SET_NULL,
         null=True,
-        verbose_name="Причина отмены"
+        blank=True,
+        verbose_name=_("Причина отмены приема"),
+        help_text=_("Причина отмены приема пациентом")
     )
     
     cancellation_notes = models.TextField(
@@ -121,12 +103,13 @@ class Appointment(models.Model):
         validators=[MinValueValidator(0), MaxValueValidator(120)]
     )
     
-    another_patient_gender = models.CharField(
-        max_length=10,
-        choices=Gender.choices,
-        blank=True,
+    another_patient_gender = models.ForeignKey(
+        Gender,
+        on_delete=models.SET_NULL,
         null=True,
-        verbose_name="Пол"
+        blank=True,
+        verbose_name=_("Пол пациента"),
+        help_text=_("Пол пациента, который записывается на прием")
     )
     
     problem_description = models.TextField(
@@ -158,7 +141,7 @@ class Appointment(models.Model):
         ]
 
     def __str__(self):
-        patient_name = self.another_patient_name if self.is_another_patient else self.patient.user.get_full_name()
+        patient_name = self.another_patient_name if self.is_another_patient else self.patient.user.get_full_name
         return f"{self.appointment_date} {self.start_time}-{self.end_time}: {patient_name} -> {self.doctor}"
 
     def clean(self):
@@ -174,18 +157,18 @@ class Appointment(models.Model):
             raise ValidationError("Укажите ФИО пациента при записи другого человека")
             
         # Проверка причины отмены
-        if self.status == self.Status.CANCELLED and not self.cancellation_reason:
+        if self.status == AppointmentStatus.objects.get(name_ru="Отменен") and not self.cancellation_reason:
             raise ValidationError("Укажите причину отмены записи")
             
-        if self.cancellation_reason == self.CancelReason.OTHERS and not self.cancellation_notes:
+        if self.cancellation_reason == CancelReason.objects.get(name_ru="Другое") and not self.cancellation_notes:
             raise ValidationError("Укажите детали причины при выборе 'Другое'")
 
     def cancel(self, by_patient=None, reason=None, notes=None):
         """Метод для отмены записи."""
-        if self.status == self.Status.CANCELLED:
+        if self.status == AppointmentStatus.objects.get(name_ru="Отменен"):
             raise ValueError("Запись уже отменена")
             
-        self.status = self.Status.CANCELLED
+        self.status = AppointmentStatus.objects.get(name_ru="Отменен")
         self.cancellation_reason = reason
         self.cancellation_notes = notes
         self.cancelled_at = timezone.now()
@@ -193,7 +176,7 @@ class Appointment(models.Model):
 
     def complete(self):
         """Метод для отметки о завершении приема."""
-        self.status = self.Status.COMPLETE
+        self.status = AppointmentStatus.objects.get(name_ru="Завершен")
         self.save()
 
     def reschedule(self, new_date, new_start, new_end):
@@ -210,4 +193,4 @@ class Appointment(models.Model):
         appointment_datetime = timezone.make_aware(
             timezone.datetime.combine(self.appointment_date, self.start_time)
         )
-        return self.status == self.Status.UPCOMING and appointment_datetime > now
+        return self.status == AppointmentStatus.objects.get(name_ru="Предстоящий") and appointment_datetime > now

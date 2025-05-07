@@ -22,5 +22,13 @@
             "name": "Пациент",
             "permissions": []
         }
+    },
+    {
+        "model": "auth.group",
+        "pk": 4,
+        "fields": {
+            "name": "Сотрудник службы поддержки",
+            "permissions": []
+        }
     }
 ]

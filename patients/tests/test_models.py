@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from datetime import date
 from decimal import Decimal
 from a_base.models import SocialStatus, Gender, District, Subscription, Advantage, Region
@@ -195,19 +196,21 @@ class PatientModelTest(TestCase):
         patient.save()
         self.assertIsNone(patient.bmi)
 
-    # def test_patient_age_property(self):
-    #     """Тестирование вычисления возраста пациента"""
-    #     # Устанавливаем дату рождения пользователя
-    #     self.user.date_of_birth = date(1990, 1, 1)
-    #     self.user.save()
+    def test_patient_age_property(self):
+        """Тестирование вычисления возраста пациента"""
+        # Устанавливаем дату рождения пользователя
+        self.user.date_of_birth = date(1990, 1, 1)
+        self.user.save()
         
-    #     patient = Patient.objects.create(**self.patient_data)
+        patient = Patient.objects.create(**self.patient_data)
         
-    #     # Рассчитываем ожидаемый возраст
-    #     today = timezone.now()
-    #     expected_age = today.year - 1990 - ((today.month, today.day) < (1, 1))
+        # Получаем текущую дату (без времени)
+        today = timezone.now().date()
         
-    #     self.assertEqual(patient.age, expected_age)
+        # Рассчитываем ожидаемый возраст
+        expected_age = today.year - 1990 - ((today.month, today.day) < (1, 1))
+        
+        self.assertEqual(patient.age, expected_age)
 
     def test_patient_relations(self):
         """Тестирование связей модели Patient"""

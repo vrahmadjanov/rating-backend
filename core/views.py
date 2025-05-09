@@ -4,47 +4,50 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.views import APIView
 from .models import CustomUser
 from a_base.models import Subscription
-from .serializers import CustomUserPublicSerializer, RegisterSerializer, CustomTokenObtainPairSerializer, CustomUserPrivateSerializer
+from .serializers import RegisterSerializer, CustomTokenObtainPairSerializer, CustomUserPrivateSerializer, CustomUserPublicSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .permissions import IsAdminOrSelf, IsAdminOrReadOnlyForSelf
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied
 from patients.models import Patient
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
-    serializer_class = CustomUserPrivateSerializer
-    permission_classes = [IsAuthenticated, IsAdminOrReadOnlyForSelf]
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
-        # Для списка пользователей используем укороченный сериализатор
         if self.action == 'list':
             return CustomUserPublicSerializer
-        return super().get_serializer_class()
+        
+        # Для детального просмотра проверяем права
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return CustomUserPrivateSerializer
+        
+        # Для собственного профиля
+        if self.action in ['retrieve', 'update', 'partial_update']:
+            obj = self.get_object()
+            if obj == self.request.user:
+                return CustomUserPrivateSerializer
 
     def get_queryset(self):
-        # Для не-админов показываем только их собственный профиль
-        if not self.request.user.is_staff:
-            return CustomUser.objects.filter(id=self.request.user.id)
-        return super().get_queryset()
+        queryset = super().get_queryset()
+        
+        # Для обычных пользователей показываем только свой профиль
+        if not (self.request.user.is_staff or self.request.user.is_superuser):
+            queryset = queryset.filter(id=self.request.user.id)
+        return queryset
 
-    @action(detail=False, methods=['get'])
-    def me(self, request):
-        # Эндпоинт для получения текущего пользователя
-        serializer = self.get_serializer(request.user)
-        return Response(serializer.data)
+    def get_object(self):
+        obj = super().get_object()
+        
+        # Дополнительная проверка прав для детального просмотра
+        if not (self.request.user.is_staff or 
+                self.request.user.is_superuser or 
+                obj == self.request.user):
+            raise PermissionDenied("У вас нет прав доступа к этому профилю")
+        return obj
 
-    def destroy(self, request, *args, **kwargs):
-        # Разрешаем удаление только администратору или самому пользователю
-        instance = self.get_object()
-        if not (request.user.is_staff or instance == request.user):
-            return Response(
-                {'detail': 'У вас нет прав для удаления этого пользователя.'},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        return super().destroy(request, *args, **kwargs)
 
 class RegisterView(CreateAPIView):
     serializer_class = RegisterSerializer
@@ -54,7 +57,7 @@ class RegisterView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        user.subscription = Subscription.objects.get(id=1)
+        user.subscription = Subscription.objects.get(name_ru="Базовая")
         user.activate_subscription()
         Patient.objects.create(user=user)
 

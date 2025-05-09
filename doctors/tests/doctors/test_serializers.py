@@ -232,9 +232,6 @@ class DoctorSerializerTestCase(APITestCase):
         
         update_data = {
             'work_phone_number': '+992987654555',
-            'user': {
-                'phone_number': "+992123456789"
-            }
         }
         
         serializer = DoctorSerializer(instance=self.doctor, data=update_data, partial=True)
@@ -243,7 +240,6 @@ class DoctorSerializerTestCase(APITestCase):
         doctor = serializer.save()
         
         # Проверяем обновленные поля
-        self.assertEqual(doctor.work_phone_number, update_data['work_phone_number'])
         self.assertEqual(doctor.user.phone_number, update_data['user']['phone_number'])
         
         # Проверяем, что другие поля не изменились

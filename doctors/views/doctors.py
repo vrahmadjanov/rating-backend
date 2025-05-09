@@ -53,7 +53,7 @@ class DoctorViewSet(viewsets.ModelViewSet):
             if user_region:
                 return queryset.filter(user__district__region=user_region)
 
-        elif user_subscription.name == 'Базовая':
+        elif user_subscription.name_ru == 'Базовая':
             # Для базовой подписки только врачи из своего региона
             if user_region:
                 return queryset.filter(user__district__region=user_region)

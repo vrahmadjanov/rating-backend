@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models.education import Education
+from ..models.educations import Education
 from doctors.serializers import DoctorSerializer
 
 class EducationSerializer(serializers.ModelSerializer):

@@ -93,11 +93,11 @@ class CustomUserModelTest(TestCase):
         """Тест выбора пола"""
         self.user.gender = self.gender_male
         self.user.save()
-        self.assertEqual(self.user.gender.name, 'Мужской')
+        self.assertEqual(self.user.gender.name_ru, 'Мужской')
         
         self.user.gender = self.gender_female
         self.user.save()
-        self.assertEqual(self.user.gender.name, 'Женский')
+        self.assertEqual(self.user.gender.name_ru, 'Женский')
 
 
     def test_confirmation_code_methods(self):

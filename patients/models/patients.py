@@ -1,4 +1,4 @@
-from datetime import timezone
+from django.utils import timezone
 from django.db import models
 from a_base.models import SocialStatus
 from django.contrib.auth import get_user_model

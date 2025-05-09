@@ -1,8 +1,5 @@
-# serializers.py
 from rest_framework import serializers
 from .models import CustomUser
-from django.utils import translation
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from a_base.serializers import DistrictSerializer, SubscriptionSerializer, GenderSerializer, GroupSerializer
@@ -10,8 +7,8 @@ from a_base.models import District, Gender
 
 User = get_user_model()
 
-
-class CustomUserSerializer(serializers.ModelSerializer):
+class CustomUserPrivateSerializer(serializers.ModelSerializer):
+    """Приватный сериализатор для обновления данных"""
     district = DistrictSerializer(read_only=True)
     gender = GenderSerializer(read_only=True)
     groups = GroupSerializer(many=True, read_only=True)
@@ -19,72 +16,47 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     gender_id = serializers.PrimaryKeyRelatedField(
         queryset=Gender.objects.all(),
-        source="gender",
+        source='gender',
         write_only=True,
-        required=False,
         allow_null=True,
+        required=False
     )
-    district_id = serializers.PrimaryKeyRelatedField(
-        queryset=District.objects.all(),
-        source="district",
-        write_only=True,
-        required=False,
-        allow_null=True,
-    )
-    
+
     class Meta:
         model = CustomUser
-        exclude = ['subscription_start_date', 'subscription_end_date', 
-                   'confirmation_code', 'confirmation_code_created_at',
-                   'user_permissions', 'is_staff', 'is_active', 'is_superuser', 
-                   'last_login']
+        fields = [
+            'id', 'first_name', 'last_name', 'middle_name', 'date_of_birth', 'gender', 'gender_id', 
+            'phone_number', 'district', 'profile_picture', 'subscription', 'groups', 'email', 'inn'
+        ]
         extra_kwargs = {
-            'password': {'write_only': True}
-            }
-        
-
-    def get_gender(self, obj):
-        if not obj.gender:
-            return None
-        return {
-            "id": obj.gender.id,
-            "name": obj.gender.name,
+            'phone_number': {'read_only': True}
         }
-
-    def get_district(self, obj):
-        if not obj.district:
-            return None
-        return {
-            "id": obj.district.id,
-            "name": obj.district.name,
-        }
-
 
     def update(self, instance, validated_data):
+        # Удаляем поля, которые не должны обновляться
+        validated_data.pop('subscription', None)
+        validated_data.pop('groups', None)
+        
+        # Обновляем остальные поля
         for attr, value in validated_data.items():
-            if attr != 'subscription':
-                setattr(instance, attr, value)
+            setattr(instance, attr, value)
         
         instance.save()
         return instance
-
-
-class CustomUserPrivateSerializer(CustomUserSerializer):
-    pass
+    
 
 class CustomUserPublicSerializer(serializers.ModelSerializer):
-    gender = serializers.SerializerMethodField()
-    district = serializers.SerializerMethodField()
+    """Публичный сериализатор только для чтения с ограниченным набором полей"""
+    gender = GenderSerializer()
+    district = DistrictSerializer()
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'first_name', 'last_name', 'middle_name', 'gender', 'district']
-
-    def get_gender(self, obj):
-        return obj.gender.name if obj.gender else None
-
-    def get_district(self, obj):
-        return obj.district.name if obj.district else None
+        fields = [
+            'id', 'first_name', 'last_name', 'middle_name', 
+            'gender', 'district','date_of_birth'
+        ]
+        read_only_fields = fields  
 
 
 # Сериализатор для регистрации нового пользователя

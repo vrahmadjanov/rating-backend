@@ -46,7 +46,7 @@ class DoctorViewSetTestCase(APITestCase):
             name_ru='Без рекламы', 
             name_tg='Бе реклама'
         )
-        
+         
         self.premium_sub = Subscription.objects.create(
             name_ru='Премиум',
             name_tg='Премиум',

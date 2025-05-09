@@ -98,20 +98,17 @@ class CustomUserSerializerTests(APITestCase):
         self.user.groups.add(self.group)
 
     def test_user_serialization(self):
-        from core.serializers import CustomUserSerializer
+        from core.serializers import CustomUserPublicSerializer
         
-        serializer = CustomUserSerializer(instance=self.user)
+        serializer = CustomUserPublicSerializer(instance=self.user)
         data = serializer.data
         
-        self.assertEqual(data['phone_number'], self.user.phone_number)
         self.assertEqual(data['first_name'], self.user.first_name)
         self.assertEqual(data['last_name'], self.user.last_name)
         self.assertEqual(data['gender']['id'], self.gender_female.id)
-        self.assertEqual(data['gender']['name'], self.gender_female.name_ru)
+        self.assertEqual(data['gender']['name'], self.gender_female.name)
         self.assertEqual(data['district']['id'], self.district2.id)
-        self.assertEqual(data['district']['name'], self.district2.name_ru)
-        self.assertEqual(len(data['groups']), 1)
-        self.assertEqual(data['groups'][0]['id'], self.group.id)
+        self.assertEqual(data['district']['name'], self.district2.name)
 
     # def test_update_user(self):
     #     from core.serializers import CustomUserSerializer
